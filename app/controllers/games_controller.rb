@@ -1,6 +1,9 @@
 class GamesController < ApplicationController
   before_action :redirect_ileligible_user, except: :show
 
+  def index
+  end
+
   def new
     @game = Game.new
   end
