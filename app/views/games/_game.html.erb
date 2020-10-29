@@ -1,5 +1,5 @@
 <%= link_to game_path(game.id) do %>
-  <%# <%= image_tag game.image.variant(resize: '300x300') %> %><br />
+  <%= image_tag game.image_url, class:"game-image" %><br />
   <%= game.name %><br />
   <%= game.description %><br />
   <% if user_signed_in? && current_user.id == 1 %>

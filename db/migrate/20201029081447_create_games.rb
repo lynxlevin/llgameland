@@ -3,6 +3,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
     create_table :games do |t|
       t.string :name,        null: false
       t.text   :description
+      t.string :image_url
       t.timestamps
     end
   end
