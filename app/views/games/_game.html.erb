@@ -1,0 +1,8 @@
+<%= link_to game_path(game.id) do %>
+  <%# <%= image_tag game.image.variant(resize: '300x300') %> %><br />
+  <%= game.name %><br />
+  <%= game.description %><br />
+  <% if user_signed_in? && current_user.id == 1 %>
+    <%= link_to "編集", edit_game_path(game.id) %>
+  <% end %>
+<% end %>

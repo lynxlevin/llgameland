@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users, :skip => [:passwords]
-  resources :top, only: [:index]
-  root to: "top#index"
-  resources :game, only: [:show]
+  root to: "games#index"
+  resources :games, only: [:index, :new, :create, :show, :edit, :update]
 end
