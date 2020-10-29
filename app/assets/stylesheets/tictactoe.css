@@ -1,0 +1,11 @@
+#board {
+  background-color: black;
+}
+
+td.cell {
+  background-color: green;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: 60px;
+}
