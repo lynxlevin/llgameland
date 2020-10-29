@@ -1,24 +1,44 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
+| Columns  | Type   | Options                       |
+| -------- | ------ | ----------------------------- |
+| username | string | null: false, uniqueness: true |
+| email    | string |                               |
+| password | string | null: false                   |
 
-Things you may want to cover:
+### Association
+- has_many :game_scores
+- has_many :favorite_games
 
-* Ruby version
+## games テーブル
+| Columns | Type   | Options     |
+| ------- | ------ | ----------- |
+| name    | string | null: false |
 
-* System dependencies
+### Association
+- has_many :game_scores
+- has_many :favorite_games
 
-* Configuration
+## game_scores テーブル
+| Columns | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| user    | references | null: false, foreign_key: true |
+| game    | references | null: false, foreign_key: true |
+| score   | integer    | null: false                    |
 
-* Database creation
+### Association
+- belongs_to :user
+- belongs_to :game
 
-* Database initialization
+## favorite_games テーブル
+| Columns    | Type       | Options                        |
+| ---------- | ---------- | ------------------------------ |
+| user       | references | null: false, foreign_key: true |
+| game       | references | null: false, foreign_key: true |
+| eval_point | integer    | null: false                    |
+| comment    | text       | null: false                    |
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Association
+- belongs_to :user
+- belongs_to :game
