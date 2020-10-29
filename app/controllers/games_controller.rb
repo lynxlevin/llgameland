@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :redirect_ileligible_user, except: :show
+  before_action :redirect_ileligible_user,  only: [:new, :create, :edit, :update]
   before_action :find_game, only: [:edit, :update, :show]
 
   def index
