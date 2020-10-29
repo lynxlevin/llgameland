@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    if current_user.id == 1 && game.save
+    if current_user.id == 1 && @game.save
       redirect_to root_path
     else
       render :new

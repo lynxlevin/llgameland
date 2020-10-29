@@ -1,0 +1,23 @@
+<%= form_with model: @game, url: games_path, local: true do |f| %>
+
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
+
+  <%# <div class="field"> %>
+    <%# <%= f.label :image %><br /> %>
+    <%# <%= f.file_field :image %> %>
+  <%# </div> %>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description, autocomplete: "description" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+
+<% end %>
