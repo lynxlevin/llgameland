@@ -12,3 +12,5 @@
 <% if user_signed_in? && current_user.id == 1 %>
   <%= link_to "ゲーム登録", new_game_path %><br>
 <% end %>
+
+<%= render partial: "game", collection: @games %>

@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   before_action :redirect_ileligible_user, except: :show
 
   def index
+    @games = Game.all
   end
 
   def new
