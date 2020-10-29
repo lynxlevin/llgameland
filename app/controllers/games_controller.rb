@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :redirect_ileligible_user, except: :show
+  before_action :find_game, only: [:edit, :update]
 
   def index
     @games = Game.all
@@ -21,6 +22,17 @@ class GamesController < ApplicationController
   def show
   end
 
+  def edit
+  end
+
+  def update
+    if @game.update(game_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
+  end
+
   private
 
   def redirect_ileligible_user
@@ -29,5 +41,9 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(:image, :name, :description)
+  end
+
+  def find_game
+    @game = Game.find(params[:id])
   end
 end
