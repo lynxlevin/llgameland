@@ -1,9 +1,10 @@
 .tile {
-  width: 20px;
-  height: 20px;
+  width: 70px;
+  height: 70px;
   border: 1px solid blue;
   border-radius: 10px;
   text-align: center;
-  font-size: 12px;
+  font-size: 36px;
   background-color: white;
   box-shadow: #8f8f8f 5px 5px;
+}
