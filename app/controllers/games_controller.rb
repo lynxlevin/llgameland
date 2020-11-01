@@ -40,10 +40,10 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:image_url, :name, :description)
+    params.require(:game).permit(:image_url, :display_name, :game_name, :description)
   end
 
   def find_game
-    @game = Game.find(params[:id])
+    @game = Game.where(game_name: params[:game_name])
   end
 end

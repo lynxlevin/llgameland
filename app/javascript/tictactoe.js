@@ -24,7 +24,7 @@ function tictactoe() {
 }
 
 function checkPath(path) {
-  if (path === "/games/1") {return true};
+  if (path === "/tictactoe") {return true};
 }
 
 function clicked(e) {
