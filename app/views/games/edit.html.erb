@@ -1,28 +1,2 @@
 <% breadcrumb :edit_game %>
-<%= form_with model: @game, url: game_path, local: true do |f| %>
-
-  <div class="field">
-    <%= f.label :display_name %><br />
-    <%= f.text_field :display_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :game_name %><br />
-    <%= f.text_field :game_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :image_url %><br />
-    <%= f.text_field :image_url %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Submit" %>
-  </div>
-
-<% end %>
+<%= render partial: "form", locals: { game: @game } %>
