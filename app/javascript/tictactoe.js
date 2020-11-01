@@ -2,11 +2,14 @@ let count = 0;
 let gameInAction = true;
 
 window.addEventListener("load", () => {
-  if (checkPath()) {
-    startGame();
-    const gameRestart = document.getElementById("restart-game");
-    gameRestart.addEventListener("click", startGame);
+  if (!checkPath()) {
+    return null;
   };
+  const b = document.getElementById("board");
+  b.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
+  startGame();
+  const gameRestart = document.getElementById("restart-game");
+  gameRestart.addEventListener("click", startGame);
 });
 
 function checkPath() {

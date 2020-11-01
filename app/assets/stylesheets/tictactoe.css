@@ -1,9 +1,3 @@
-#board {
-  background-color: black;
-  width: 70vmin;
-  height: 70vmin;
-}
-
 td.cell {
   background-color: green;
   width: 100px;
