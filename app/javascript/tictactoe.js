@@ -22,14 +22,13 @@ function startGame() {
   for (let i = 0 ; i < 3 ; i++) {
     const tr = document.createElement("tr");
     for (let j = 0 ; j < 3 ; j++) {
-      const td = document.createElement("td");
-      td.className = "cell";
-      td.id = "c" + i + j;
-      td.onclick = tick_cell;
-      tr.appendChild(td);
+      const td = `
+      <td class="cell" id="c${i}${j}"></td>`
+      tr.insertAdjacentHTML("beforeend", td);
     }
     b.appendChild(tr);
   }
+  b.onclick = tick_cell;
 }
 function tick_cell(e) {
   if (e.target.textContent == "" && gameInAction) {
