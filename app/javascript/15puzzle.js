@@ -20,7 +20,7 @@ window.addEventListener("load", () => {
       }
       board.appendChild(tr);
     }
-    for (let i = 0 ; i < 1 ; i++) {
+    for (let i = 0 ; i < 1000 ; i++) {
       click({ srcElement: {index: Math.floor(Math.random() * 16)}})
     }
     document.getElementById("info").textContent = "";
