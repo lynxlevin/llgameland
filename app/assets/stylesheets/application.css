@@ -14,7 +14,12 @@
  *= require_self
  */
 
- .hidden {
-   display: none;
+ body {
+  width: 90vw;
+  margin: 5px 5vw 0;
+  border: solid 1px #0107422a;
  }
- 
+
+.hidden {
+  display: none;
+}

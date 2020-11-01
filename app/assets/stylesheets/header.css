@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 1vw;
+  border-bottom: solid 1px #0107422a;
+  background-color: #ececec;
+ }
+
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+}
+
+.header-content {
+  display: block;
+  padding: 0px 5px;
+}

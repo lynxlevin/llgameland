@@ -1,0 +1,18 @@
+<header>
+  <div class="header-left">
+    <%= breadcrumbs separator: "＞" %>
+  </div>
+  <div class="header-right">
+    <% if user_signed_in? %>
+      <%= link_to "マイページ", edit_user_registration_path, class:"header-content" %>
+      <%= link_to "ログアウト", destroy_user_session_path, method: "DELETE", class:"header-content" %>
+    <% else %>
+      <%= link_to "ログイン", new_user_session_path, class:"header-content" %>
+      <%= link_to "新規登録", new_user_registration_path, class:"header-content" %>
+    <% end %>
+    <% if user_signed_in? && current_user.id == 1 %>
+      <%= link_to "ゲーム登録", new_game_path, class:"header-content" %>
+      <%= link_to "ゲーム画像", images_path, class:"header-content" %>
+    <% end %>
+  </div>
+</header>

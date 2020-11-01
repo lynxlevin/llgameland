@@ -2,16 +2,5 @@
   <h3><%= "Hello, #{current_user.username}!" %></h3>
 <% end %>
 <h1>LynxLevin's Game Land</h1>
-<% if user_signed_in? %>
-  <%= link_to "マイページ", edit_user_registration_path %><br>
-  <%= link_to "ログアウト", destroy_user_session_path, method: "DELETE" %><br>
-<% else %>
-  <%= link_to "ログイン", new_user_session_path %><br>
-  <%= link_to "新規登録", new_user_registration_path %><br>
-<% end %>
-<% if user_signed_in? && current_user.id == 1 %>
-  <%= link_to "ゲーム登録", new_game_path %><br>
-  <%= link_to "ゲーム画像", images_path %><br>
-<% end %>
 
 <%= render partial: "game", collection: @games %>

@@ -5,3 +5,10 @@
   height: 300px;
   /* width: 300px; */
 }
+
+.game-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,5 +1,7 @@
 #board {
   background-color: black;
+  width: 70vmin;
+  height: 70vmin;
 }
 
 td.cell {
@@ -7,5 +9,5 @@ td.cell {
   width: 100px;
   height: 100px;
   text-align: center;
-  font-size: 60px;
+  font-size: 6.8vmin;
 }
