@@ -1,6 +1,7 @@
-function tictactoe() {
-  const path = location.pathname;
-  if (checkPath(path)) {
+let count = 0;
+let gameInAction = true;
+window.addEventListener("load", () => {
+  if (checkPath()) {
     const b = document.getElementById("board");
     const gameStart = document.getElementById("start-game");
     gameStart.addEventListener("click", () => {
@@ -14,29 +15,26 @@ function tictactoe() {
           const td = document.createElement("td");
           td.className = "cell";
           td.id = "c" + i + j;
-          td.onclick = clicked;
+          td.onclick = tick_cell;
           tr.appendChild(td);
         }
         b.appendChild(tr);
       }
     })
   }
-}
+});
 
-function checkPath(path) {
+function checkPath() {
+  const path = location.pathname;
   if (path === "/tictactoe") {return true};
 }
-
-function clicked(e) {
+function tick_cell(e) {
   if (e.target.textContent == "" && gameInAction) {
     count = ++count;
     e.target.textContent = (count % 2 == 0) ? "X" : "O";
     checkWinner(e);
   }
-  else {
-  }
 }
-
 function checkWinner(e) {
   let row = e.target.id.slice(1,2);
   let column = e.target.id.slice(2,3);
@@ -66,14 +64,10 @@ function checkWinner(e) {
       endGame(cellrc); break;
     case Number(row) + Number(column) == 2 && (cell02 == cell11 && cell02 == cell20):
       endGame(cellrc); break;
-    }
   }
+}
+function endGame(e) {
+  document.getElementById("info").textContent = e + " Wins!!";
+  gameInAction = false;
+}
   
-  function endGame(e) {
-    document.getElementById("info").textContent = e + " Wins!!";
-    gameInAction = false;
-  }
-  
-  let count = 0;
-  let gameInAction = true;
-  window.addEventListener("load", tictactoe);
