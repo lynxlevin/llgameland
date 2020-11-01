@@ -1,8 +1,8 @@
 header {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
-  padding: 1vw;
+  font-size: 2vmin;
+  padding: 1vmin;
   border-bottom: solid 1px #0107422a;
   background-color: #ececec;
  }
