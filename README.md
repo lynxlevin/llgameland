@@ -12,9 +12,12 @@
 - has_many :favorite_games
 
 ## games テーブル
-| Columns | Type   | Options     |
-| ------- | ------ | ----------- |
-| name    | string | null: false |
+| Columns      | Type   | Options     |
+| ------------ | ------ | ----------- |
+| display_name | string | null: false |
+| game_name    | string | null: false |
+| description  | text   |             |
+| image_url    | string |             |
 
 ### Association
 - has_many :game_scores
