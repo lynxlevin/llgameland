@@ -1,32 +1,35 @@
 let count = 0;
 let gameInAction = true;
+
 window.addEventListener("load", () => {
   if (checkPath()) {
-    const b = document.getElementById("board");
-    const gameStart = document.getElementById("start-game");
-    gameStart.addEventListener("click", () => {
-      b.innerHTML = "";
-      gameInAction = true;
-      document.getElementById("info").textContent = "";
-      count = 0;
-      for (let i = 0 ; i < 3 ; i++) {
-        const tr = document.createElement("tr");
-        for (let j = 0 ; j < 3 ; j++) {
-          const td = document.createElement("td");
-          td.className = "cell";
-          td.id = "c" + i + j;
-          td.onclick = tick_cell;
-          tr.appendChild(td);
-        }
-        b.appendChild(tr);
-      }
-    })
-  }
+    startGame();
+    const gameRestart = document.getElementById("restart-game");
+    gameRestart.addEventListener("click", startGame);
+  };
 });
 
 function checkPath() {
   const path = location.pathname;
-  if (path === "/tictactoe") {return true};
+  if (path === "/games/tictactoe") {return true};
+}
+function startGame() {
+  const b = document.getElementById("board");
+  b.innerHTML = "";
+  gameInAction = true;
+  document.getElementById("info").textContent = "";
+  count = 0;
+  for (let i = 0 ; i < 3 ; i++) {
+    const tr = document.createElement("tr");
+    for (let j = 0 ; j < 3 ; j++) {
+      const td = document.createElement("td");
+      td.className = "cell";
+      td.id = "c" + i + j;
+      td.onclick = tick_cell;
+      tr.appendChild(td);
+    }
+    b.appendChild(tr);
+  }
 }
 function tick_cell(e) {
   if (e.target.textContent == "" && gameInAction) {
