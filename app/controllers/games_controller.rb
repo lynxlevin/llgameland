@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :redirect_ileligible_user,  only: [:new, :create, :edit, :update]
-  before_action :find_game, only: [:edit, :update, :show]
+  before_action :find_game, only: [:edit, :update]
 
   def index
     @games = Game.all
@@ -20,6 +20,7 @@ class GamesController < ApplicationController
   end
   
   def show
+    @game = Game.where(game_name: params[:game_name])
   end
 
   def edit
@@ -44,6 +45,6 @@ class GamesController < ApplicationController
   end
 
   def find_game
-    @game = Game.where(game_name: params[:game_name])
+    @game = Game.find(params[:id])
   end
 end
