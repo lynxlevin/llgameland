@@ -5,8 +5,9 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   };
-  const b = document.getElementById("board");
-  b.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
+  document.getElementById("input").className="hidden";
+  const board = document.getElementById("board");
+  board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();
   const gameRestart = document.getElementById("restart-game");
   gameRestart.addEventListener("click", startGame);
@@ -17,8 +18,8 @@ function checkPath() {
   if (path === "/games/tictactoe") {return true};
 }
 function startGame() {
-  const b = document.getElementById("board");
-  b.innerHTML = "";
+  const board = document.getElementById("board");
+  board.innerHTML = "";
   gameInAction = true;
   document.getElementById("info").textContent = "";
   count = 0;
@@ -29,9 +30,9 @@ function startGame() {
       <td class="cell" id="c${i}${j}"></td>`
       tr.insertAdjacentHTML("beforeend", td);
     }
-    b.appendChild(tr);
+    board.appendChild(tr);
   }
-  b.onclick = tick_cell;
+  board.onclick = tick_cell;
 }
 function tick_cell(e) {
   if (e.target.textContent == "" && gameInAction) {
