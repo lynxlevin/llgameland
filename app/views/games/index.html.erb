@@ -1,6 +1,11 @@
-<% if user_signed_in? %>
-  <h3><%= "Hello, #{current_user.username}!" %></h3>
-<% end %>
-<h1>LynxLevin's Game Land</h1>
-
-<%= render partial: "game", collection: @games %>
+<div class="index-wrapper">
+  <% if user_signed_in? %>
+    <h3><%= "Hello, #{current_user.username}!" %></h3>
+  <% end %>
+  <div class="index-title">
+    <h1>LynxLevin's Game Land</h1>
+  </div>
+  <div class="index-games">
+    <%= render partial: "game", collection: @games %>
+  </div>
+</div>

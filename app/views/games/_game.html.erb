@@ -1,8 +1,10 @@
 <%= link_to show_game_path(game.game_name) do %>
-  <%= image_tag game.image_url, class:"game-image" %><br />
-  <%= game.display_name %><br />
-  <%= game.description %><br />
-  <% if user_signed_in? && current_user.id == 1 %>
-    <%= link_to "編集", edit_game_path(game.id) %>
-  <% end %>
+  <div class="index-game">
+    <%= image_tag game.image_url, class:"game-image" %><br />
+    <%= game.display_name %><br />
+    <%= game.description %><br />
+    <% if user_signed_in? && current_user.id == 1 %>
+      <%= link_to "編集", edit_game_path(game.id) %><br />
+    <% end %>
+  </div>
 <% end %>
