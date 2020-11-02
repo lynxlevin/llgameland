@@ -15,8 +15,27 @@
   /* justify-content: space-around; */
 }
 
-.game-image {
+.index-game {
+  width: 250px;
+  margin-right: 10px;
+}
+
+.game-title {
+  padding-left: 8px;
+}
+
+.game-image-div {
+  width: 300px;
   height: 300px;
+}
+
+.game-image {
+  width: 250px;
+}
+
+.game-description {
+  border: 1px solid #0107422a;
+  padding: 0 5px;
 }
 
 footer {
