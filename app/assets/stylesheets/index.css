@@ -1,0 +1,32 @@
+.index-wrapper {
+  padding: 3vmin;
+  border-right: 1px solid #0107422a;
+  border-left: 1px solid #0107422a;
+  border-top: none;
+  border-bottom: none;
+}
+
+.index-title {
+  margin-bottom: 35px;
+}
+
+.index-games {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.game-image {
+  height: 300px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2.5vmin;
+  padding: 1vmin;
+  border-right: 1px solid #0107422a;
+  border-left: 1px solid #0107422a;
+  border-bottom: 3px solid #0107422a;
+  background-color: #ffffff;
+  font-size: 1.8vmin;
+}
