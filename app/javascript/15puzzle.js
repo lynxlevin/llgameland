@@ -4,6 +4,7 @@ window.addEventListener("load", () => {
     }
     const gameRestart = document.getElementById("restart-game");
     gameRestart.textContent = "START";
+    document.getElementById("input").value = 4
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
       board.innerHTML = "";
@@ -17,6 +18,9 @@ window.addEventListener("load", () => {
           let td = document.createElement("td");
           td.className = "tile";
           td.index = index;
+          td.style.height = `${75 / input}vmin`;
+          td.style.width = `${75 / input}vmin`;
+          td.style.fontSize = `${240 / input}px`;
           td.id = "tile" + (index + 1);
           td.textContent = index == (input * input - 1) ? "" : (index + 1);
           td.onclick = click;
@@ -25,7 +29,7 @@ window.addEventListener("load", () => {
         }
         board.appendChild(tr);
       }
-      for (let i = 0 ; i < 1000 ; i++) {
+      for (let i = 0 ; i < 1000 + (input * input * input) ; i++) {
         click({ srcElement: {index: Math.floor(Math.random() * (input * input))}})
       }
       document.getElementById("info").textContent = "";
