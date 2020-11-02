@@ -12,3 +12,17 @@
   flex-direction: column;
   align-items: center;
 }
+
+.input {
+  display: flex;
+}
+
+#input {
+  font-size: 20px;
+}
+
+#restart-game {
+  width: 15vmin;
+  font-size: 3vmin;
+  margin-top: 10px;
+}

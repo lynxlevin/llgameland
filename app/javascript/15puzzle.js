@@ -4,6 +4,7 @@ window.addEventListener("load", () => {
     }
     const gameRestart = document.getElementById("restart-game");
     gameRestart.textContent = "START";
+    document.getElementById("input-message").textContent = "※マス目の数を指定（○×○マス）"
     document.getElementById("input").value = 4
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
@@ -18,8 +19,8 @@ window.addEventListener("load", () => {
           let td = document.createElement("td");
           td.className = "tile";
           td.index = index;
-          td.style.height = `${75 / input}vmin`;
-          td.style.width = `${75 / input}vmin`;
+          td.style.height = `${73 / input}vmin`;
+          td.style.width = `${73 / input}vmin`;
           td.style.fontSize = `${240 / input}px`;
           td.id = "tile" + (index + 1);
           td.textContent = index == (input * input - 1) ? "" : (index + 1);
