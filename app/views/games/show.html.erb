@@ -1,10 +1,24 @@
 <% breadcrumb :show_game, @game %>
 <div class="game-wrapper">
   <button id="restart-game">RESTART</button>
-  <div class="input">
-    <input type="number" min="1" max="100" step="1" id="input">
-    <p id="input-message"></p>
-  </div>
+    <div class="inputs-wrapper">
+      <div class="input" id="input1-div">
+        <input type="number" min="1" max="100" step="1" id="input1" class="input-tag">
+        <div class="input-num-buttons">
+          <button class="input-num-button" id="input1-up">+</button><br />
+          <button class="input-num-button" id="input1-down">-</button>
+        </div>
+        <p id="input1-message">○×○マス</p>
+      </div>
+      <div class="input" id="input2-div">
+        <input type="number" min="1" max="100" step="1" id="input2" class="input-tag">
+        <div class="input-num-buttons">
+          <button class="input-num-button" id="input2-up">+</button><br />
+          <button class="input-num-button" id="input2-down">-</button>
+        </div>
+        <p id="input2-message">爆弾の数</p>
+      </div>
+    </div>
   <table id="board"></table>
   <div class="game-info">
     <h2 id="info"></h2>

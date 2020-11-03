@@ -5,7 +5,8 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   };
-  document.getElementById("input").className="hidden";
+  document.getElementById("input1-div").className = "input hidden";
+  document.getElementById("input2-div").className = "input hidden";
   const board = document.getElementById("board");
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();

@@ -1,0 +1,18 @@
+.tile-closed {
+  background-color: #c49e90;
+  font-size: 0px;
+}
+
+.tile-open {
+  background-color: #c8785b;
+  text-align: center;
+}
+
+.tile-broken {
+  background-color: #bf4c22;
+  text-align: center;
+}
+
+.minesweeper-board {
+  border-spacing: 1px;
+}

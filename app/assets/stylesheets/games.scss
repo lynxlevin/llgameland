@@ -11,17 +11,30 @@
 }
 
 #restart-game {
-  width: 15vmin;
+  width: 17vmin;
   font-size: 3vmin;
   margin-top: 10px;
 }
 
-.input {
+.inputs-wrapper {
   display: flex;
 }
 
-#input {
+.input {
+  display: flex;
+  align-items: center;
+  padding: 8px 0 0 13px;
+}
+
+.input-tag {
   font-size: 20px;
+  height: 40px;
+}
+
+.input-num-button {
+  height: 30px;
+  width: 30px;
+  margin: 0 5px;
 }
 
 #board {
