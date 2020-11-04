@@ -1,12 +1,12 @@
-@media (max-width: 1000px) {
-  .header {
-    font-size: 3.8vmin;
+@media screen and (max-width:767px) {
+  header {
+    font-size: 4vmin;
   }
 }
 
-@media (min-width: 1001px) {
-  .header {
-  font-size: 22px;
+@media screen and (min-width:768px) {
+  header {
+    font-size: 22px;
   }
 }
 

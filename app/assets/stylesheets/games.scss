@@ -16,32 +16,53 @@
 }
 
 .top-left-wrapper {
-  width: 40%;
+  width: 32%;
 }
 
 .top-center-wrapper {
-  width: 20%;
+  width: 30%;
   text-align: center;
 }
 
 .top-right-wrapper {
-  width: 40%;
+  width: 38%;
   padding-right: 10px;
 }
 
-#restart-game {
-  width: 17vmin;
-  font-size: 3vmin;
-  margin-top: 10px;
-  height: 4vmin;
+@media screen and (max-width:767px) {
+  #restart-game {
+    font-size: 4vmin;
+    margin-top: 10px;
+    height: 7vmin;
+    padding: 0 3vmin;
+  }
 }
 
-#helper-btn {
-  width: 18vmin;
-  height: 4vmin;
-  font-size: 2vmin;
-  padding: 0;
-  margin-top: 10px;
+@media screen and (min-width:768px) {
+  #restart-game {
+    height: 35px;
+    font-size: 23px;
+    margin-top: 10px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width:767px) {
+  #helper-btn {
+    height: 7vmin;
+    font-size: 4vmin;
+    margin-top: 10px;
+    padding: 0 3vmin;
+  }
+}
+
+@media screen and (min-width:768px) {
+  #helper-btn {
+    height: 35px;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 0 15px;
+  }
 }
 
 .inputs-wrapper {
@@ -54,34 +75,73 @@
   padding: 8px 0 0 13px;
 }
 
-.select-tag {
-  font-size: 20px;
-  height: 40px;
+@media screen and (max-width:767px) {
+  .select-tag {
+    font-size: 4vmin;
+    height: 30px;
+  }
 }
 
-// .input-num-btn {
-//   height: 30px;
-//   width: 30px;
-//   margin: 0 5px;
-// }
+@media screen and (min-width:768px) {
+  .select-tag {
+    font-size: 20px;
+    height: 40px;
+  }
+}
 
-.game-btns {
-  height: 100px;
-  width: 30%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@media screen and (max-width:767px) {
+  .select-message {
+    font-size: 3vmin;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .select-message {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width:767px) {
+  .game-btns {
+    height: 130px;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3vmin;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .game-btns {
+    height: 130px;
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .game-btn-div {
   text-align: center;
 }
 
+@media screen and (max-width:767px) {
+  .game-btn-off {
+    margin: 5px 5px;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .game-btn-off {
+    margin: 7px 5px;
+  }
+}
+
 .game-btn-off {
   height: 60px;
   width: 60px;
   border: 1px solid #a1a1dd;
-  margin: 8px 0;
 }
 
 .game-btn-on {

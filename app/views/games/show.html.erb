@@ -14,23 +14,23 @@
       <select id="select1" class="select-tag">
         <%= options_for_select(@nums50) %>
       </select>
-      <p id="select1-message">○×○マス</p>
+      <p id="select1-message" class="select-message"></p>
     </div>
     <div class="select" id="select2-div">
       <select id="select2" class="select-tag">
         <%= options_for_select(@nums1000) %>
       </select>
-      <p id="select2-message">爆弾の数</p>
+      <p id="select2-message" class="select-message"></p>
     </div>
   </div>
   <div class="game-btns" id="game-btns-div">
     <div class="game-btn-div">
-      <p class="game-btn-text" id="game-btn-text1"></p>
       <button id="game-btn1"></button>
+      <p class="game-btn-text" id="game-btn-text1"></p>
     </div>
     <div class="game-btn-div">
-      <p class="game-btn-text" id="game-btn-text2"></p>
       <button id="game-btn2"></button>
+      <p class="game-btn-text" id="game-btn-text2"></p>
     </div>
   </div>
   <table id="board"></table>
