@@ -50,11 +50,16 @@ window.addEventListener("load", () => {
       board.appendChild(tr);
     }
     let acorns = [];
-    document.getElementById("info").textContent = "";
+    let acornCount = select2.value;
+    document.getElementById("info1").textContent = "";
+    changeAcornCount();
     buryAcorn(acorns);
     countNearbyAcorns(tiles, acorns);
     showAcorns(tiles, acorns);
     
+    function changeAcornCount() {
+      document.getElementById("info2").textContent = `残りのどんぐりの数 ${acornCount}`;
+    }
     function buryAcorn(acorns) {
       let tileIndexes = [];
       let select1Value = Number(document.getElementById("select1").value);
@@ -173,9 +178,12 @@ window.addEventListener("load", () => {
         return null;
       } else if (clicked.className == "acorn-mark") {
         clicked.className = "tile-closed";
+        acornCount++;
+        changeAcornCount();
       } else {
         clicked.className = "acorn-mark";
-        return null;
+        acornCount--;
+        changeAcornCount();
       }
     }
     function plowMode(e) {
@@ -189,7 +197,7 @@ window.addEventListener("load", () => {
       acornBtn.className = "acorn-btn game-btn-on";
     }
     function gameOver() {
-      document.getElementById("info").textContent = "You Broke an Acorn";
+      document.getElementById("info1").textContent = "You Broke an Acorn";
       gameInAction = false;
     }
   })

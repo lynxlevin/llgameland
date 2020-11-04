@@ -23,7 +23,7 @@ function startGame() {
   const board = document.getElementById("board");
   board.innerHTML = "";
   gameInAction = true;
-  document.getElementById("info").textContent = "";
+  document.getElementById("info1").textContent = "";
   count = 0;
   for (let i = 0 ; i < 3 ; i++) {
     const tr = document.createElement("tr");
@@ -75,7 +75,7 @@ function checkWinner(e) {
   }
 }
 function endGame(e) {
-  document.getElementById("info").textContent = e + " Wins!!";
+  document.getElementById("info1").textContent = e + " Wins!!";
   gameInAction = false;
 }
   

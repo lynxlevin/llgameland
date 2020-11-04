@@ -35,7 +35,7 @@ window.addEventListener("load", () => {
       for (let i = 0 ; i < 1000 + (select1 * select1 * select1) ; i++) {
         click({ srcElement: {index: Math.floor(Math.random() * (select1 * select1))}})
       }
-      document.getElementById("info").textContent = "";
+      document.getElementById("info1").textContent = "";
         function click(e) {
           let clicked = e.srcElement.index;
           let blank = document.getElementById(`tile${select1 * select1}`).index;
@@ -75,7 +75,7 @@ window.addEventListener("load", () => {
             }
           })
           if (goal == 0) {
-            document.getElementById("info").textContent = " You've DONE IT!!";
+            document.getElementById("info1").textContent = " You've DONE IT!!";
           }
         }
       })
