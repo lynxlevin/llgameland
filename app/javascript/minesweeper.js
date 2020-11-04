@@ -4,23 +4,25 @@ window.addEventListener("load", () => {
   }
   const gameRestart = document.getElementById("restart-game");
   gameRestart.textContent = "START";
-  document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
-  document.getElementById("select2-message").textContent = "※どんぐりの数を指定"
+  let helperBtn = document.getElementById("helper-btn");
+  helperBtn.textContent = "はじめの第一歩"
+  document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）";
+  document.getElementById("select2-message").textContent = "※どんぐりの数を指定";
+  let select1 = document.getElementById("select1");
+  let select2 = document.getElementById("select2");
+  select1.value = 10;
+  select2.value = 15;
   let plowBtn = document.getElementById("game-btn1");
   let acornBtn = document.getElementById("game-btn2");
   plowBtn.className = "plow-btn game-btn-on";
   document.getElementById("game-btn-text1").textContent = "耕す";
   acornBtn.className = "acorn-btn game-btn-off";
   document.getElementById("game-btn-text2").textContent = "どんぐりマークをつける";
-  let select1 = document.getElementById("select1");
-  let select2 = document.getElementById("select2");
-  select1.value = 10;
-  select2.value = 15;
   
   gameRestart.addEventListener("click", () => {
     "use strict";
-    let plowBtn = document.getElementById("game-btn1");
-    let acornBtn = document.getElementById("game-btn2");
+    helperBtn.className = "";
+    helperBtn.onclick = firstStep;
     plowBtn.onclick = plowMode;
     acornBtn.onclick = acornMode;
     let acornModeCode = false;
@@ -52,6 +54,8 @@ window.addEventListener("load", () => {
     let acorns = [];
     let acornCount = select2.value;
     document.getElementById("info1").textContent = "";
+    let helperMessage = document.getElementById("helper-btn-message");
+    helperMessage.textContent = "";
     changeAcornCount();
     buryAcorn(acorns);
     countNearbyAcorns(tiles, acorns);
@@ -115,6 +119,21 @@ window.addEventListener("load", () => {
       });
     }
     
+    function firstStep(e) {
+      if (board.innerHTML.includes("></td>")) {
+        e.srcElement.className = "hidden";
+        let random = Math.floor(Math.random() * tiles.length);
+        if (tiles[random].textContent == "") {
+          tiles[random].click();
+        } else {
+          console.log(tiles[random].textContent);
+          firstStep(e);
+        }
+      } else {
+        helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+      }
+
+    }
     
     function click(e) {
       if (acornModeCode) {

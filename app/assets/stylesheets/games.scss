@@ -10,6 +10,33 @@
   background-color: #f5f5f5;
 }
 
+.top-btn-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.top-left-wrapper {
+  width: 33%;
+}
+
+.top-center-wrapper {
+  width: 34%;
+  text-align: center;
+}
+
+.top-right-wrapper {
+  width: 33%;
+  padding-right: 10px;
+}
+
+#helper-btn {
+  width: 18vmin;
+  height: 30px;
+  font-size: 2vmin;
+  padding: 0;
+  margin-top: 10px;
+}
+
 #restart-game {
   width: 17vmin;
   font-size: 3vmin;

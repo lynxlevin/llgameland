@@ -1,6 +1,14 @@
 <% breadcrumb :show_game, @game %>
 <div class="game-wrapper">
-  <button id="restart-game">RESTART</button>
+  <div class="top-btn-wrapper">
+    <div class="top-left-wrapper"></div>
+    <div class="top-center-wrapper">
+      <button id="restart-game">RESTART</button>
+    </div>
+    <div class="top-right-wrapper">
+      <button id="helper-btn" ></button><p id="helper-btn-message"></p>
+    </div>
+  </div>
   <div class="inputs-wrapper">
     <div class="select" id="select1-div">
       <select id="select1" class="select-tag">
