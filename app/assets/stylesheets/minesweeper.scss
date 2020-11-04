@@ -9,8 +9,13 @@
 }
 
 .tile-broken {
-  background-color: #bf4c22;
+  background-color: #db4343;
   text-align: center;
+  background-image: image-url("games/minesweeper/acorn_trans.png");
+  background-size: 90%;
+  background-position: center;
+  transform: rotateZ(-90deg);
+  font-size: 0px;
 }
 
 .minesweeper-board {
@@ -29,7 +34,8 @@
 
 .acorn-mark {
   background-image: image-url("games/minesweeper/acorn_trans.png");
-  background-size: cover;
+  background-size: 90%;
+  background-position: center;
   background-color: #c49e90;
   font-size: 0px;
 }

@@ -40,7 +40,7 @@ window.addEventListener("load", () => {
         let td = document.createElement("td");
         td.className = "tile-closed";
         td.index = index;
-        // td.id = `tile${index}`
+        td.id = `tile${index}`
         td.style.height = `${63 / select1Value}vmin`;
         td.style.width = `${63 / select1Value}vmin`;
         td.style.fontSize = `${240 / select1}px`;
@@ -126,7 +126,6 @@ window.addEventListener("load", () => {
         if (tiles[random].textContent == "") {
           tiles[random].click();
         } else {
-          console.log(tiles[random].textContent);
           firstStep(e);
         }
       } else {
@@ -216,7 +215,7 @@ window.addEventListener("load", () => {
       acornBtn.className = "acorn-btn game-btn-on";
     }
     function gameOver() {
-      document.getElementById("info1").textContent = "You Broke an Acorn";
+      document.getElementById("info1").textContent = "どんぐり踏んじゃった!!";
       gameInAction = false;
     }
   })

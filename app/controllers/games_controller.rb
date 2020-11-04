@@ -21,7 +21,7 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.where(game_name: params[:game_name])
-    @nums100 = create_array(1, 100)
+    @nums1000 = create_array(1, 1000)
     @nums50 = create_array(1, 50)
   end
 

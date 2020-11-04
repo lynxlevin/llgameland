@@ -8,6 +8,7 @@ window.addEventListener("load", () => {
   document.getElementById("select1-div").className = "select hidden";
   document.getElementById("select2-div").className = "select hidden";
   document.getElementById("game-btns-div").className = "hidden";
+  document.getElementById("helper-btn").className = "hidden";
   const board = document.getElementById("board");
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();

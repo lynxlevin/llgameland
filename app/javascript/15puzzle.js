@@ -8,6 +8,7 @@ window.addEventListener("load", () => {
     document.getElementById("select1").value = 4
     document.getElementById("select2-div").className = "select hidden";
     document.getElementById("game-btns-div").className = "hidden";
+    document.getElementById("helper-btn").className = "hidden";
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
       board.innerHTML = "";
