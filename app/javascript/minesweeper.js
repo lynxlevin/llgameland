@@ -172,6 +172,8 @@ window.addEventListener("load", () => {
       let clicked = e.srcElement;
       if (clicked.className == "tile-open") {
         return null;
+      } else if (clicked.className == "acorn-mark") {
+        clicked.className = "tile-closed";
       } else {
         clicked.className = "acorn-mark";
         return null;
