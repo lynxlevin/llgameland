@@ -16,30 +16,31 @@
 }
 
 .top-left-wrapper {
-  width: 33%;
+  width: 40%;
 }
 
 .top-center-wrapper {
-  width: 34%;
+  width: 20%;
   text-align: center;
 }
 
 .top-right-wrapper {
-  width: 33%;
+  width: 40%;
   padding-right: 10px;
-}
-
-#helper-btn {
-  width: 18vmin;
-  height: 30px;
-  font-size: 2vmin;
-  padding: 0;
-  margin-top: 10px;
 }
 
 #restart-game {
   width: 17vmin;
   font-size: 3vmin;
+  margin-top: 10px;
+  height: 4vmin;
+}
+
+#helper-btn {
+  width: 18vmin;
+  height: 4vmin;
+  font-size: 2vmin;
+  padding: 0;
   margin-top: 10px;
 }
 
