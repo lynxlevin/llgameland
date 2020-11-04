@@ -16,7 +16,6 @@ window.addEventListener("load", () => {
   let select2 = document.getElementById("select2");
   select1.value = 10;
   select2.value = 15;
-  // setInputButton();
   
   gameRestart.addEventListener("click", () => {
     "use strict";
@@ -194,20 +193,6 @@ window.addEventListener("load", () => {
       gameInAction = false;
     }
   })
-  // function setInputButton() {
-  //   document.getElementById("select1-up").addEventListener("click", () => {
-  //     select1.value++;
-  //   });
-  //   document.getElementById("select1-down").addEventListener("click", () => {
-  //     select1.value--;
-  //   });
-  //   document.getElementById("select2-up").addEventListener("click", () => {
-  //     select2.value++;
-  //   });
-  //   document.getElementById("select2-down").addEventListener("click", () => {
-  //     select2.value--;
-  //   });
-  // }
   function checkPath() {
       const path = location.pathname;
       if (path === "/games/minesweeper") {return true};

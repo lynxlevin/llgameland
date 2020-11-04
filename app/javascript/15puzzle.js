@@ -8,7 +8,6 @@ window.addEventListener("load", () => {
     document.getElementById("select1").value = 4
     document.getElementById("select2-div").className = "select hidden";
     document.getElementById("game-btns-div").className = "hidden";
-    // setInputButton();
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
       board.innerHTML = "";
@@ -80,14 +79,6 @@ window.addEventListener("load", () => {
           }
         }
       })
-      // function setInputButton() {
-      //   document.getElementById("select1-up").addEventListener("click", () => {
-      //     select1.value++;
-      //   });
-      //   document.getElementById("select1-down").addEventListener("click", () => {
-      //     select1.value--;
-      //   });
-      // }
       function checkPath() {
         const path = location.pathname;
         if (path === "/games/15puzzle") {return true};
