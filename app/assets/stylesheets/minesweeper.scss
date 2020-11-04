@@ -19,18 +19,18 @@
 
 .plow-btn {
   background-color: white;
-  background-image: url(games/minesweeper/scopp.gif);
+  background-image: image-url("games/minesweeper/scopp.gif");
   background-size: cover;
 }
 
 .acorn-btn {
   background-color: white;
-  background-image: url(games/minesweeper/acorn.png);
+  background-image: image-url("games/minesweeper/acorn.png");
   background-size: cover;
 }
 
 .acorn-mark {
-  background-image: url(games/minesweeper/acorn.png);
+  background-image: image-url("games/minesweeper/acorn.png");
   background-size: cover;
   background-color: #c49e90;
   font-size: 0px;
