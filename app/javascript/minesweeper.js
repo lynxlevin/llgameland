@@ -5,7 +5,7 @@ window.addEventListener("load", () => {
   const gameRestart = document.getElementById("restart-game");
   gameRestart.textContent = "START";
   document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
-  document.getElementById("input2-message").textContent = "※どんぐりの数を指定"
+  document.getElementById("select2-message").textContent = "※どんぐりの数を指定"
   let plowBtn = document.getElementById("game-btn1");
   let acornBtn = document.getElementById("game-btn2");
   plowBtn.className = "plow-btn game-btn-on";
@@ -13,9 +13,9 @@ window.addEventListener("load", () => {
   acornBtn.className = "acorn-btn game-btn-off";
   document.getElementById("game-btn-text2").textContent = "どんぐりマークをつける";
   let select1 = document.getElementById("select1");
-  let input2 = document.getElementById("input2");
+  let select2 = document.getElementById("select2");
   select1.value = 10;
-  input2.value = 15;
+  select2.value = 15;
   // setInputButton();
   
   gameRestart.addEventListener("click", () => {
@@ -59,11 +59,11 @@ window.addEventListener("load", () => {
     function buryAcorn(acorns) {
       let tileIndexes = [];
       let select1Value = Number(document.getElementById("select1").value);
-      let input2Value = Number(document.getElementById("input2").value);
+      let select2Value = Number(document.getElementById("select2").value);
       for (let i = 0 ; i < select1Value * select1Value ; i++) {
         tileIndexes.push(i);
       }
-      for (let i = 0 ; i < input2Value ; i++) {
+      for (let i = 0 ; i < select2Value ; i++) {
         let random = Math.floor(Math.random() * tileIndexes.length);
         let buriedTile = tileIndexes[random];
         tileIndexes.splice(random, 1);
@@ -201,11 +201,11 @@ window.addEventListener("load", () => {
   //   document.getElementById("select1-down").addEventListener("click", () => {
   //     select1.value--;
   //   });
-  //   document.getElementById("input2-up").addEventListener("click", () => {
-  //     input2.value++;
+  //   document.getElementById("select2-up").addEventListener("click", () => {
+  //     select2.value++;
   //   });
-  //   document.getElementById("input2-down").addEventListener("click", () => {
-  //     input2.value--;
+  //   document.getElementById("select2-down").addEventListener("click", () => {
+  //     select2.value--;
   //   });
   // }
   function checkPath() {

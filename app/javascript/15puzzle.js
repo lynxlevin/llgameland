@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
     gameRestart.textContent = "START";
     document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
     document.getElementById("select1").value = 4
-    document.getElementById("input2-div").className = "input hidden";
+    document.getElementById("select2-div").className = "input hidden";
     // setInputButton();
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
