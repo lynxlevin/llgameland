@@ -6,6 +6,12 @@ window.addEventListener("load", () => {
   gameRestart.textContent = "START";
   document.getElementById("input1-message").textContent = "※マス目の数を指定（○×○マス）"
   document.getElementById("input2-message").textContent = "※どんぐりの数を指定"
+  let plowBtn = document.getElementById("game-btn1");
+  let acornBtn = document.getElementById("game-btn2");
+  plowBtn.className = "plow-btn game-btn-on";
+  document.getElementById("game-btn-text1").textContent = "耕す";
+  acornBtn.className = "acorn-btn game-btn-off";
+  document.getElementById("game-btn-text2").textContent = "どんぐりマークをつける";
   let input1 = document.getElementById("input1");
   let input2 = document.getElementById("input2");
   input1.value = 10;
@@ -14,6 +20,11 @@ window.addEventListener("load", () => {
   
   gameRestart.addEventListener("click", () => {
     "use strict";
+    let plowBtn = document.getElementById("game-btn1");
+    let acornBtn = document.getElementById("game-btn2");
+    plowBtn.onclick = plowMode;
+    acornBtn.onclick = acornMode;
+    let acornModeCode = false;
     let gameInAction = true;
     let board = document.getElementById("board");
     let input1Value = Number(document.getElementById("input1").value);
@@ -33,6 +44,7 @@ window.addEventListener("load", () => {
         td.style.width = `${63 / input1Value}vmin`;
         td.style.fontSize = `${240 / input1}px`;
         td.onclick = click;
+        td.oncontextmenu = rightClick;
         tr.appendChild(td);
         tiles.push(td)
       }
@@ -101,6 +113,10 @@ window.addEventListener("load", () => {
     
     
     function click(e) {
+      if (acornModeCode) {
+        rightClick(e);
+        return null;
+      }
       if (!gameInAction) {
         return null;
       }
@@ -109,6 +125,8 @@ window.addEventListener("load", () => {
         clicked.className = "tile-broken";
         gameOver();
       } else if (clicked.className == "tile-open") {
+        return null;
+      } else if (clicked.className == "acorn-mark") {
         return null;
       } else if (clicked.value != null) {
         clicked.className = "tile-open";
@@ -143,6 +161,33 @@ window.addEventListener("load", () => {
       if (Math.floor(i / input1Value) != (input1Value - 1) && Math.floor(i % input1Value) != (input1Value - 1) && tiles[i + input1Value + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
         tiles[i + input1Value + 1].click();
       }
+    }
+    function rightClick(e) {
+      event.preventDefault();
+      if (!acornModeCode) {
+        click(e);
+        return null;
+      }
+      if (!gameInAction) {
+        return null;
+      }
+      let clicked = e.srcElement;
+      if (clicked.className == "tile-open") {
+        return null;
+      } else {
+        clicked.className = "acorn-mark";
+        return null;
+      }
+    }
+    function plowMode(e) {
+      acornModeCode = false;
+      plowBtn.className = "plow-btn game-btn-on";
+      acornBtn.className = "acorn-btn game-btn-off";
+    }
+    function acornMode(e) {
+      acornModeCode = true;
+      plowBtn.className = "plow-btn game-btn-off";
+      acornBtn.className = "acorn-btn game-btn-on";
     }
     function gameOver() {
       document.getElementById("info").textContent = "You Broke an Acorn";

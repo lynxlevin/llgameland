@@ -31,10 +31,35 @@
   height: 40px;
 }
 
-.input-num-button {
+.input-num-btn {
   height: 30px;
   width: 30px;
   margin: 0 5px;
+}
+
+.game-btns {
+  height: 100px;
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-btn-div {
+  text-align: center;
+}
+
+.game-btn-off {
+  height: 60px;
+  width: 60px;
+  border: 1px solid #a1a1dd;
+  margin: 8px 0;
+}
+
+.game-btn-on {
+  height: 75px;
+  width: 75px;
+  border: 2px solid #7171f0;
 }
 
 #board {

@@ -7,6 +7,7 @@ window.addEventListener("load", () => {
     document.getElementById("input1-message").textContent = "※マス目の数を指定（○×○マス）"
     document.getElementById("input1").value = 4
     document.getElementById("input2-div").className = "input hidden";
+    setInputButton();
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
       board.innerHTML = "";
@@ -78,6 +79,14 @@ window.addEventListener("load", () => {
           }
         }
       })
+      function setInputButton() {
+        document.getElementById("input1-up").addEventListener("click", () => {
+          input1.value++;
+        });
+        document.getElementById("input1-down").addEventListener("click", () => {
+          input1.value--;
+        });
+      }
       function checkPath() {
         const path = location.pathname;
         if (path === "/games/15puzzle") {return true};
