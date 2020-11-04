@@ -21,6 +21,8 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.where(game_name: params[:game_name])
+    @nums100 = create_array(1, 100)
+    @nums50 = create_array(1, 50)
   end
 
   def edit
@@ -46,5 +48,13 @@ class GamesController < ApplicationController
 
   def find_game
     @game = Game.find(params[:id])
+  end
+
+  def create_array(i, j)
+    array = []
+    (j - i + 1).times do |k|
+      array << k + i
+    end
+    return array
   end
 end
