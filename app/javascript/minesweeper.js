@@ -121,13 +121,11 @@ window.addEventListener("load", () => {
         return null;
       }
       let clicked = e.srcElement;
-      if (clicked.value == "A") {
+      if (clicked.className == "tile-open" || clicked.className == "acorn-mark") {
+        return null;
+      } else if (clicked.value == "A") {
         clicked.className = "tile-broken";
         gameOver();
-      } else if (clicked.className == "tile-open") {
-        return null;
-      } else if (clicked.className == "acorn-mark") {
-        return null;
       } else if (clicked.value != null) {
         clicked.className = "tile-open";
       } else if (clicked.value == null) {
