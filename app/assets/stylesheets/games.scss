@@ -1,159 +1,284 @@
 // Place all the styles related to the games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.game-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 30px;
-  background-color: #f5f5f5;
-}
-
-.top-btn-wrapper {
-  width: 100%;
-  display: flex;
-}
-
-.top-left-wrapper {
-  width: 27%;
-}
-
-.top-center-wrapper {
-  width: 30%;
-  text-align: center;
-}
-
-.top-right-wrapper {
-  width: 43%;
-  padding-right: 10px;
-}
 
 @media screen and (max-width:767px) {
+  .game-btn-wrapper {
+    height: 100px;
+    // width: 40%;
+    // display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    font-size: 3vmin;
+  }
   #restart-game {
     font-size: 4vmin;
     margin-top: 10px;
     height: 7vmin;
     padding: 0 3vmin;
   }
-}
-
-@media screen and (min-width:768px) {
-  #restart-game {
-    height: 35px;
-    font-size: 23px;
-    margin-top: 10px;
-    padding: 0 20px;
+  .select-tag {
+    font-size: 4vmin;
+    height: 30px;
   }
-}
-
-@media screen and (max-width:767px) {
+  .select-message {
+    font-size: 3vmin;
+  }
   #helper-btn {
     height: 7vmin;
     font-size: 4vmin;
     margin-top: 10px;
     padding: 0 1.5vmin;
   }
+  .game-btn-off {
+    margin: 5px 5px;
+  }
+
+  .game-wrapper {
+    height: calc(100% - 37px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+    // position: relative;
+  }
+  
+  
+  
+  
+  
+  
+  .left-wrapper {
+    width: 250px;
+
+  }
+  
+  .top-btn-wrapper {
+    height: 100px;
+    width: 230px;
+    margin: 8px 0 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #1b1e33b0;
+  }
+  
+  .inputs-wrapper:hover {
+    display: flex;
+  }
+
+  .inputs-wrapper {
+    height: 200px;
+    width: 230px;
+    margin: 8px 0 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #1b1e33b0;
+  }
+  
+  .game-info {
+    height: 80px;
+    width: 230px;
+    // position: absolute;
+    // top: 587px;
+    // left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #1b1e33b0;
+  }
+  
+  .center-wrapper {
+    width: calc(100% - 250px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 2vw;
+  }
+  
+  #timer {
+    font-size: 23px;
+    margin-block-start: 0.2em;
+    margin-block-end: 0;
+  }
+  
+  .difficulty-btns {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin-top: 10px;
+  }
+  
+  .difficulty-btn {
+    height: 30px;
+    padding: 0 7px;
+    display: block;
+  }
+  
+  .select {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    // padding: 8px 0 0 13px;
+  }
+  
+  .game-btn-div {
+    text-align: center;
+  }
+  
+  .game-btn-off {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #a1a1dd;
+  }
+  
+  .game-btn-on {
+    height: 60px;
+    width: 60px;
+    border: 2px solid #7171f0;
+  }
+  
+  #board {
+    // margin: 10px;
+  }
+
+
 }
 
+
 @media screen and (min-width:768px) {
+  .game-btn-wrapper {
+    height: 250px;
+    width: 230px;
+    margin: 8px 0 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #1b1e33b0;
+  }
+  #restart-game {
+    height: 35px;
+    font-size: 23px;
+    padding: 0 20px;
+  }
+  .select-tag {
+    font-size: 16px;
+    height: 40px;
+    width: 70px;
+  }
+  .select-message {
+    font-size: 16px;
+  }
   #helper-btn {
     height: 35px;
     font-size: 16px;
     margin-top: 10px;
     padding: 0 15px;
   }
-}
-
-.inputs-wrapper {
-  display: flex;
-}
-
-.select {
-  display: flex;
-  align-items: center;
-  padding: 8px 0 0 13px;
-}
-
-@media screen and (max-width:767px) {
-  .select-tag {
-    font-size: 4vmin;
-    height: 30px;
+  .game-btn-off {
+    margin: 7px 5px 6px;
   }
-}
 
-@media screen and (min-width:768px) {
-  .select-tag {
-    font-size: 20px;
-    height: 40px;
+
+
+
+
+  
+  .game-wrapper {
+    height: calc(100% - 37px);
+    width: 100%;
+    display: flex;
+    background-color: #f5f5f5;
   }
-}
-
-@media screen and (max-width:767px) {
-  .select-message {
-    font-size: 3vmin;
+  
+  .left-wrapper {
+    width: 250px;
   }
-}
-
-@media screen and (min-width:768px) {
-  .select-message {
-    font-size: 16px;
-  }
-}
-
-@media screen and (max-width:767px) {
-  .game-btns {
+  
+  .top-btn-wrapper {
     height: 100px;
-    width: 40%;
+    width: 230px;
+    margin: 8px 0 8px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    font-size: 3vmin;
+    justify-content: center;
+    border: 1px solid #1b1e33b0;
   }
-}
-
-@media screen and (min-width:768px) {
-  .game-btns {
-    height: 130px;
-    width: 30%;
+  
+  .inputs-wrapper {
+    height: 200px;
+    width: 230px;
+    margin: 8px 0 8px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    border: 1px solid #1b1e33b0;
   }
-}
-
-.game-btn-div {
-  text-align: center;
-}
-
-@media screen and (max-width:767px) {
+  
+  .game-info {
+    height: 80px;
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #1b1e33b0;
+  }
+  
+  .center-wrapper {
+    width: calc(100% - 250px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 2vw;
+  }
+  
+  #timer {
+    font-size: 23px;
+    margin-block-start: 0.2em;
+    margin-block-end: 0;
+  }
+  
+  .difficulty-btns {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin-top: 10px;
+  }
+  
+  .difficulty-btn {
+    height: 30px;
+    padding: 0 7px;
+    display: block;
+  }
+  
+  .select {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .game-btn-div {
+    text-align: center;
+  }
+  
   .game-btn-off {
-    margin: 5px 5px;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #a1a1dd;
   }
-}
-
-@media screen and (min-width:768px) {
-  .game-btn-off {
-    margin: 7px 5px;
+  
+  .game-btn-on {
+    height: 60px;
+    width: 60px;
+    border: 2px solid #7171f0;
   }
-}
-
-.game-btn-off {
-  height: 60px;
-  width: 60px;
-  border: 1px solid #a1a1dd;
-}
-
-.game-btn-on {
-  height: 70px;
-  width: 70px;
-  border: 2px solid #7171f0;
-}
-
-#board {
-  // margin: 10px;
-}
-
-.game-info {
-  height: 27px;
-}
+}  
