@@ -5,12 +5,13 @@
 @media screen and (max-width:767px) {
   .game-btn-wrapper {
     height: 90px;
-    width: 100%;
+    // width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 3vmin;
-    position: relative;
+    margin: 0 auto;
+    // position: relative;
   }
   #restart-game {
     font-size: 4vmin;
@@ -28,12 +29,12 @@
   }
   #helper-btn {
     height: 14vmin;
-    width: 20vmin;
+    width: 25vmin;
     font-size: 4vmin;
     padding: 0 1.5vmin;
     margin-bottom: 24px;
-    position: absolute;
-    right: 6vmin;
+    // position: absolute;
+    // right: 6vmin;
   }
   .game-btn-off {
     margin: 5px 5px;
@@ -127,7 +128,7 @@
   
   .game-btn-div {
     text-align: center;
-    margin: 0 10px;
+    margin: 0 3vw;
   }
   
   .game-btn-off {
