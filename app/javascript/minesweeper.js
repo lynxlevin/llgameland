@@ -41,8 +41,8 @@ window.addEventListener("load", () => {
         td.className = "tile-closed";
         td.index = index;
         td.id = `tile${index}`
-        td.style.height = `${70 / select1Value}vmin`;
-        td.style.width = `${70 / select1Value}vmin`;
+        td.style.height = `${65 / select1Value}vmin`;
+        td.style.width = `${65 / select1Value}vmin`;
         td.style.fontSize = `${240 / select1}px`;
         td.onclick = click;
         // td.oncontextmenu = rightClick;
@@ -53,7 +53,7 @@ window.addEventListener("load", () => {
     }
     let acorns = [];
     let acornCount = select2.value;
-    document.getElementById("info1").textContent = "You've DONE IT!!";
+    document.getElementById("info1").textContent = "";
     let helperMessage = document.getElementById("helper-btn-message");
     helperMessage.textContent = "";
     changeAcornCount();

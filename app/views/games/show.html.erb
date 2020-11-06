@@ -2,16 +2,11 @@
 <div class="game-wrapper">
   <div class="left-wrapper">
     <div class="top-btn-wrapper">
-      <%# <div class="top-left-wrapper"></div> %>
-      <%# <div class="top-center-wrapper"> %>
-        <button id="restart-game">RESTART</button>
-        <p id="timer">00:00:00</p>
-      <%# </div> %>
-      <%# <div class="top-right-wrapper"> %>
-      <%# </div> %>
+      <button id="restart-game">RESTART</button>
+      <p id="timer"></p>
     </div>
     <span class="show-settings">設定を表示する</span>
-    <input type="checkbox" name="checkbox">
+    <input type="checkbox" name="checkbox" id="show-settings-check">
     <div class="inputs-wrapper">
       <div class="difficulty-btns">
         <button class="difficulty-btn" id="difficulty1">EASY</button>
@@ -32,7 +27,7 @@
           <p id="select2-message" class="select-message"></p>
         </div>
       </div>
-      <p id=input-info>どんぐり15個がおすすめ</p>    
+      <p id=input-info>どんぐり○個がおすすめ</p>    
     </div>
     <div class="game-btn-wrapper" id="game-btns-div">
       <button id="helper-btn" ></button><p id="helper-btn-message"></p>
