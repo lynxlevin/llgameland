@@ -38,7 +38,8 @@
 }
 
 .game-image {
-  width: 250px;
+  max-width: 300px;
+  max-height: 300px;
 }
 
 .game-description {
