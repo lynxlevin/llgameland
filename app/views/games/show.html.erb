@@ -1,41 +1,51 @@
 <% breadcrumb :show_game, @game %>
 <div class="game-wrapper">
-  <div class="top-btn-wrapper">
-    <div class="top-left-wrapper"></div>
-    <div class="top-center-wrapper">
+  <div class="left-wrapper">
+    <div class="top-btn-wrapper">
       <button id="restart-game">RESTART</button>
+      <p id="timer"></p>
     </div>
-    <div class="top-right-wrapper">
+    <span class="show-settings">設定を表示する</span>
+    <input type="checkbox" name="checkbox" id="show-settings-check">
+    <div class="inputs-wrapper">
+      <div class="difficulty-btns">
+        <button class="difficulty-btn" id="difficulty1">EASY</button>
+        <button class="difficulty-btn" id="difficulty2">MEDIUM</button>
+        <button class="difficulty-btn" id="difficulty3">HARD</button>
+      </div>
+      <div class="select-boxes">
+        <div class="select" id="select1-div">
+          <select id="select1" class="select-tag">
+            <%= options_for_select(@nums50) %>
+          </select>
+          <p id="select1-message" class="select-message"></p>
+        </div>
+        <div class="select" id="select2-div">
+          <select id="select2" class="select-tag">
+            <%= options_for_select(@nums1000) %>
+          </select>
+          <p id="select2-message" class="select-message"></p>
+        </div>
+      </div>
+      <p id=input-info>どんぐり○個がおすすめ</p>    
+    </div>
+    <div class="game-btn-wrapper" id="game-btns-div">
       <button id="helper-btn" ></button><p id="helper-btn-message"></p>
+      <div class="game-btn-div">
+        <button id="game-btn1"></button>
+        <p class="game-btn-text" id="game-btn-text1"></p>
+      </div>
+      <div class="game-btn-div">
+        <button id="game-btn2"></button>
+        <p class="game-btn-text" id="game-btn-text2"></p>
+      </div>
+    </div>
+    <div class="game-info">
+      <h3 id="info1"></h3>
+      <h3 id="info2"></h3>
     </div>
   </div>
-  <div class="inputs-wrapper">
-    <div class="select" id="select1-div">
-      <select id="select1" class="select-tag">
-        <%= options_for_select(@nums50) %>
-      </select>
-      <p id="select1-message" class="select-message"></p>
-    </div>
-    <div class="select" id="select2-div">
-      <select id="select2" class="select-tag">
-        <%= options_for_select(@nums1000) %>
-      </select>
-      <p id="select2-message" class="select-message"></p>
-    </div>
-  </div>
-  <div class="game-btns" id="game-btns-div">
-    <div class="game-btn-div">
-      <button id="game-btn1"></button>
-      <p class="game-btn-text" id="game-btn-text1"></p>
-    </div>
-    <div class="game-btn-div">
-      <button id="game-btn2"></button>
-      <p class="game-btn-text" id="game-btn-text2"></p>
-    </div>
-  </div>
-  <table id="board"></table>
-  <div class="game-info">
-    <h2 id="info1"></h2>
-    <h2 id="info2"></h2>
+  <div class="center-wrapper">
+    <table id="board"></table>
   </div>
 </div>
