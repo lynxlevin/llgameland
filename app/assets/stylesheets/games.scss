@@ -28,10 +28,10 @@
     font-size: 3vmin;
   }
   #helper-btn {
-    height: 14vmin;
-    width: 25vmin;
-    font-size: 4vmin;
-    padding: 0 1.5vmin;
+    height: min(14vmin, 62px);
+    width: min(25vmin, 100px);
+    font-size: min(4vmin, 19px);
+    padding: 0 min(1.5vmin, 8px);
     margin-bottom: 24px;
     // position: absolute;
     // right: 6vmin;

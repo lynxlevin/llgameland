@@ -30,9 +30,12 @@ window.addEventListener("load", () => {
   select1.addEventListener("input", () => {
     document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
   });
+  let gameTimer = NaN;
   
   gameRestart.addEventListener("click", () => {
     "use strict";
+    clearInterval(gameTimer);
+    document.getElementById("timer").textContent = `00:00:00`;
     helperBtn.className = "";
     helperBtn.onclick = firstStep;
     plowBtn.onclick = plowMode;
@@ -40,6 +43,7 @@ window.addEventListener("load", () => {
     let gameInAction = true;
     let board = document.getElementById("board");
     let select1Value = Number(document.getElementById("select1").value);
+    let firstClick = true;
     gameRestart.textContent = "RESTART";
     board.innerHTML = "";
     board.className = "minesweeper-board";
@@ -144,10 +148,13 @@ window.addEventListener("load", () => {
       } else {
         helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
       }
-
     }
     
     function click(e) {
+      if (firstClick) {
+        startTimer();
+        firstClick = false;
+      }
       if (acornModeCode) {
         rightClick(e);
         return null;
@@ -198,6 +205,10 @@ window.addEventListener("load", () => {
     }
     function rightClick(e) {
       event.preventDefault();
+      if (firstClick) {
+        startTimer();
+        firstClick = false;
+      }
       if (!acornModeCode) {
         click(e);
         return null;
@@ -229,13 +240,28 @@ window.addEventListener("load", () => {
       plowBtn.className = "plow-btn game-btn-off";
       acornBtn.className = "acorn-btn game-btn-on";
     }
+    function startTimer() {
+      let elapsedTime = 0;
+      gameTimer = setInterval(() => {
+        elapsedTime ++;
+        let hour = Math.floor(elapsedTime / 3600);
+        let minute = Math.floor(elapsedTime / 60);
+        let second = Math.floor(elapsedTime % 60);
+        hour = ("0" + hour).slice(-2);
+        minute = ("0" + minute).slice(-2);
+        second = ("0" + second).slice(-2);
+        document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
+      }, 1000);
+    }
     function gameOver() {
+      clearInterval(gameTimer);
       document.getElementById("info1").textContent = "どんぐり踏んじゃった";
       gameInAction = false;
     }
     function judge() {
       let closedTiles = document.getElementsByClassName("tile-closed");
       if (closedTiles.length == 0 && acornCount == 0) {
+        clearInterval(gameTimer);
         document.getElementById("info1").textContent = "You've DONE IT!!";
       }
     }
