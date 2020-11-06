@@ -18,6 +18,7 @@ window.addEventListener("load", () => {
   document.getElementById("game-btn-text1").textContent = "畑を耕す";
   acornBtn.className = "acorn-btn game-btn-off";
   document.getElementById("game-btn-text2").textContent = "印をつける";
+  let acornModeCode = false;
   
   gameRestart.addEventListener("click", () => {
     "use strict";
@@ -25,7 +26,6 @@ window.addEventListener("load", () => {
     helperBtn.onclick = firstStep;
     plowBtn.onclick = plowMode;
     acornBtn.onclick = acornMode;
-    let acornModeCode = false;
     let gameInAction = true;
     let board = document.getElementById("board");
     let select1Value = Number(document.getElementById("select1").value);
@@ -120,6 +120,7 @@ window.addEventListener("load", () => {
     }
     
     function firstStep(e) {
+      plowBtn.click();
       if (board.innerHTML.includes("></td>")) {
         e.srcElement.className = "hidden";
         let random = Math.floor(Math.random() * tiles.length);
