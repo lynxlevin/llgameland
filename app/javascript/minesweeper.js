@@ -132,6 +132,7 @@ window.addEventListener("load", () => {
     
     function firstStep(e) {
       plowBtn.click();
+      document.getElementById("show-settings-check").checked = false;
       if (board.innerHTML.includes("></td>")) {
         e.srcElement.className = "hidden";
         let random = Math.floor(Math.random() * tiles.length);
