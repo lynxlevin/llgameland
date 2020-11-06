@@ -5,10 +5,12 @@
 @media screen and (max-width:7670px) {
   .game-btn-wrapper {
     height: 90px;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     font-size: 3vmin;
+    position: relative;
   }
   #restart-game {
     font-size: 4vmin;
@@ -25,9 +27,13 @@
     font-size: 3vmin;
   }
   #helper-btn {
-    height: 7vmin;
+    height: 14vmin;
+    width: 20vmin;
     font-size: 4vmin;
     padding: 0 1.5vmin;
+    margin-bottom: 24px;
+    position: absolute;
+    right: 6vmin;
   }
   .game-btn-off {
     margin: 5px 5px;
@@ -50,6 +56,7 @@
   
   .left-wrapper {
     // margin: 0 auto;
+    width: 100%;
     text-align: center;
     // display: flex;
     // flex-direction: column;
@@ -66,10 +73,6 @@
     justify-content: center;
     position: relative;
   }
-
-  .show-settings {
-
-  }
   
   input[type="checkbox"] {
     height: 5vmin;
@@ -83,7 +86,7 @@
   .inputs-wrapper {
     // height: 200px;
     width: 230px;
-    // margin: 8px 0 8px;
+    margin: 0 auto;
     display: none;
     flex-direction: column;
     align-items: center;
@@ -115,7 +118,7 @@
     margin-block-end: 0;
     position: absolute;
     top: 4px;
-    right: 0;
+    right: 5vmin;
   }
   
   .difficulty-btns {
@@ -140,6 +143,7 @@
   
   .game-btn-div {
     text-align: center;
+    margin: 0 10px;
   }
   
   .game-btn-off {
