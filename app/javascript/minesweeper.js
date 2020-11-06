@@ -14,11 +14,22 @@ window.addEventListener("load", () => {
   select2.value = 15;
   let plowBtn = document.getElementById("game-btn1");
   let acornBtn = document.getElementById("game-btn2");
+  let easyBtn = document.getElementById("difficulty1");
+  let mediumBtn = document.getElementById("difficulty2");
+  let hardBtn = document.getElementById("difficulty3");
   plowBtn.className = "plow-btn game-btn-on";
   document.getElementById("game-btn-text1").textContent = "畑を耕す";
   acornBtn.className = "acorn-btn game-btn-off";
   document.getElementById("game-btn-text2").textContent = "印をつける";
   let acornModeCode = false;
+  easyBtn.onclick = easyMode;
+  mediumBtn.onclick = mediumMode;
+  hardBtn.onclick = hardMode;
+  let difficulty = "EASY";
+  let difficultyValue = 1.12;
+  select1.addEventListener("input", () => {
+    document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
+  });
   
   gameRestart.addEventListener("click", () => {
     "use strict";
@@ -220,6 +231,27 @@ window.addEventListener("load", () => {
       gameInAction = false;
     }
   })
+  function easyMode() {
+    select1.value = 9;
+    select2.value = 10;
+    difficulty = "EASY";
+    difficultyValue = 1.12;
+    gameRestart.click();
+  }
+  function mediumMode() {
+    select1.value = 16;
+    select2.value = 40;
+    difficulty = "MEDIUM";
+    difficultyValue = 2.5;
+    gameRestart.click();
+  }
+  function hardMode() {
+    select1.value = 22;
+    select2.value = 99;
+    difficulty = "HARD";
+    difficultyValue = 4.5;
+    gameRestart.click();
+  }
   function checkPath() {
       const path = location.pathname;
       if (path === "/games/minesweeper") {return true};
