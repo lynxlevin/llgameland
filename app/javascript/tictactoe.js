@@ -14,6 +14,8 @@ window.addEventListener("load", () => {
   startGame();
   const gameRestart = document.getElementById("restart-game");
   gameRestart.addEventListener("click", startGame);
+  document.getElementById("show-settings").className = "hidden";
+  document.getElementById("show-settings-check").className = "hidden";
 });
 
 function checkPath() {
