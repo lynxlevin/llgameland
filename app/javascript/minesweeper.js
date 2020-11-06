@@ -163,6 +163,7 @@ window.addEventListener("load", () => {
         gameOver();
       } else if (clicked.value != null) {
         clicked.className = "tile-open";
+        judge();
       } else if (clicked.value == null) {
         clicked.className = "tile-open";
         clickBlank(clicked);
@@ -215,6 +216,7 @@ window.addEventListener("load", () => {
         clicked.className = "acorn-mark";
         acornCount--;
         changeAcornCount();
+        judge();
       }
     }
     function plowMode(e) {
@@ -228,8 +230,14 @@ window.addEventListener("load", () => {
       acornBtn.className = "acorn-btn game-btn-on";
     }
     function gameOver() {
-      document.getElementById("info1").textContent = "どんぐり踏んじゃった!!";
+      document.getElementById("info1").textContent = "どんぐり踏んじゃった";
       gameInAction = false;
+    }
+    function judge() {
+      let closedTiles = document.getElementsByClassName("tile-closed");
+      if (closedTiles.length == 0 && acornCount == 0) {
+        document.getElementById("info1").textContent = "You've DONE IT!!";
+      }
     }
   })
   function easyMode() {
