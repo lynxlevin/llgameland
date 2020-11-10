@@ -17,6 +17,7 @@ window.addEventListener("load", () => {
   document.getElementById("show-settings").className = "hidden";
   document.getElementById("show-settings-check").className = "hidden";
   document.getElementById("inputs-wrapper").className = "inputs-wrapper hidden";
+  document.getElementById("input-info").className = "hidden";
 });
 
 function checkPath() {
