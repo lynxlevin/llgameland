@@ -16,6 +16,7 @@ window.addEventListener("load", () => {
   gameRestart.addEventListener("click", startGame);
   document.getElementById("show-settings").className = "hidden";
   document.getElementById("show-settings-check").className = "hidden";
+  document.getElementById("inputs-wrapper").className = "inputs-wrapper hidden";
 });
 
 function checkPath() {
