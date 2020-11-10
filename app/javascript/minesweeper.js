@@ -10,8 +10,8 @@ window.addEventListener("load", () => {
   document.getElementById("select2-message").textContent = "※どんぐりの数";
   let select1 = document.getElementById("select1");
   let select2 = document.getElementById("select2");
-  select1.value = 10;
-  select2.value = 15;
+  select1.value = 9;
+  select2.value = 10;
   let plowBtn = document.getElementById("game-btn1");
   let acornBtn = document.getElementById("game-btn2");
   let easyBtn = document.getElementById("difficulty1");
@@ -68,7 +68,10 @@ window.addEventListener("load", () => {
     }
     let acorns = [];
     let acornCount = select2.value;
-    document.getElementById("info1").textContent = "";
+    let clearMessage = document.getElementById("clear-message");
+    let clearImage = document.getElementById("clear-image");
+    clearMessage.textContent = "";
+    clearImage.className = "hidden";
     let helperMessage = document.getElementById("helper-btn-message");
     helperMessage.textContent = "";
     changeAcornCount();
@@ -255,14 +258,16 @@ window.addEventListener("load", () => {
     }
     function gameOver() {
       clearInterval(gameTimer);
-      document.getElementById("info1").textContent = "どんぐり踏んじゃった";
+      clearMessage.textContent = "どんぐり踏んじゃった";
       gameInAction = false;
     }
     function judge() {
       let closedTiles = document.getElementsByClassName("tile-closed");
       if (closedTiles.length == 0 && acornCount == 0) {
         clearInterval(gameTimer);
-        document.getElementById("info1").textContent = "You've DONE IT!!";
+        clearMessage.textContent = "おめでとう！リスも大喜び";
+        clearImage.className = "squirrel-happy";
+        board.className = "minesweeper-board-clear"
       }
     }
   })
