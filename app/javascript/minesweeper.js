@@ -58,7 +58,7 @@ window.addEventListener("load", () => {
         td.id = `tile${index}`
         td.style.height = `${65 / select1Value}vmin`;
         td.style.width = `${65 / select1Value}vmin`;
-        td.style.fontSize = `${240 / select1}px`;
+        td.style.fontSize = `${35 / select1Value}vmin`;
         td.onclick = click;
         // td.oncontextmenu = rightClick;
         tr.appendChild(td);

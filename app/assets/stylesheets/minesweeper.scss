@@ -1,21 +1,35 @@
 .tile-closed {
   background-color: #c49e90;
-  font-size: 0px;
+	text-indent:200%;
+	white-space:nowrap;
+	overflow:hidden;
 }
 
 .tile-open {
   background-color: #c8785b;
   text-align: center;
+  padding: 0;
 }
 
 .tile-broken {
   background-color: #db4343;
-  text-align: center;
   background-image: image-url("games/minesweeper/acorn_trans.png");
-  background-size: 90%;
+  background-size: 100%;
   background-position: center;
-  transform: rotateZ(-90deg);
-  font-size: 0px;
+  // transform: rotateZ(-90deg);
+  text-indent:200%;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.acorn-mark {
+  background-image: image-url("games/minesweeper/acorn_trans.png");
+  background-size: 100%;
+  background-position: center;
+  background-color: #c49e90;
+  text-indent:200%;
+  white-space:nowrap;
+  overflow:hidden;
 }
 
 .minesweeper-board {
@@ -30,12 +44,4 @@
 .acorn-btn {
   background-image: image-url("games/minesweeper/acorn_trans.png");
   background-size: cover;
-}
-
-.acorn-mark {
-  background-image: image-url("games/minesweeper/acorn_trans.png");
-  background-size: 90%;
-  background-position: center;
-  background-color: #c49e90;
-  font-size: 0px;
 }
