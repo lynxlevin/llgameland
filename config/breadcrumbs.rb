@@ -17,6 +17,11 @@ crumb :show_game do |game|
   parent :root
 end
 
+crumb :about do
+  link "ABOUT", about_path
+  parent :root
+end
+
 crumb :images do
   link "images", images_path
   parent :root

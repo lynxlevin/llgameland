@@ -90,6 +90,10 @@
     height: 60px;
     width: 230px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .center-wrapper {

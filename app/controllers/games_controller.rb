@@ -36,6 +36,9 @@ class GamesController < ApplicationController
     end
   end
 
+  def about
+  end
+
   private
 
   def redirect_ileligible_user

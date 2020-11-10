@@ -4,7 +4,7 @@
     <div class="game-image-div">
       <%= image_tag game.image_url, class:"game-image" %><br />
     </div>
-    <p class="game-description"><%= game.description %></p>
+    <%= simple_format(game.description, class:"game-description")%>
     <% if user_signed_in? && current_user.id == 1 %>
       <%= link_to "編集", edit_game_path(game.id) %><br />
     <% end %>
