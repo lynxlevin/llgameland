@@ -71,7 +71,7 @@ window.addEventListener("load", () => {
     let clearMessage = document.getElementById("clear-message");
     let clearImage = document.getElementById("clear-image");
     clearMessage.textContent = "";
-    clearImage.className = "hidden";
+    clearImage.className = "hidden squirrel-happy";
     let helperMessage = document.getElementById("helper-btn-message");
     helperMessage.textContent = "";
     changeAcornCount();
