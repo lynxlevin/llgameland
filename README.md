@@ -43,12 +43,12 @@ GIFつき
 - has_many :favorite_games
 
 ## games テーブル
-| Columns      | Type   | Options     |
-| ------------ | ------ | ----------- |
-| display_name | string | null: false |
-| game_name    | string | null: false |
-| description  | text   |             |
-| image_url    | string |             |
+| Columns      | Type   | Options                       |
+| ------------ | ------ | ----------------------------- |
+| display_name | string | null: false, uniqueness: true |
+| game_name    | string | null: false, uniqueness: true |
+| description  | text   |                               |
+| image_url    | string |                               |
 
 ### Association
 - has_many :game_scores

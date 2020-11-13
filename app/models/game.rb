@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
-  validates :display_name, presence: true
-  validates :game_name,    presence: true
+  with_options presence: true, uniqueness: { case_sensitive: true } do
+    validates :display_name
+    validates :game_name
+  end 
 end
