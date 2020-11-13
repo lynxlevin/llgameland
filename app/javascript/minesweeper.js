@@ -81,7 +81,7 @@ window.addEventListener("load", () => {
     showAcorns(tiles, acorns);
     
     function changeAcornCount() {
-      document.getElementById("info2").textContent = `残りのどんぐりの数 ${acornCount}`;
+      document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
     }
     function buryAcorn(acorns) {
       let tileIndexes = [];

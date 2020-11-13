@@ -39,7 +39,7 @@ GIFつき
 | password | string | null: false                   |
 
 ### Association
-- has_many :game_scores
+- has_many :clear-times
 - has_many :favorite_games
 
 ## games テーブル
@@ -51,15 +51,17 @@ GIFつき
 | image_url    | string |                               |
 
 ### Association
-- has_many :game_scores
+- has_many :clear-times
 - has_many :favorite_games
 
-## game_scores テーブル
-| Columns | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| user    | references | null: false, foreign_key: true |
-| game    | references | null: false, foreign_key: true |
-| score   | integer    | null: false                    |
+## clear_times テーブル
+| Columns       | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| user          | references | null: false, foreign_key: true |
+| game          | references | null: false, foreign_key: true |
+| select1_value | integer    |                                |
+| select2_value | integer    |                                |
+| clear_time    | integer    | null: false                    |
 
 ### Association
 - belongs_to :user
