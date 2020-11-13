@@ -10,4 +10,4 @@ Game.create(display_name: 'まるばつゲーム', game_name: 'tictactoe', descr
 Game.create(display_name: '15 Puzzle', game_name: '15puzzle', description: 'バラバラになった数字を、図のように順番に並べ替えてください。', image_url: 'http://localhost:3000/assets/215puzzle-3736d7dc552ff4897ccf29f392826e9e3468b8b0b01835f1ecc3ae8de8f0c7a1.png',)
 Game.create(display_name: 'どんぐり探し', game_name: 'minesweeper', description: 'マインスイーパ風ゲーム
 あなたの畑にリスがどんぐりを埋めてしまったようです。
-優しいあなたは、どんぐりのあるところは避けて、畑を耕してください。', image_url: 'http://localhost:3000/assets/3minesweeper-84d270ae146dc590f48a399dfb267ccdebe212361c28d1ab13aad5f9ebd9fd5d.png',)
+優しいあなたは、どんぐりのあるところは避けて、畑を耕してください。', image_url: 'http://localhost:3000/assets/3minesweeper-ee38ced76ce37cdaf9f8c15b3cac024f4781b86aa85e1e84ddf441fe3a387f83.png',)
