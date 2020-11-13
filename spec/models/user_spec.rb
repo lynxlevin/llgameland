@@ -11,6 +11,10 @@ RSpec.describe User, type: :model do
         expect(@user).to be_valid
       end
 
+      it '登録したユーザーはデフォルトでadminがfalseになっていること' do
+        expect(@user.admin).to match(false)
+      end
+
       it 'emailがなくても登録できること' do
         @user.email = nil
         expect(@user).to be_valid
