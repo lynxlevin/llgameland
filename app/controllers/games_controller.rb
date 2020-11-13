@@ -12,7 +12,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-    if current_user.id == 1 && @game.save
+    if current_user.admin && @game.save
       redirect_to root_path
     else
       render :new
@@ -42,7 +42,7 @@ class GamesController < ApplicationController
   private
 
   def redirect_ileligible_user
-    redirect_to root_path unless user_signed_in? && current_user.id == 1
+    redirect_to root_path unless user_signed_in? && current_user.admin
   end
 
   def game_params
