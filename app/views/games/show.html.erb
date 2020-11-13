@@ -1,19 +1,19 @@
 <% breadcrumb :show_game, @game %>
-<div class="game-wrapper">
-  <div class="left-wrapper">
-    <div class="top-btn-wrapper">
+<div id="game-wrapper">
+  <div id="left-wrapper">
+    <div id="top-btn-wrapper">
       <button id="restart-game">RESTART</button>
       <p id="timer">00:00:00</p>
     </div>
     <span id="show-settings">設定を表示する</span>
     <input type="checkbox" name="checkbox" id="show-settings-check">
-    <div class="inputs-wrapper" id="inputs-wrapper">
-      <div id="difficulty-btns">
+    <div id="inputs-wrapper">
+      <div id="difficulty-btns-wrapper">
         <button class="difficulty-btn" id="difficulty1">EASY</button>
         <button class="difficulty-btn" id="difficulty2">MEDIUM</button>
         <button class="difficulty-btn" id="difficulty3">HARD</button>
       </div>
-      <div class="select-boxes">
+      <div id="select-boxes-wrapper">
         <div class="select" id="select1-div">
           <select id="select1" class="select-tag">
             <%= options_for_select(@nums50) %>
@@ -29,7 +29,7 @@
       </div>
       <p id="input-info"></p>    
     </div>
-    <div class="game-btn-wrapper" id="game-btns-div">
+    <div id="game-btn-wrapper">
       <button id="helper-btn" ></button><p id="helper-btn-message"></p>
       <div class="game-btn-div">
         <button id="game-btn1"></button>
@@ -40,12 +40,12 @@
         <p class="game-btn-text" id="game-btn-text2"></p>
       </div>
     </div>
-    <div class="game-info">
+    <div id="game-info-wrapper">
       <h3 id="info1"></h3>
       <h3 id="info2"></h3>
     </div>
   </div>
-  <div class="center-wrapper">
+  <div id="center-wrapper">
     <div class="board-div">
       <table id="board"></table>
       <div id="clear-image"></div>
