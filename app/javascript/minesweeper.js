@@ -2,6 +2,7 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   }
+  revealContents();
   const gameRestart = document.getElementById("restart-game");
   gameRestart.textContent = "START";
   let helperBtn = document.getElementById("helper-btn");
@@ -295,5 +296,14 @@ window.addEventListener("load", () => {
   function checkPath() {
       const path = location.pathname;
       if (path === "/games/minesweeper") {return true};
+  }
+  function revealContents() {
+    document.getElementById("top-btn-wrapper").style.display = "";
+    document.getElementById("inputs-wrapper").style.display = "";
+    document.getElementById("difficulty-btns-wrapper").style.display = "";
+    document.getElementById("select-boxes-wrapper").style.display = "";
+    document.getElementById("game-btn-wrapper").style.display = "";
+    document.getElementById("game-info-wrapper").style.display = "";
+    document.getElementById("clear-image").style.display = "";
   }
 });

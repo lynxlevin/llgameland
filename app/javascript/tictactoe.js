@@ -5,20 +5,13 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   };
-  document.getElementById("select1-div").className = "select hidden";
-  document.getElementById("select2-div").className = "select hidden";
-  document.getElementById("game-btn-wrapper").className = "hidden";
-  document.getElementById("helper-btn").className = "hidden";
+  revealContents();
+  hideContents();
   const board = document.getElementById("board");
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();
   const gameRestart = document.getElementById("restart-game");
   gameRestart.addEventListener("click", startGame);
-  document.getElementById("show-settings").className = "hidden";
-  document.getElementById("show-settings-check").className = "hidden";
-  document.getElementById("inputs-wrapper").className = "inputs-wrapper hidden";
-  document.getElementById("input-info").className = "hidden";
-  document.getElementById("clear-image").className = "hidden";
 });
 
 function checkPath() {
@@ -83,5 +76,14 @@ function checkWinner(e) {
 function endGame(e) {
   document.getElementById("info1").textContent = e + " Wins!!";
   gameInAction = false;
+}
+function revealContents() {
+  document.getElementById("top-btn-wrapper").style.display = "";
+  document.getElementById("game-info-wrapper").style.display = "";
+}
+function hideContents() {
+  document.getElementById("show-settings").className = "hidden";
+  document.getElementById("show-settings-check").className = "hidden";
+  document.getElementById("timer").className = "hidden";
 }
   

@@ -2,19 +2,13 @@ window.addEventListener("load", () => {
     if (!checkPath()) {
       return null;
     }
+    revealContents();
+    hideContents();
     const gameRestart = document.getElementById("restart-game");
     gameRestart.textContent = "START";
     document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
     document.getElementById("select1").value = 4
-    document.getElementById("select2-div").className = "select hidden";
-    document.getElementById("game-btn-wrapper").className = "hidden";
-    document.getElementById("helper-btn").className = "hidden";
-    document.getElementById("difficulty1").className = "hidden";
-    document.getElementById("difficulty2").className = "hidden";
-    document.getElementById("difficulty3").className = "hidden";
-    document.getElementById("input-info").className = "hidden";
-    document.getElementById("input-info").className = "hidden";
-    document.getElementById("clear-image").className = "hidden";
+
     document.getElementById("inputs-wrapper").style.height = "65px";
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
@@ -90,6 +84,16 @@ window.addEventListener("load", () => {
       function checkPath() {
         const path = location.pathname;
         if (path === "/games/15puzzle") {return true};
+      }
+      function revealContents() {
+        document.getElementById("top-btn-wrapper").style.display = "";
+        document.getElementById("inputs-wrapper").style.display = "";
+        document.getElementById("select-boxes-wrapper").style.display = "";
+        document.getElementById("game-info-wrapper").style.display = "";
+      }
+      function hideContents() {
+        document.getElementById("select2-div").style.display = "none";
+        document.getElementById("input-info").style.display = "none";
       }
     });
     
