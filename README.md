@@ -116,3 +116,7 @@ rails db:migrate
 ```
 
 7. データベースにデータを登録します。
+
+```
+rails db:seed
+```

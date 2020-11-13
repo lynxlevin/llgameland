@@ -18,6 +18,7 @@ window.addEventListener("load", () => {
   document.getElementById("show-settings-check").className = "hidden";
   document.getElementById("inputs-wrapper").className = "inputs-wrapper hidden";
   document.getElementById("input-info").className = "hidden";
+  document.getElementById("clear-image").className = "hidden";
 });
 
 function checkPath() {

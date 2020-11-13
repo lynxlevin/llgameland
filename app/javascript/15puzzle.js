@@ -14,6 +14,7 @@ window.addEventListener("load", () => {
     document.getElementById("difficulty3").className = "hidden";
     document.getElementById("input-info").className = "hidden";
     document.getElementById("input-info").className = "hidden";
+    document.getElementById("clear-image").className = "hidden";
     document.getElementById("inputs-wrapper").style.height = "65px";
     gameRestart.addEventListener("click", () => {
       let board = document.getElementById("board");
