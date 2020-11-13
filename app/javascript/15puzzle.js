@@ -11,6 +11,7 @@ window.addEventListener("load", () => {
 
     document.getElementById("inputs-wrapper").style.height = "65px";
     gameRestart.addEventListener("click", () => {
+      gameRestart.textContent = "RESTART";
       let board = document.getElementById("board");
       board.innerHTML = "";
       let select1 = Number(document.getElementById("select1").value);

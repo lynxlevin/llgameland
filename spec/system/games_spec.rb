@@ -10,7 +10,6 @@ RSpec.describe "Games", type: :system do
     it 'userのadminがtrueであれば、ゲーム登録ページに遷移することができ、新規登録ができ、
         登録したゲームをクリックするとgame_nameのついたアドレスに遷移できること' do
       visit root_path
-      binding.pry
       expect(page).to have_content('ログイン')
       click_on('ログイン')
       
@@ -57,5 +56,95 @@ RSpec.describe "Games", type: :system do
       expect(page).to have_no_content('ゲーム画像')
     end
   end
+
+  context '作成したゲームに必要な表示があり、不要な表示が隠れていること' do
+    it 'まるばつゲームを遊べること' do
+      @game1 = FactoryBot.create(:game_tictactoe)
+      visit root_path
+      expect(page).to have_content(@game1.display_name)
+      expect(page).to have_content(@game1.description)
+      click_on(@game1.display_name)
+
+      expect(page).to have_content('RESTART')
+      expect(page).to have_no_selector('#timer')
+      expect(page).to have_no_content('EASY')
+      expect(page).to have_no_content('MEDIUM')
+      expect(page).to have_no_content('HARD')
+      expect(page).to have_no_selector('#select1')
+      expect(page).to have_no_selector('#select2')
+      expect(page).to have_no_selector('#helper-btn')
+      expect(page).to have_no_selector('#game-btn1')
+      expect(page).to have_no_selector('#game-btn2')
+      expect(page).to have_selector('#game-info-wrapper')
+      expect(page).to have_no_selector('#clear-image')
+      expect(page).to have_selector('#c00')
+    end
+
+    it 'まるばつゲームを遊べること' do
+      @game2 = FactoryBot.create(:game_15puzzle)
+      visit root_path
+      expect(page).to have_content(@game2.display_name)
+      expect(page).to have_content(@game2.description)
+      click_on(@game2.display_name)
+
+      expect(page).to have_content('START')
+      expect(page).to have_no_content('RESTART')
+      expect(page).to have_selector('#timer')
+      expect(page).to have_no_content('EASY')
+      expect(page).to have_no_content('MEDIUM')
+      expect(page).to have_no_content('HARD')
+      expect(page).to have_selector('#select1')
+      expect(page).to have_no_selector('#select2')
+      expect(page).to have_no_selector('#helper-btn')
+      expect(page).to have_no_selector('#game-btn1')
+      expect(page).to have_no_selector('#game-btn2')
+      expect(page).to have_selector('#game-info-wrapper')
+      expect(page).to have_no_selector('#clear-image')
+      expect(page).to have_no_selector('#tile1')
+
+      click_on('START')
+      expect(page).to have_content('RESTART')
+      expect(page).to have_selector('#tile1')
+    end
+
+    it 'どんぐり探しゲームを遊べること' do
+      @game3 = FactoryBot.create(:game_minesweeper)
+      visit root_path
+      expect(page).to have_content(@game3.display_name)
+      click_on(@game3.display_name)
+      
+      expect(page).to have_content('START')
+      expect(page).to have_no_content('RESTART')
+      expect(page).to have_selector('#timer')
+      expect(page).to have_content('EASY')
+      expect(page).to have_content('MEDIUM')
+      expect(page).to have_content('HARD')
+      expect(page).to have_selector('#select1')
+      expect(page).to have_selector('#select2')
+      expect(page).to have_selector('#helper-btn')
+      expect(page).to have_selector('#game-btn1')
+      expect(page).to have_selector('#game-btn2')
+      expect(page).to have_selector('#game-info-wrapper')
+      expect(page).to have_selector('#clear-image')
+      expect(page).to have_no_selector('#tile0')
+
+      click_on('START')
+      expect(page).to have_content('RESTART')
+      expect(page).to have_selector('.tile-closed')
+      expect(page).to have_no_selector('.tile-open')
+      expect(page).to have_selector('#helper-btn')
+      expect(page).to have_no_selector('#clear-image')
+      expect(page).to have_selector('#tile0')
+
+      click_on('はじめの第一歩')
+      expect(page).to have_selector('.tile-open')
+      expect(page).to have_no_selector('#helper-btn')
+
+      click_on('RESTART')
+      expect(page).to have_no_selector('.tile-open')
+      expect(page).to have_selector('#helper-btn')
+    end
+  end
+
 
 end
