@@ -4,15 +4,17 @@ window.addEventListener("load", () => {
   }
   revealContents();
   hideContents();
-  const gameRestart = document.getElementById("restart-game");
-  gameRestart.textContent = "START";
+  const gameRestartBtn = document.getElementById("restart-game");
   document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
   document.getElementById("select1").value = 4
 
   document.getElementById("inputs-wrapper").style.height = "65px";
   let gameTimer = NaN;
-  gameRestart.addEventListener("click", () => {
-    gameRestart.textContent = "RESTART";
+  gameRestart();
+  gameRestartBtn.addEventListener("click", gameRestart);
+
+  function gameRestart () {
+    gameRestartBtn.textContent = "RESTART";
     clearInterval(gameTimer);
     document.getElementById("timer").textContent = `00:00:00`;
     let firstClick = false;
@@ -91,7 +93,7 @@ window.addEventListener("load", () => {
         document.getElementById("info1").textContent = " You've DONE IT!!";
       }
     }
-  })
+  }
   function startTimer() {
     let elapsedTime = 0;
     gameTimer = setInterval(() => {
