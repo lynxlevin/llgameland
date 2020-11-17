@@ -9,16 +9,16 @@ window.addEventListener("load", () => {
   hideContents();
   const board = document.getElementById("board");
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
-  gameRestart();
-  const gameRestartBtn = document.getElementById("restart-game");
-  gameRestartBtn.addEventListener("click", gameRestart);
+  startGame();
+  const gameRestart = document.getElementById("restart-game");
+  gameRestart.addEventListener("click", startGame);
 });
 
 function checkPath() {
   const path = location.pathname;
   if (path === "/games/tictactoe") {return true};
 }
-function gameRestart() {
+function startGame() {
   const board = document.getElementById("board");
   board.innerHTML = "";
   gameInAction = true;

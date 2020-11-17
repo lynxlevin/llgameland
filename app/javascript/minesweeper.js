@@ -2,10 +2,9 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   }
-  "use strict";
   revealContents();
-  const gameRestartBtn = document.getElementById("restart-game");
-  gameRestartBtn.textContent = "START";
+  const gameRestart = document.getElementById("restart-game");
+  gameRestart.textContent = "START";
   let helperBtn = document.getElementById("helper-btn");
   helperBtn.textContent = "はじめの第一歩"
   document.getElementById("select1-message").textContent = "※1辺のマスの数";
@@ -33,11 +32,9 @@ window.addEventListener("load", () => {
     document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
   });
   let gameTimer = NaN;
-  gameRestart();
-
-  gameRestartBtn.addEventListener("click", restartGame);
   
-  function gameRestart() {
+  gameRestart.addEventListener("click", () => {
+    "use strict";
     clearInterval(gameTimer);
     document.getElementById("timer").textContent = `00:00:00`;
     helperBtn.className = "";
@@ -48,7 +45,7 @@ window.addEventListener("load", () => {
     let board = document.getElementById("board");
     let select1Value = Number(document.getElementById("select1").value);
     let firstClick = true;
-    gameRestartBtn.textContent = "RESTART";
+    gameRestart.textContent = "RESTART";
     board.innerHTML = "";
     board.className = "minesweeper-board";
     let tiles = [];
@@ -274,27 +271,27 @@ window.addEventListener("load", () => {
         board.className = "minesweeper-board-clear"
       }
     }
-  }
+  })
   function easyMode() {
     select1.value = 9;
     select2.value = 10;
     difficulty = "EASY";
     difficultyValue = 1.12;
-    gameRestartBtn.click();
+    gameRestart.click();
   }
   function mediumMode() {
     select1.value = 16;
     select2.value = 40;
     difficulty = "MEDIUM";
     difficultyValue = 2.5;
-    gameRestartBtn.click();
+    gameRestart.click();
   }
   function hardMode() {
     select1.value = 22;
     select2.value = 99;
     difficulty = "HARD";
     difficultyValue = 4.5;
-    gameRestartBtn.click();
+    gameRestart.click();
   }
   function checkPath() {
       const path = location.pathname;
