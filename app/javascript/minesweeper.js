@@ -36,17 +36,15 @@ window.addEventListener("load", () => {
     prepareContents();
     prepareBoard(tiles);
     clearInterval(gameTimer);
+    changeAcornCount();
     buryAcorns(acorns);
     countNearbyAcorns(tiles, acorns);
     helperBtn.onclick = firstStep;
-    plowBtn.onclick = plowMode;
-    acornBtn.onclick = acornMode;
     
     function prepareContents() {
       document.getElementById("timer").textContent = `00:00:00`;
       helperBtn.className = "";
       helperMessage.textContent = "";
-      document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
       clearMessage.textContent = "";
       clearImage.className = "hidden squirrel-happy";
     }
@@ -71,6 +69,9 @@ window.addEventListener("load", () => {
         }
         board.appendChild(tr);
       }
+    }
+    function changeAcornCount() {
+      document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
     }
     function buryAcorns(acorns) {
       let tileIndexes = [];
@@ -218,17 +219,6 @@ window.addEventListener("load", () => {
         judge();
       }
     }
-
-    function plowMode(e) {
-      acornModeCode = false;
-      plowBtn.className = "plow-btn game-btn-on";
-      acornBtn.className = "acorn-btn game-btn-off";
-    }
-    function acornMode(e) {
-      acornModeCode = true;
-      plowBtn.className = "plow-btn game-btn-off";
-      acornBtn.className = "acorn-btn game-btn-on";
-    }
     function startTimer() {
       let elapsedTime = 0;
       gameTimer = setInterval(() => {
@@ -272,6 +262,8 @@ window.addEventListener("load", () => {
     easyBtn.onclick = easyMode;
     mediumBtn.onclick = mediumMode;
     hardBtn.onclick = hardMode;
+    plowBtn.onclick = plowMode;
+    acornBtn.onclick = acornMode;
     select1.addEventListener("input", () => {
       document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
     });
@@ -296,6 +288,16 @@ window.addEventListener("load", () => {
     difficulty = "HARD";
     difficultyValue = 4.5;
     startGame();
+  }
+  function plowMode(e) {
+    acornModeCode = false;
+    plowBtn.className = "plow-btn game-btn-on";
+    acornBtn.className = "acorn-btn game-btn-off";
+  }
+  function acornMode(e) {
+    acornModeCode = true;
+    plowBtn.className = "plow-btn game-btn-off";
+    acornBtn.className = "acorn-btn game-btn-on";
   }
   function checkPath() {
       const path = location.pathname;
