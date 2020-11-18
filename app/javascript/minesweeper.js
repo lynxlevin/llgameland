@@ -98,13 +98,12 @@ window.addEventListener("load", () => {
         acorns.push(buriedTile);
       }
       acorns.forEach((acorn) => {
-        tiles[acorn].textContent = "A";
         tiles[acorn].value = "A"
       });
     }
     function countNearbyAcorns(tiles, acorns) {
       tiles.forEach((tile, i) => {
-        if (tile.textContent == "A") {
+        if (tile.value == "A") {
           return null;
         }
         let acornCount = 0;
@@ -141,10 +140,10 @@ window.addEventListener("load", () => {
     function firstStep(e) {
       plowBtn.click();
       document.getElementById("show-settings-check").checked = false;
-      if (board.innerHTML.includes("></td>")) {
+      if (tiles.find(tile => tile.value == null) != null) {
         e.srcElement.className = "hidden";
         let random = Math.floor(Math.random() * tiles.length);
-        if (tiles[random].textContent == "") {
+        if (tiles[random].value == null) {
           tiles[random].click();
         } else {
           firstStep(e);
