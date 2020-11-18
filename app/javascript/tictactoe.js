@@ -5,19 +5,15 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   };
+  let board = document.getElementById("board");
+  let gameRestartBtn = document.getElementById("restart-game");
   revealContents();
   hideContents();
-  const board = document.getElementById("board");
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();
-  const gameRestart = document.getElementById("restart-game");
-  gameRestart.addEventListener("click", startGame);
+  gameRestartBtn.onclick = startGame;
 });
 
-function checkPath() {
-  const path = location.pathname;
-  if (path === "/games/tictactoe") {return true};
-}
 function startGame() {
   const board = document.getElementById("board");
   board.innerHTML = "";
@@ -76,6 +72,10 @@ function checkWinner(e) {
 function endGame(e) {
   document.getElementById("info1").textContent = e + " Wins!!";
   gameInAction = false;
+}
+function checkPath() {
+  const path = location.pathname;
+  if (path === "/games/tictactoe") {return true};
 }
 function revealContents() {
   document.getElementById("top-btn-wrapper").style.display = "";

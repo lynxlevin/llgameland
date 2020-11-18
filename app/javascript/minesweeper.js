@@ -36,13 +36,13 @@ window.addEventListener("load", () => {
     document.getElementById("show-settings-check").checked = false;
     prepareContents();
     prepareBoard(tiles);
-    clearInterval(gameTimer);
     changeAcornCount();
     buryAcorns(acorns);
     countNearbyAcorns(tiles, acorns);
     helperBtn.onclick = firstStep;
     
     function prepareContents() {
+      clearInterval(gameTimer);
       document.getElementById("timer").textContent = `00:00:00`;
       helperBtn.className = "";
       helperMessage.textContent = "";

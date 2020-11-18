@@ -2,48 +2,54 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   }
+  "use strict";
   revealContents();
   hideContents();
-  const gameRestart = document.getElementById("restart-game");
-  gameRestart.textContent = "START";
-  document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
-  document.getElementById("select1").value = 4
-
-  document.getElementById("inputs-wrapper").style.height = "65px";
+  let gameRestartBtn = document.getElementById("restart-game");
+  let board = document.getElementById("board");
   let gameTimer = NaN;
-  gameRestart.addEventListener("click", () => {
-    gameRestart.textContent = "RESTART";
-    clearInterval(gameTimer);
-    document.getElementById("timer").textContent = `00:00:00`;
-    let firstClick = false;
-    let board = document.getElementById("board");
-    board.innerHTML = "";
+  prepareGame();
+  startGame();
+  gameRestartBtn.onclick = startGame;
+
+  function startGame() {
     let select1 = Number(document.getElementById("select1").value);
-    "use strict";
+    let firstClick = false;
     let tiles = [];
-    for (let i = 0 ; i < select1 ; i++) {
-      let tr = document.createElement("tr");
-      for (let j = 0 ; j < select1 ; j++) {
-        let index = i * select1 + j
-        let td = document.createElement("td");
-        td.className = "tile";
-        td.index = index;
-        td.style.height = `${75 / select1}vmin`;
-        td.style.width = `${75 / select1}vmin`;
-        td.style.fontSize = `${120 / select1}px`;
-        td.id = "tile" + (index + 1);
-        td.textContent = index == (select1 * select1 - 1) ? "" : (index + 1);
-        td.onclick = click;
-        tr.appendChild(td);
-        tiles.push(td)
+    prepareBoard(tiles);
+    prepareContents();
+
+    function prepareBoard(tiles) {
+      board.innerHTML = "";
+      for (let i = 0 ; i < select1 ; i++) {
+        let tr = document.createElement("tr");
+        for (let j = 0 ; j < select1 ; j++) {
+          let index = i * select1 + j
+          let td = document.createElement("td");
+          td.className = "tile";
+          td.index = index;
+          td.style.height = `${75 / select1}vmin`;
+          td.style.width = `${75 / select1}vmin`;
+          td.style.fontSize = `${120 / select1}px`;
+          td.id = "tile" + (index + 1);
+          td.textContent = index == (select1 * select1 - 1) ? "" : (index + 1);
+          td.onclick = click;
+          tr.appendChild(td);
+          tiles.push(td)
+        }
+        board.appendChild(tr);
       }
-      board.appendChild(tr);
+      for (let i = 0 ; i < 1000 + (select1 * select1 * select1) ; i++) {
+        click({ srcElement: {index: Math.floor(Math.random() * (select1 * select1))}})
+      }
+      firstClick = true;
     }
-    for (let i = 0 ; i < 1000 + (select1 * select1 * select1) ; i++) {
-      click({ srcElement: {index: Math.floor(Math.random() * (select1 * select1))}})
+    function prepareContents() {
+      gameRestartBtn.textContent = "RESTART";
+      clearInterval(gameTimer);
+      document.getElementById("timer").textContent = `00:00:00`;
+      document.getElementById("info1").textContent = "";
     }
-    firstClick = true;
-    document.getElementById("info1").textContent = "";
     function click(e) {
       if (firstClick) {
         startTimer();
@@ -91,7 +97,7 @@ window.addEventListener("load", () => {
         document.getElementById("info1").textContent = " You've DONE IT!!";
       }
     }
-  })
+  }
   function startTimer() {
     let elapsedTime = 0;
     gameTimer = setInterval(() => {
@@ -104,6 +110,12 @@ window.addEventListener("load", () => {
       second = ("0" + second).slice(-2);
       document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
     }, 1000);
+  }
+  function prepareGame() {
+    gameRestartBtn.textContent = "START";
+    document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
+    document.getElementById("select1").value = 4
+    document.getElementById("inputs-wrapper").style.height = "65px";
   }
   function checkPath() {
     const path = location.pathname;
