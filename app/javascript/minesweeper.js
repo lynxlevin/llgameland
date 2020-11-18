@@ -64,7 +64,6 @@ window.addEventListener("load", () => {
           td.style.width = `${65 / select1Value}vmin`;
           td.style.fontSize = `${35 / select1Value}vmin`;
           td.onclick = click;
-          // td.oncontextmenu = rightClick;
           tr.appendChild(td);
           tiles.push(td)
         }
