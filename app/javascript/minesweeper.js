@@ -2,7 +2,7 @@ window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   }
-  revealContents();
+  "use strict";
   let gameRestart = document.getElementById("restart-game");
   let helperBtn = document.getElementById("helper-btn");
   let select1 = document.getElementById("select1");
@@ -12,81 +12,69 @@ window.addEventListener("load", () => {
   let easyBtn = document.getElementById("difficulty1");
   let mediumBtn = document.getElementById("difficulty2");
   let hardBtn = document.getElementById("difficulty3");
-  prepareGame();
-  function prepareGame() {
-    gameRestart.textContent = "START";
-    helperBtn.textContent = "はじめの第一歩"
-    document.getElementById("select1-message").textContent = "※1辺のマスの数";
-    document.getElementById("select2-message").textContent = "※どんぐりの数";
-    select1.value = 9;
-    select2.value = 10;
-    plowBtn.className = "plow-btn game-btn-on";
-    document.getElementById("game-btn-text1").textContent = "畑を耕す";
-    acornBtn.className = "acorn-btn game-btn-off";
-    document.getElementById("game-btn-text2").textContent = "印をつける";
-    easyBtn.onclick = easyMode;
-    mediumBtn.onclick = mediumMode;
-    hardBtn.onclick = hardMode;
-    select1.addEventListener("input", () => {
-      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
-    });
-  }
   let difficulty = "EASY";
   let difficultyValue = 1.12;
   let acornModeCode = false;
   let gameTimer = NaN;
+  revealContents();
+  prepareGame();
   
   gameRestart.addEventListener("click", () => {
-    "use strict";
-    clearInterval(gameTimer);
-    document.getElementById("timer").textContent = `00:00:00`;
-    helperBtn.className = "";
-    helperBtn.onclick = firstStep;
-    plowBtn.onclick = plowMode;
-    acornBtn.onclick = acornMode;
-    let gameInAction = true;
     let board = document.getElementById("board");
     let select1Value = Number(document.getElementById("select1").value);
     let select2Value = Number(document.getElementById("select2").value);
-    let firstClick = true;
-    gameRestart.textContent = "RESTART";
-    board.innerHTML = "";
-    board.className = "minesweeper-board";
-    let tiles = [];
-    for (let i = 0 ; i < select1Value ; i++) {
-      let tr = document.createElement("tr");
-      for (let j = 0 ; j < select1Value ; j++) {
-        let index = i * select1Value + j
-        let td = document.createElement("td");
-        td.className = "tile-closed";
-        td.index = index;
-        td.id = `tile${index}`
-        td.style.height = `${65 / select1Value}vmin`;
-        td.style.width = `${65 / select1Value}vmin`;
-        td.style.fontSize = `${35 / select1Value}vmin`;
-        td.onclick = click;
-        // td.oncontextmenu = rightClick;
-        tr.appendChild(td);
-        tiles.push(td)
-      }
-      board.appendChild(tr);
-    }
-    let acorns = [];
-    let acornCount = select2.value;
+    let helperMessage = document.getElementById("helper-btn-message");
     let clearMessage = document.getElementById("clear-message");
     let clearImage = document.getElementById("clear-image");
-    clearMessage.textContent = "";
-    clearImage.className = "hidden squirrel-happy";
-    let helperMessage = document.getElementById("helper-btn-message");
-    helperMessage.textContent = "";
+    let tiles = [];
+    let acorns = [];
+    let acornCount = select2.value;
+    let gameInAction = true;
+    let firstClick = true;
+    prepareContents();
+    prepareBoard(tiles);
+    clearInterval(gameTimer);
     changeAcornCount();
-    buryAcorn(acorns);
+    buryAcorns(acorns);
     countNearbyAcorns(tiles, acorns);
+    helperBtn.onclick = firstStep;
+    plowBtn.onclick = plowMode;
+    acornBtn.onclick = acornMode;
     
+    function prepareContents() {
+      gameRestart.textContent = "RESTART";
+      document.getElementById("timer").textContent = `00:00:00`;
+      helperBtn.className = "";
+      helperMessage.textContent = "";
+      clearMessage.textContent = "";
+      clearImage.className = "hidden squirrel-happy";
+    }
+    function prepareBoard(tiles) {
+      board.innerHTML = "";
+      board.className = "minesweeper-board";
+      for (let i = 0 ; i < select1Value ; i++) {
+        let tr = document.createElement("tr");
+        for (let j = 0 ; j < select1Value ; j++) {
+          let index = i * select1Value + j
+          let td = document.createElement("td");
+          td.className = "tile-closed";
+          td.index = index;
+          td.id = `tile${index}`
+          td.style.height = `${65 / select1Value}vmin`;
+          td.style.width = `${65 / select1Value}vmin`;
+          td.style.fontSize = `${35 / select1Value}vmin`;
+          td.onclick = click;
+          // td.oncontextmenu = rightClick;
+          tr.appendChild(td);
+          tiles.push(td)
+        }
+        board.appendChild(tr);
+      }
+    }
     function changeAcornCount() {
       document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
     }
-    function buryAcorn(acorns) {
+    function buryAcorns(acorns) {
       let tileIndexes = [];
       for (let i = 0 ; i < select1Value * select1Value ; i++) {
         tileIndexes.push(i);
@@ -137,6 +125,7 @@ window.addEventListener("load", () => {
         }
       });
     }
+
     function firstStep(e) {
       plowBtn.click();
       document.getElementById("show-settings-check").checked = false;
@@ -152,7 +141,6 @@ window.addEventListener("load", () => {
         helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
       }
     }
-    
     function click(e) {
       if (firstClick) {
         startTimer();
@@ -232,6 +220,7 @@ window.addEventListener("load", () => {
         judge();
       }
     }
+
     function plowMode(e) {
       acornModeCode = false;
       plowBtn.className = "plow-btn game-btn-on";
@@ -255,6 +244,7 @@ window.addEventListener("load", () => {
         document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
       }, 1000);
     }
+
     function gameOver() {
       clearInterval(gameTimer);
       clearMessage.textContent = "どんぐり踏んじゃった";
@@ -270,6 +260,24 @@ window.addEventListener("load", () => {
       }
     }
   })
+  function prepareGame() {
+    gameRestart.textContent = "START";
+    helperBtn.textContent = "はじめの第一歩"
+    document.getElementById("select1-message").textContent = "※1辺のマスの数";
+    document.getElementById("select2-message").textContent = "※どんぐりの数";
+    select1.value = 9;
+    select2.value = 10;
+    plowBtn.className = "plow-btn game-btn-on";
+    document.getElementById("game-btn-text1").textContent = "畑を耕す";
+    acornBtn.className = "acorn-btn game-btn-off";
+    document.getElementById("game-btn-text2").textContent = "印をつける";
+    easyBtn.onclick = easyMode;
+    mediumBtn.onclick = mediumMode;
+    hardBtn.onclick = hardMode;
+    select1.addEventListener("input", () => {
+      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
+    });
+  }
   function easyMode() {
     select1.value = 9;
     select2.value = 10;
