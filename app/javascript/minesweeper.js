@@ -144,7 +144,8 @@ window.addEventListener("load", () => {
       }
     }
     function mouseDown(e) {
-      e.preventDefault();
+      // e.preventDefault();
+      tiles.forEach( tile => { tile.removeEventListener("touchstart", mouseDown) });
       e.srcElement.addEventListener("mouseup", mouseUp);
       e.srcElement.addEventListener("mouseleave", mouseLeave);
       e.srcElement.addEventListener("touchend", mouseUp);
@@ -161,6 +162,7 @@ window.addEventListener("load", () => {
       }
     }
     function mouseUp(e) {
+      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("touchend", mouseUp);
       e.srcElement.removeEventListener("touchmove", mouseLeave);
       e.srcElement.removeEventListener("mouseup", mouseUp);
@@ -174,6 +176,7 @@ window.addEventListener("load", () => {
       }
     }
     function mouseLeave(e) {
+      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("touchend", mouseUp);
       e.srcElement.removeEventListener("touchmove", mouseLeave);
       e.srcElement.removeEventListener("mouseup", mouseUp);
