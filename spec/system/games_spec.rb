@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Games", type: :system do
+RSpec.describe 'Games', type: :system do
   before do
     @user1 = FactoryBot.create(:user, admin: true)
     @game = FactoryBot.build(:game)
@@ -12,11 +12,11 @@ RSpec.describe "Games", type: :system do
       visit root_path
       expect(page).to have_content('ログイン')
       click_on('ログイン')
-      
+
       expect(current_path).to eq new_user_session_path
-      fill_in 'Username', with: @user1.username
-      fill_in 'Password', with: @user1.password
-      click_on('Log in')
+      fill_in 'user_username', with: @user1.username
+      fill_in 'user_password', with: @user1.password
+      click_on('commit')
 
       expect(current_path).to eq root_path
       expect(page).to have_content('ゲーム登録')
@@ -26,10 +26,9 @@ RSpec.describe "Games", type: :system do
       expect(current_path).to eq new_game_path
       fill_in 'Display name', with: @game.display_name
       fill_in 'Game name', with: @game.game_name
-      fill_in 'Image url', with: @game.image_url
       fill_in 'Description', with: @game.description
-      expect{ click_on('Submit') }.to change { Game.count }.by(1)
-      
+      expect { click_on('Submit') }.to change { Game.count }.by(1)
+
       expect(current_path).to eq root_path
       expect(page).to have_content(@game.display_name)
       expect(page).to have_content(@game.description)
@@ -45,11 +44,11 @@ RSpec.describe "Games", type: :system do
       visit root_path
       expect(page).to have_content('ログイン')
       click_on('ログイン')
-      
+
       expect(current_path).to eq new_user_session_path
-      fill_in 'Username', with: @user2.username
-      fill_in 'Password', with: @user2.password
-      click_on('Log in')
+      fill_in 'user_username', with: @user2.username
+      fill_in 'user_password', with: @user2.password
+      click_on('commit')
 
       expect(current_path).to eq root_path
       expect(page).to have_no_content('ゲーム登録')
@@ -80,15 +79,14 @@ RSpec.describe "Games", type: :system do
       expect(page).to have_selector('#c00')
     end
 
-    it 'まるばつゲームを遊べること' do
+    it '15puzzleを遊べること' do
       @game2 = FactoryBot.create(:game_15puzzle)
       visit root_path
       expect(page).to have_content(@game2.display_name)
       expect(page).to have_content(@game2.description)
       click_on(@game2.display_name)
 
-      expect(page).to have_content('START')
-      expect(page).to have_no_content('RESTART')
+      expect(page).to have_content('RESTART')
       expect(page).to have_selector('#timer')
       expect(page).to have_no_content('EASY')
       expect(page).to have_no_content('MEDIUM')
@@ -100,10 +98,6 @@ RSpec.describe "Games", type: :system do
       expect(page).to have_no_selector('#game-btn2')
       expect(page).to have_selector('#game-info-wrapper')
       expect(page).to have_no_selector('#clear-image')
-      expect(page).to have_no_selector('#tile1')
-
-      click_on('START')
-      expect(page).to have_content('RESTART')
       expect(page).to have_selector('#tile1')
     end
 
@@ -112,9 +106,8 @@ RSpec.describe "Games", type: :system do
       visit root_path
       expect(page).to have_content(@game3.display_name)
       click_on(@game3.display_name)
-      
-      expect(page).to have_content('START')
-      expect(page).to have_no_content('RESTART')
+
+      expect(page).to have_content('RESTART')
       expect(page).to have_selector('#timer')
       expect(page).to have_content('EASY')
       expect(page).to have_content('MEDIUM')
@@ -125,10 +118,10 @@ RSpec.describe "Games", type: :system do
       expect(page).to have_selector('#game-btn1')
       expect(page).to have_selector('#game-btn2')
       expect(page).to have_selector('#game-info-wrapper')
-      expect(page).to have_selector('#clear-image')
-      expect(page).to have_no_selector('#tile0')
+      expect(page).to have_no_selector('#clear-image')
+      expect(page).to have_selector('#tile0')
 
-      click_on('START')
+      click_on('RESTART')
       expect(page).to have_content('RESTART')
       expect(page).to have_selector('.tile-closed')
       expect(page).to have_no_selector('.tile-open')
@@ -145,6 +138,4 @@ RSpec.describe "Games", type: :system do
       expect(page).to have_selector('#helper-btn')
     end
   end
-
-
 end
