@@ -36,7 +36,7 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 #### Ruby on Railsによるアプリ制作
 アプリの開発コストを抑え、ゲーム画面デザインの統一化を図るためにRuby on Railsを使用してアプリ制作を行いました。それぞれのゲームは1つのHTMLを共有し、元々非表示に設定をしている項目のうち、必要な項目をJavaScript表示させ、JavaScriptで動作をします。
 　各ゲームはデータベースの1レコードとして登録し、トップページに表示を行い、それぞれのURLを認識して該当のJavaScriptが動作する設計にしております。
-スクリーンショット 2020-11-17 19.09.38.jpg
+![](2020-11-18-17-17-33.png)
 （データベースのgameテーブルの内容）
 
 #### ユーザー管理機能
