@@ -53,7 +53,3 @@ end
 after_fork do |_server, _worker|
   defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
 end
-
-before_exec do |server|
-  ENV['BUNDLE_GEMFILE'] = @app_path + "/current/Gemfile"
-end
