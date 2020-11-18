@@ -3,7 +3,8 @@ window.addEventListener("load", () => {
     return null;
   }
   "use strict";
-  let gameRestart = document.getElementById("restart-game");
+  revealContents();
+  let gameRestartBtn = document.getElementById("restart-game");
   let helperBtn = document.getElementById("helper-btn");
   let select1 = document.getElementById("select1");
   let select2 = document.getElementById("select2");
@@ -16,10 +17,11 @@ window.addEventListener("load", () => {
   let difficultyValue = 1.12;
   let acornModeCode = false;
   let gameTimer = NaN;
-  revealContents();
   prepareGame();
-  
-  gameRestart.addEventListener("click", () => {
+  startGame();
+  gameRestartBtn.onclick = startGame;
+
+  function startGame() {
     let board = document.getElementById("board");
     let select1Value = Number(document.getElementById("select1").value);
     let select2Value = Number(document.getElementById("select2").value);
@@ -34,7 +36,6 @@ window.addEventListener("load", () => {
     prepareContents();
     prepareBoard(tiles);
     clearInterval(gameTimer);
-    changeAcornCount();
     buryAcorns(acorns);
     countNearbyAcorns(tiles, acorns);
     helperBtn.onclick = firstStep;
@@ -42,10 +43,10 @@ window.addEventListener("load", () => {
     acornBtn.onclick = acornMode;
     
     function prepareContents() {
-      gameRestart.textContent = "RESTART";
       document.getElementById("timer").textContent = `00:00:00`;
       helperBtn.className = "";
       helperMessage.textContent = "";
+      document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
       clearMessage.textContent = "";
       clearImage.className = "hidden squirrel-happy";
     }
@@ -70,9 +71,6 @@ window.addEventListener("load", () => {
         }
         board.appendChild(tr);
       }
-    }
-    function changeAcornCount() {
-      document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
     }
     function buryAcorns(acorns) {
       let tileIndexes = [];
@@ -259,9 +257,9 @@ window.addEventListener("load", () => {
         board.className = "minesweeper-board-clear"
       }
     }
-  })
+  }
+  
   function prepareGame() {
-    gameRestart.textContent = "START";
     helperBtn.textContent = "はじめの第一歩"
     document.getElementById("select1-message").textContent = "※1辺のマスの数";
     document.getElementById("select2-message").textContent = "※どんぐりの数";
@@ -283,21 +281,21 @@ window.addEventListener("load", () => {
     select2.value = 10;
     difficulty = "EASY";
     difficultyValue = 1.12;
-    gameRestart.click();
+    startGame();
   }
   function mediumMode() {
     select1.value = 16;
     select2.value = 40;
     difficulty = "MEDIUM";
     difficultyValue = 2.5;
-    gameRestart.click();
+    startGame();
   }
   function hardMode() {
     select1.value = 22;
     select2.value = 99;
     difficulty = "HARD";
     difficultyValue = 4.5;
-    gameRestart.click();
+    startGame();
   }
   function checkPath() {
       const path = location.pathname;
