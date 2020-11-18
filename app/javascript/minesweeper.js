@@ -33,8 +33,8 @@ window.addEventListener("load", () => {
     let acornCount = select2.value;
     let gameInAction = true;
     let firstClick = true;
-    let touchTimer;
-    let touchTime = 0;
+    let holdTimer;
+    let holdTime = 0;
     document.getElementById("show-settings-check").checked = false;
     prepareContents();
     prepareBoard(tiles);
@@ -65,8 +65,8 @@ window.addEventListener("load", () => {
           td.style.height = `${65 / select1Value}vmin`;
           td.style.width = `${65 / select1Value}vmin`;
           td.style.fontSize = `${35 / select1Value}vmin`;
-          td.addEventListener("touchstart", touchStart);
-          td.onclick = click;
+          td.addEventListener("mousedown", mouseDown);
+          td.addEventListener("touchstart", mouseDown);
           tr.appendChild(td);
           tiles.push(td)
         }
@@ -135,7 +135,7 @@ window.addEventListener("load", () => {
         e.srcElement.className = "hidden";
         let random = Math.floor(Math.random() * tiles.length);
         if (tiles[random].value == null) {
-          tiles[random].click();
+          click(tiles[random]);
         } else {
           firstStep(e);
         }
@@ -143,52 +143,59 @@ window.addEventListener("load", () => {
         helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
       }
     }
-    function touchStart(e) {
+    function mouseDown(e) {
       e.preventDefault();
-      e.srcElement.addEventListener("touchend", touchEnd);
-      e.srcElement.addEventListener("touchmove", touchMove);
-      touchTime = 0;
+      e.srcElement.addEventListener("mouseup", mouseUp);
+      e.srcElement.addEventListener("mouseleave", mouseLeave);
+      e.srcElement.addEventListener("touchend", mouseUp);
+      e.srcElement.addEventListener("touchmove", mouseLeave);
+      holdTime = 0;
       let originalClass = e.srcElement.className;
-      if (originalClass != "tile-open" || gameInAction) {
-        touchTimer = setInterval( () => {
-          touchTime++;
-          if (touchTime == 30) {
+      if (originalClass != "tile-open" && gameInAction) {
+        holdTimer = setInterval( () => {
+          holdTime++;
+          if (holdTime == 28) {
             e.srcElement.className = `${originalClass} tile-holded`;
           }
         }, 10);
       }
     }
-    function touchEnd(e) {
-      e.preventDefault();
-      e.srcElement.removeEventListener("touchend", touchEnd);
-      e.srcElement.removeEventListener("touchmove", touchMove);
-      clearInterval(touchTimer);
-      if (touchTime >= 30) {
-        rightClick(e);
+    function mouseUp(e) {
+      e.srcElement.removeEventListener("touchend", mouseUp);
+      e.srcElement.removeEventListener("touchmove", mouseLeave);
+      e.srcElement.removeEventListener("mouseup", mouseUp);
+      e.srcElement.removeEventListener("mouseleave", mouseLeave);
+      clearInterval(holdTimer);
+      if (holdTime >= 28) {
+        e.srcElement.className = e.srcElement.className.split(' ')[0];
+        rightClick(e.srcElement);
       } else {
-        click(e);
+        click(e.srcElement);
       }
     }
-    function touchMove(e) {
-      e.preventDefault();
-      e.srcElement.removeEventListener("touchend", touchEnd);
-      e.srcElement.removeEventListener("touchmove", touchMove);
-      clearInterval(touchTimer);
+    function mouseLeave(e) {
+      e.srcElement.removeEventListener("touchend", mouseUp);
+      e.srcElement.removeEventListener("touchmove", mouseLeave);
+      e.srcElement.removeEventListener("mouseup", mouseUp);
+      e.srcElement.removeEventListener("mouseleave", mouseLeave);
+      clearInterval(holdTimer);
+      if (holdTime >= 28) {
+        e.srcElement.className = e.srcElement.className.split(' ')[0];
+      }
     }
-    function click(e) {
+    function click(clicked) {
       if (firstClick) {
         startTimer();
         firstClick = false;
       }
       if (acornModeCode) {
-        rightClick(e);
+        rightClick(clicked);
         return null;
       }
       if (!gameInAction) {
         return null;
       }
-      let clicked = e.srcElement;
-      if (clicked.className == "tile-open" || clicked.className == "acorn-mark") {
+      if (["tile-open", "acorn-mark"].includes(clicked.className)) {
         return null;
       } else if (clicked.value == "A") {
         clicked.className = "tile-broken";
@@ -204,32 +211,31 @@ window.addEventListener("load", () => {
     function clickBlank(clicked) {
       let i = clicked.index;
       if (Math.floor(i / select1Value) != 0 && tiles[i - select1Value].className != "tile-open") {// 一番上でない → 上をクリック
-        tiles[i - select1Value].click();
+        click(tiles[i - select1Value]);
       }
       if (Math.floor(i / select1Value) != (select1Value - 1) && tiles[i + select1Value].className != "tile-open") {// 一番下でない → 下をクリック
-        tiles[i + select1Value].click();
+        click(tiles[i + select1Value]);
       }
       if (Math.floor(i % select1Value) != 0 && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
-        tiles[i - 1].click();
+        click(tiles[i - 1]);
       }
       if (Math.floor(i % select1Value) != (select1Value - 1) && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
-        tiles[i + 1].click();
+        click(tiles[i + 1]);
       }
       if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != 0 && tiles[i - select1Value - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
-        tiles[i - select1Value - 1].click();
+        click(tiles[i - select1Value - 1]);
       }
       if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != (select1Value - 1) && tiles[i - select1Value + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
-        tiles[i - select1Value + 1].click();
+        click(tiles[i - select1Value + 1]);
       }
       if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != 0 && tiles[i + select1Value - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
-        tiles[i + select1Value - 1].click();
+        click(tiles[i + select1Value - 1]);
       }
       if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != (select1Value - 1) && tiles[i + select1Value + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
-        tiles[i + select1Value + 1].click();
+        click(tiles[i + select1Value + 1]);
       }
     }
-    function rightClick(e) {
-      console.log("rightClick");
+    function rightClick(clicked) {
       if (firstClick) {
         startTimer();
         firstClick = false;
@@ -237,10 +243,9 @@ window.addEventListener("load", () => {
       if (!gameInAction) {
         return null;
       }
-      let clicked = e.srcElement;
       if (clicked.className == "tile-open") {
         return null;
-      } else if (clicked.className == "acorn-mark" || clicked.className == "acorn-mark tile-holded") {
+      } else if (clicked.className == "acorn-mark") {
         clicked.className = "tile-closed";
         acornCount++;
         changeAcornCount();
