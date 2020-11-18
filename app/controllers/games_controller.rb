@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :redirect_ileligible_user,  only: [:new, :create, :edit, :update]
+  before_action :redirect_ileligible_user, only: [:new, :create, :edit, :update]
   before_action :find_game, only: [:edit, :update]
 
   def index
@@ -18,7 +18,7 @@ class GamesController < ApplicationController
       render :new
     end
   end
-  
+
   def show
     @game = Game.where(game_name: params[:game_name])
     @nums1000 = create_array(1, 1000)
@@ -58,6 +58,6 @@ class GamesController < ApplicationController
     (j - i + 1).times do |k|
       array << k + i
     end
-    return array
+    array
   end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before do 
+  before do
     @user = FactoryBot.build(:user)
   end
 
@@ -42,7 +42,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'passwordとpassword_confirmationが一致しないと登録ができないこと' do
-        @user.password_confirmation = @user.password + "1"
+        @user.password_confirmation = @user.password + '1'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end

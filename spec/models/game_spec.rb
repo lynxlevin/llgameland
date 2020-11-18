@@ -12,8 +12,8 @@ RSpec.describe Game, type: :model do
       end
 
       it 'display_nameとgame_nameが存在すれば他の項目が空欄でも登録できること' do
-        @game.description = ""
-        @game.image_url = ""
+        @game.description = ''
+        @game.image_url = ''
         expect(@game).to be_valid
       end
     end
