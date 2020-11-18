@@ -33,6 +33,7 @@ window.addEventListener("load", () => {
     let acornCount = select2.value;
     let gameInAction = true;
     let firstClick = true;
+    document.getElementById("show-settings-check").checked = false;
     prepareContents();
     prepareBoard(tiles);
     clearInterval(gameTimer);
