@@ -155,7 +155,7 @@ window.addEventListener("load", () => {
       if (originalClass != "tile-open" && gameInAction) {
         holdTimer = setInterval( () => {
           holdTime++;
-          if (holdTime == 15) {
+          if (holdTime == 18) {
             // e.srcElement.className = `${originalClass} tile-holded`;
             board.className = "minesweeper-board minesweeper-holded";
           }
@@ -169,7 +169,7 @@ window.addEventListener("load", () => {
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
       clearInterval(holdTimer);
-      if (holdTime >= 14) {
+      if (holdTime >= 17) {
         // e.srcElement.className = e.srcElement.className.split(' ')[0];
         board.className = "minesweeper-board";
         rightClick(e.srcElement);
@@ -184,7 +184,7 @@ window.addEventListener("load", () => {
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
       clearInterval(holdTimer);
-      if (holdTime >= 14) {
+      if (holdTime >= 17) {
         // e.srcElement.className = e.srcElement.className.split(' ')[0];
         board.className = "minesweeper-board";
 
