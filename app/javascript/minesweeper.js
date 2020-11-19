@@ -155,7 +155,7 @@ window.addEventListener("load", () => {
       if (originalClass != "tile-open" && gameInAction) {
         holdTimer = setInterval( () => {
           holdTime++;
-          if (holdTime == 28) {
+          if (holdTime == 15) {
             e.srcElement.className = `${originalClass} tile-holded`;
           }
         }, 10);
@@ -168,7 +168,7 @@ window.addEventListener("load", () => {
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
       clearInterval(holdTimer);
-      if (holdTime >= 28) {
+      if (holdTime >= 14) {
         e.srcElement.className = e.srcElement.className.split(' ')[0];
         rightClick(e.srcElement);
       } else {
@@ -182,7 +182,7 @@ window.addEventListener("load", () => {
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
       clearInterval(holdTimer);
-      if (holdTime >= 28) {
+      if (holdTime >= 14) {
         e.srcElement.className = e.srcElement.className.split(' ')[0];
       }
     }
