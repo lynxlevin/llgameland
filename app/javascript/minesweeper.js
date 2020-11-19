@@ -156,7 +156,8 @@ window.addEventListener("load", () => {
         holdTimer = setInterval( () => {
           holdTime++;
           if (holdTime == 15) {
-            e.srcElement.className = `${originalClass} tile-holded`;
+            // e.srcElement.className = `${originalClass} tile-holded`;
+            board.className = "minesweeper-board minesweeper-holded";
           }
         }, 10);
       }
@@ -169,7 +170,8 @@ window.addEventListener("load", () => {
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
       clearInterval(holdTimer);
       if (holdTime >= 14) {
-        e.srcElement.className = e.srcElement.className.split(' ')[0];
+        // e.srcElement.className = e.srcElement.className.split(' ')[0];
+        board.className = "minesweeper-board";
         rightClick(e.srcElement);
       } else {
         click(e.srcElement);
@@ -183,7 +185,9 @@ window.addEventListener("load", () => {
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
       clearInterval(holdTimer);
       if (holdTime >= 14) {
-        e.srcElement.className = e.srcElement.className.split(' ')[0];
+        // e.srcElement.className = e.srcElement.className.split(' ')[0];
+        board.className = "minesweeper-board";
+
       }
     }
     function click(clicked) {
