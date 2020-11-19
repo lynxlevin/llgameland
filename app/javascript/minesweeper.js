@@ -66,7 +66,7 @@ window.addEventListener("load", () => {
           td.style.width = `${65 / select1Value}vmin`;
           td.style.fontSize = `${35 / select1Value}vmin`;
           td.addEventListener("mousedown", mouseDown);
-          td.addEventListener("touchstart", mouseDown);
+          td.addEventListener("touchstart", touchStart);
           tr.appendChild(td);
           tiles.push(td)
         }
