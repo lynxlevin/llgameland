@@ -17,6 +17,7 @@ window.addEventListener("load", () => {
   let difficultyValue = 1.12;
   let acornModeCode = false;
   let gameTimer = NaN;
+  let holdThreshold = 17;
   prepareGame();
   startGame();
   gameRestartBtn.onclick = startGame;
@@ -145,36 +146,60 @@ window.addEventListener("load", () => {
     }
     function touchStart(e) {
       e.srcElement.removeEventListener("mousedown", mouseDown);
-      tiles.forEach( tile => { tile.removeEventListener("touchstart", mouseDown) });
-      mouseDown(e);
+      tiles.forEach( tile => { tile.removeEventListener("touchstart", touchStart) });
+      e.srcElement.addEventListener("touchend", touchEnd);
+      e.srcElement.addEventListener("touchmove", touchMove);
+      holdTime = 0;
+      if (e.srcElement.className != "tile-open" && gameInAction) {
+        holdTimer = setInterval( () => {
+          holdTime++;
+          if (holdTime == holdThreshold + 1) {
+            board.className = "minesweeper-board minesweeper-holded";
+          }
+        }, 10);
+      }
+    }
+    function touchEnd(e) {
+      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
+      e.srcElement.removeEventListener("touchend", mouseUp);
+      e.srcElement.removeEventListener("touchmove", mouseLeave);
+      clearInterval(holdTimer);
+      if (holdTime >= holdThreshold) {
+        board.className = "minesweeper-board";
+        rightClick(e.srcElement);
+      } else {
+        click(e.srcElement);
+      }
+    }
+    function touchMove(e) {
+      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
+      e.srcElement.removeEventListener("touchend", mouseUp);
+      e.srcElement.removeEventListener("touchmove", mouseLeave);
+      clearInterval(holdTimer);
+      if (holdTime >= holdThreshold) {
+        board.className = "minesweeper-board";
+      }
     }
     function mouseDown(e) {
-      // e.preventDefault();
+      e.preventDefault();
       e.srcElement.addEventListener("mouseup", mouseUp);
       e.srcElement.addEventListener("mouseleave", mouseLeave);
-      e.srcElement.addEventListener("touchend", mouseUp);
-      e.srcElement.addEventListener("touchmove", mouseLeave);
       holdTime = 0;
       let originalClass = e.srcElement.className;
       if (originalClass != "tile-open" && gameInAction) {
         holdTimer = setInterval( () => {
           holdTime++;
-          if (holdTime == 18) {
-            // e.srcElement.className = `${originalClass} tile-holded`;
+          if (holdTime == holdThreshold + 1) {
             board.className = "minesweeper-board minesweeper-holded";
           }
         }, 10);
       }
     }
     function mouseUp(e) {
-      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
-      e.srcElement.removeEventListener("touchend", mouseUp);
-      e.srcElement.removeEventListener("touchmove", mouseLeave);
       clearInterval(holdTimer);
-      if (holdTime >= 17) {
-        // e.srcElement.className = e.srcElement.className.split(' ')[0];
+      if (holdTime >= holdThreshold) {
         board.className = "minesweeper-board";
         rightClick(e.srcElement);
       } else {
@@ -182,16 +207,11 @@ window.addEventListener("load", () => {
       }
     }
     function mouseLeave(e) {
-      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
-      e.srcElement.removeEventListener("touchend", mouseUp);
-      e.srcElement.removeEventListener("touchmove", mouseLeave);
       clearInterval(holdTimer);
-      if (holdTime >= 17) {
-        // e.srcElement.className = e.srcElement.className.split(' ')[0];
+      if (holdTime >= holdThreshold) {
         board.className = "minesweeper-board";
-
       }
     }
     function click(clicked) {
