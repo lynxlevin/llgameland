@@ -160,7 +160,7 @@ window.addEventListener("load", () => {
       }
     }
     function touchEnd(e) {
-      tiles.forEach( tile => { tile.addEventListener("touchstart", touchStart) });
+      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("touchend", mouseUp);
       e.srcElement.removeEventListener("touchmove", mouseLeave);
       clearInterval(holdTimer);
@@ -172,7 +172,7 @@ window.addEventListener("load", () => {
       }
     }
     function touchMove(e) {
-      tiles.forEach( tile => { tile.addEventListener("touchstart", touchStart) });
+      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("touchend", mouseUp);
       e.srcElement.removeEventListener("touchmove", mouseLeave);
       clearInterval(holdTimer);
@@ -182,7 +182,6 @@ window.addEventListener("load", () => {
     }
     function mouseDown(e) {
       e.preventDefault();
-      e.srcElement.removeEventListener("touchstart", touchStart);
       e.srcElement.addEventListener("mouseup", mouseUp);
       e.srcElement.addEventListener("mouseleave", mouseLeave);
       holdTime = 0;
