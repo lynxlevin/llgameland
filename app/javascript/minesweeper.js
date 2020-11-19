@@ -198,10 +198,6 @@ window.addEventListener("load", () => {
         startTimer();
         firstClick = false;
       }
-      if (!acornModeCode) {
-        click(e);
-        return null;
-      }
       if (!gameInAction) {
         return null;
       }
