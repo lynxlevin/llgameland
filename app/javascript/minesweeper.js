@@ -66,7 +66,7 @@ window.addEventListener("load", () => {
           td.style.width = `${65 / select1Value}vmin`;
           td.style.fontSize = `${35 / select1Value}vmin`;
           td.addEventListener("mousedown", mouseDown);
-          td.addEventListener("touchstart", mouseDown);
+          // td.addEventListener("touchstart", mouseDown);
           tr.appendChild(td);
           tiles.push(td)
         }
@@ -143,17 +143,13 @@ window.addEventListener("load", () => {
         helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
       }
     }
-    function touchStart(e) {
-      e.srcElement.removeEventListener("mousedown", mouseDown);
-      tiles.forEach( tile => { tile.removeEventListener("touchstart", mouseDown) });
-      mouseDown(e);
-    }
     function mouseDown(e) {
       // e.preventDefault();
+      // tiles.forEach( tile => { tile.removeEventListener("touchstart", mouseDown) });
       e.srcElement.addEventListener("mouseup", mouseUp);
       e.srcElement.addEventListener("mouseleave", mouseLeave);
-      e.srcElement.addEventListener("touchend", mouseUp);
-      e.srcElement.addEventListener("touchmove", mouseLeave);
+      // e.srcElement.addEventListener("touchend", mouseUp);
+      // e.srcElement.addEventListener("touchmove", mouseLeave);
       holdTime = 0;
       let originalClass = e.srcElement.className;
       if (originalClass != "tile-open" && gameInAction) {
@@ -167,11 +163,11 @@ window.addEventListener("load", () => {
       }
     }
     function mouseUp(e) {
-      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
+      // tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
-      e.srcElement.removeEventListener("touchend", mouseUp);
-      e.srcElement.removeEventListener("touchmove", mouseLeave);
+      // e.srcElement.removeEventListener("touchend", mouseUp);
+      // e.srcElement.removeEventListener("touchmove", mouseLeave);
       clearInterval(holdTimer);
       if (holdTime >= 17) {
         // e.srcElement.className = e.srcElement.className.split(' ')[0];
@@ -182,11 +178,11 @@ window.addEventListener("load", () => {
       }
     }
     function mouseLeave(e) {
-      tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
+      // tiles.forEach( tile => { tile.addEventListener("touchstart", mouseDown) });
       e.srcElement.removeEventListener("mouseup", mouseUp);
       e.srcElement.removeEventListener("mouseleave", mouseLeave);
-      e.srcElement.removeEventListener("touchend", mouseUp);
-      e.srcElement.removeEventListener("touchmove", mouseLeave);
+      // e.srcElement.removeEventListener("touchend", mouseUp);
+      // e.srcElement.removeEventListener("touchmove", mouseLeave);
       clearInterval(holdTimer);
       if (holdTime >= 17) {
         // e.srcElement.className = e.srcElement.className.split(' ')[0];
