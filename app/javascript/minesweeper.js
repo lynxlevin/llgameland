@@ -260,6 +260,7 @@ window.addEventListener("load", () => {
     hardBtn.onclick = hardMode;
     plowBtn.onclick = plowMode;
     acornBtn.onclick = acornMode;
+    document.addEventListener("keydown", pressKey);
     select1.addEventListener("input", () => {
       document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
     });
@@ -284,6 +285,13 @@ window.addEventListener("load", () => {
     difficulty = "HARD";
     difficultyValue = 4.5;
     startGame();
+  }
+  function pressKey(e) {
+    if (e.key == 1) {
+      plowMode();
+    } else if (e.key == 2) {
+      acornMode();
+    }
   }
   function plowMode(e) {
     acornModeCode = false;

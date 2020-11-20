@@ -36,9 +36,6 @@
     // position: absolute;
     // right: 6vmin;
   }
-  .game-btn-off {
-    margin: 5px 5px;
-  }
 
   #game-wrapper {
     height: calc(100% - 37px);
@@ -142,6 +139,7 @@
     height: 50px;
     width: 50px;
     border: 1px solid #a1a1dd;
+    margin: 5px 5px;
   }
   
   .game-btn-on {
@@ -150,6 +148,9 @@
     border: 2px solid #7171f0;
   }
 
+  .game-btn-image {
+    display: none;
+  }
 }
 
 
@@ -183,9 +184,7 @@
     margin-top: 10px;
     padding: 0 15px;
   }
-  .game-btn-off {
-    margin: 7px 5px 6px;
-  }
+
 
 
 
@@ -280,18 +279,28 @@
   
   .game-btn-div {
     text-align: center;
+    position: relative;
+    width: 100px;
   }
   
   .game-btn-off {
     height: 50px;
     width: 50px;
     border: 1px solid #a1a1dd;
+    margin: 7px 5px 6px;
   }
   
   .game-btn-on {
     height: 60px;
     width: 60px;
     border: 2px solid #7171f0;
+  }
+
+  .game-btn-image {
+    position: absolute;
+    width: 28px;
+    top: -7px;
+    left: 0px;
   }
 }  
 
