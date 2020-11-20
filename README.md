@@ -173,41 +173,18 @@ C：クリックしたマスが空白（隣接マスにどんぐりがない）�
 s（Ruby on Railsのバージョン6.0.0でせい作成ています。）
 1. 任意のディレクトリを開きます。vv
 ※「~/repositories」の部分は任意のディレクトリを指定します。
-```
-cd ~/repositories
-```
-
 2. リポジトリをクローンします。
-
-```
-git clone https://github.com/lynxlevin/llgameland.git
-```
 3. llgamelandディレクトリに移動します。
-
-```
-cd llgameland
-```
-
 4. Gemをインストールします。
-
-```
-bundle install
-```
-
 5. JavaScriptのパッケージをインストール
-
-```
-yarn install
-```
-
 6. データベースを生成します。
-
-```
-rails db:migrate
-```
-
 7. データベースにデータを登録します。
-
 ```
-rails db:seed
+1. cd ~/repositories
+2. git clone https://github.com/lynxlevin/llgameland.git
+3. cd llgameland
+4. bundle install
+5. yarn install
+6. rails db:migrate
+7. rails db:seed
 ```
