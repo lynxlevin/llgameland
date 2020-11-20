@@ -51,7 +51,7 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 
 ![](2020-11-18-20-00-13.png)
 
-（左：新規登録画面　中：ログイン画面　右：ユーザー情報編集画面）  
+<b>（左：新規登録画面　中：ログイン画面　右：ユーザー情報編集画面）  </b>
 
 ## ・レスポンシブデザイン
 こちらのURL（ http://54.250.80.22/games/minesweeper ）よりご覧いただけます。  
