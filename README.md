@@ -43,7 +43,7 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 
 ![](2020-11-18-17-17-33.png)
 
-<div style="text-align: center;">（データベースのgameテーブルの内容）</div>
+（データベースのgameテーブルの内容）  
 
 ## ・ユーザー管理機能
 気軽に遊べるシンプルなゲームサイトをコンセプトにしているため、ユーザー登録やログイン無しでも遊べるように作成をしております。  
@@ -51,7 +51,7 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 
 ![](2020-11-18-20-00-13.png)
 
-<div style="text-align: center;">（左：新規登録画面　中：ログイン画面　右：ユーザー情報編集画面）</div>
+（左：新規登録画面　中：ログイン画面　右：ユーザー情報編集画面）  
 
 ## ・レスポンシブデザイン
 こちらのURL（ http://54.250.80.22/games/minesweeper ）よりご覧いただけます。  
@@ -59,13 +59,13 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 
 ![](2020-11-18-20-02-20.png)
 
-<div style="text-align: center;">（左：PC画面　右：スマートフォン画面）</div>
+（左：PC画面　右：スマートフォン画面）  
 
 　また、スマートフォン上で「設定を表示する」のチェックボックスのオン・オフを切り替えることで、ゲームプレイ中には必要のない設定ボタン*の表示・非表示を切り替えできる機能もCSSで実装しております。
 
 ![](2020-11-18-20-03-19.png)
 
-<div style="text-align: center;">（左：非表示　右：表示）</div>
+（左：非表示　右：表示）  
 
 ## ・まるばつゲーム
 こちらのURL（ http://54.250.80.22/games/tictactoe ）からご覧いただけます。  
@@ -75,7 +75,7 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 
 ![](2020-11-18-20-04-57.png)
 
-<div style="text-align: center;">（まるばつゲームプレイ画像）</div>
+（まるばつゲームプレイ画像）  
 
 ## ・15 Puzzle
 こちらのURL（ http://54.250.80.22/games/15puzzle ）からご覧いただけます。  
@@ -84,7 +84,7 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 
 ![](2020-11-18-20-05-49.png)
 
-<div style="text-align: center;">（左：プレイ開始時画面　右：クリア後画面）</div>
+（左：プレイ開始時画面　右：クリア後画面）  
 
 　このゲームの基礎的なコードは書籍にあるものを参考にしましたが、ユーザーの遊びやすさを考慮し、以下の機能を自分で工夫して実装しております。  
 - 一度に複数のマスを動かす機能（例：上図プレイ開始時画面で12をクリックした場合、1、3、12の3マスが同時に動く機能）
@@ -93,14 +93,14 @@ https://docs.google.com/spreadsheets/d/1Z-VuONBD2F42nqNpe_3i8dkBSrBTvDsQ0C7GzcpB
 - クリアタイムの計測機能
 ![](2020-11-18-20-06-39.png)
 
-<div style="text-align: center;">（盤面サイズを10マス四方に設定した画面）</div>
+（盤面サイズを10マス四方に設定した画面）  
 
 ## ・どんぐり探し
 こちらのURL（ http://54.250.80.22/games/minesweeper ）からご覧いただけます。  
 　マインスイーパー風のゲームで、STARTボタンをクリックすることで盤面を生成し、盤面をクリックすることで近くのどんぐり（地雷）の数を示した数字が現れ、どんぐりのある箇所に印を付けていくゲームです。地雷の負のイメージを除くため、リスが埋めたどんぐりを避けつつ畑を耕す、という設定にしています。
 ![](2020-11-18-20-07-38.png)
 
-<div style="text-align: center;">（左：ゲーム開始時画面　右：クリア後画面）</div>
+（左：ゲーム開始時画面　右：クリア後画面）  
 
 　こちらは、以前からロジックが気になっていたために、完全に自力で制作したもので、以下のようなロジックです。  
 1. まるばつゲームと同様の方法で盤面を生成
@@ -124,11 +124,11 @@ C：クリックしたマスが空白（隣接マスにどんぐりがない）�
 
 ![](2020-11-18-20-08-30.png)
 
-<div style="text-align: center;">（左：一手目でゲームオーバーになる例　右：はじめの第一歩機能の例）</div>
+（左：一手目でゲームオーバーになる例　右：はじめの第一歩機能の例）  
 
 ![](2020-11-19-13-20-16.png)
 
-<div style="text-align: center;">（どんぐりの数の示唆機能）</div>
+（どんぐりの数の示唆機能）  
 
 現状、空白マスが多すぎる場合、マスを開く動作の途中でJavaScriptが停止してしまうので、マスを開く動作ロジックの改善を図りたいと思っております。
 
