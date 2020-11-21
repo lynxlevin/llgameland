@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
   let mediumBtn = document.getElementById("difficulty2");
   let hardBtn = document.getElementById("difficulty3");
   let difficulty = "EASY";
-  let difficultyValue = 1.12;
+  let difficultyValue = 0.123;
   let acornModeCode = false;
   let gameTimer = NaN;
   prepareGame();
@@ -262,28 +262,28 @@ window.addEventListener("load", () => {
     acornBtn.onclick = acornMode;
     document.addEventListener("keydown", pressKey);
     select1.addEventListener("input", () => {
-      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * difficultyValue)}個で難易度${difficulty}`
+      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficulty}`
     });
   }
   function easyMode() {
     select1.value = 9;
     select2.value = 10;
     difficulty = "EASY";
-    difficultyValue = 1.12;
+    difficultyValue = 0.123;
     startGame();
   }
   function mediumMode() {
     select1.value = 16;
     select2.value = 40;
     difficulty = "MEDIUM";
-    difficultyValue = 2.5;
+    difficultyValue = 0.15625;
     startGame();
   }
   function hardMode() {
     select1.value = 22;
     select2.value = 99;
     difficulty = "HARD";
-    difficultyValue = 4.5;
+    difficultyValue = 0.2045;
     startGame();
   }
   function pressKey(e) {
