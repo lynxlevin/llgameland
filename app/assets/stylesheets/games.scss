@@ -148,7 +148,7 @@
     border: 2px solid #7171f0;
   }
 
-  .game-btn-image {
+  .game-btn-text > span {
     display: none;
   }
 }
@@ -279,8 +279,6 @@
   
   .game-btn-div {
     text-align: center;
-    position: relative;
-    width: 100px;
   }
   
   .game-btn-off {
@@ -294,13 +292,6 @@
     height: 60px;
     width: 60px;
     border: 2px solid #7171f0;
-  }
-
-  .game-btn-image {
-    position: absolute;
-    width: 28px;
-    top: -7px;
-    left: 0px;
   }
 }  
 

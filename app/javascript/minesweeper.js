@@ -252,9 +252,9 @@ window.addEventListener("load", () => {
     select1.value = 9;
     select2.value = 10;
     plowBtn.className = "plow-btn game-btn-on";
-    document.getElementById("game-btn-text1").textContent = "畑を耕す";
+    document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
     acornBtn.className = "acorn-btn game-btn-off";
-    document.getElementById("game-btn-text2").textContent = "印をつける";
+    document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
     easyBtn.onclick = easyMode;
     mediumBtn.onclick = mediumMode;
     hardBtn.onclick = hardMode;
@@ -287,9 +287,9 @@ window.addEventListener("load", () => {
     startGame();
   }
   function pressKey(e) {
-    if (e.key == 1) {
+    if (e.key == "z") {
       plowMode();
-    } else if (e.key == 2) {
+    } else if (e.key == "x") {
       acornMode();
     }
   }
