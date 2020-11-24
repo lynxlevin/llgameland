@@ -270,6 +270,7 @@ window.addEventListener("load", () => {
     select2.value = 10;
     difficulty = "EASY";
     difficultyValue = 0.123;
+    document.getElementById("input-info").textContent = ""
     startGame();
   }
   function mediumMode() {
@@ -277,6 +278,7 @@ window.addEventListener("load", () => {
     select2.value = 40;
     difficulty = "MEDIUM";
     difficultyValue = 0.15625;
+    document.getElementById("input-info").textContent = ""
     startGame();
   }
   function hardMode() {
@@ -284,6 +286,7 @@ window.addEventListener("load", () => {
     select2.value = 99;
     difficulty = "HARD";
     difficultyValue = 0.2045;
+    document.getElementById("input-info").textContent = ""
     startGame();
   }
   function pressKey(e) {
