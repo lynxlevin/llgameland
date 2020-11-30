@@ -1,22 +1,22 @@
 <div class="main-wrapper">
-<div class="index-wrapper">
-  <% if user_signed_in? %>
-    <h3><%= "#{current_user.username}さん、いらっしゃい!" %></h3>
-  <% end %>
-  <div class="index-title">
-    <h1>LynxLevin's Game Land</h1>
-    <p><%= link_to "シンプルなゲームをシンプルに遊べるサイト", about_path %>を目指します</p>
+  <div class="index-wrapper">
+    <% if user_signed_in? %>
+      <h3><%= "#{current_user.username}さん、いらっしゃい!" %></h3>
+    <% end %>
+    <div class="index-title">
+      <h1>LynxLevin's Game Land</h1>
+      <p><%= link_to "シンプルなゲームをシンプルに遊べるサイト", about_path %>を目指します</p>
+    </div>
+    <div class="index-games">
+      <%= render partial: "game", collection: @games %>
+    </div>
   </div>
-  <div class="index-games">
-    <%= render partial: "game", collection: @games %>
-  </div>
-</div>
-<footer>
-  <div class="footer-left">
-  </div>
-  <div class="footer-right">
-    <%= link_to "このサイトの思い", about_path %>
-    <%= link_to "LynxLevinブログ","https://lynx-levin.hateblo.jp/" %>
-  </div>
-</footer>
+  <footer>
+    <div class="footer-left">
+      <%= link_to "このサイトの思い", about_path %>
+    </div>
+    <div class="footer-right">
+      <%= link_to "LynxLevinブログ","https://lynx-levin.hateblo.jp/" %>
+    </div>
+  </footer>
 </div>
