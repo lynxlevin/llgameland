@@ -43,7 +43,7 @@ a {
 }
 
 body {
-  width: 95vw;
+  width: 100vw;
   min-height: calc(100vh - 20px);
   background-color: #f5f5f5;
   padding: 10px 2.5vw 10px;
