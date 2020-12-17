@@ -40,7 +40,7 @@ window.addEventListener("load", () => {
     buryAcorns(acorns);
     countNearbyAcorns(tiles, acorns);
     helperBtn.onclick = firstStep;
-    
+
     function prepareContents() {
       clearInterval(gameTimer);
       document.getElementById("timer").textContent = `00:00:00`;
@@ -168,30 +168,42 @@ window.addEventListener("load", () => {
     }
     function clickBlank(clicked) {
       let i = clicked.index;
+      let array = [];
       if (Math.floor(i / select1Value) != 0 && tiles[i - select1Value].className != "tile-open") {// 一番上でない → 上をクリック
-        tiles[i - select1Value].click();
+        array.push(tiles[i - select1Value]);
       }
       if (Math.floor(i / select1Value) != (select1Value - 1) && tiles[i + select1Value].className != "tile-open") {// 一番下でない → 下をクリック
-        tiles[i + select1Value].click();
+        array.push(tiles[i + select1Value]);
       }
       if (Math.floor(i % select1Value) != 0 && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
-        tiles[i - 1].click();
+        array.push(tiles[i - 1]);
       }
       if (Math.floor(i % select1Value) != (select1Value - 1) && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
-        tiles[i + 1].click();
+        array.push(tiles[i + 1]);
       }
       if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != 0 && tiles[i - select1Value - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
-        tiles[i - select1Value - 1].click();
+        array.push(tiles[i - select1Value - 1]);
       }
       if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != (select1Value - 1) && tiles[i - select1Value + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
-        tiles[i - select1Value + 1].click();
+        array.push(tiles[i - select1Value + 1]);
       }
       if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != 0 && tiles[i + select1Value - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
-        tiles[i + select1Value - 1].click();
+        array.push(tiles[i + select1Value - 1]);
       }
       if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != (select1Value - 1) && tiles[i + select1Value + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
-        tiles[i + select1Value + 1].click();
+        array.push(tiles[i + select1Value + 1]);
       }
+      array.forEach (tile => {
+        if (tile.className == "tile-open" || tile.className == "acorn-mark") {
+          return null;
+        } else if (tile.value != null) {
+          tile.className = "tile-open";
+        } else if (tile.value == null) {
+          tile.className = "tile-open";
+          clickBlank(tile);
+        }
+      })
+      judge();
     }
     function rightClick(e) {
       if (firstClick) {
@@ -244,7 +256,7 @@ window.addEventListener("load", () => {
       }
     }
   }
-  
+
   function prepareGame() {
     helperBtn.textContent = "はじめの第一歩"
     document.getElementById("select1-message").textContent = "※1辺のマスの数";
