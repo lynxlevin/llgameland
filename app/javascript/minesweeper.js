@@ -62,7 +62,7 @@ window.addEventListener("load", () => {
           td.id = `tile${index}`
           td.style.height = `${65 / select1Value}vmin`;
           td.style.width = `${65 / select1Value}vmin`;
-          td.style.fontSize = `${35 / select1Value}vmin`;
+          // td.style.fontSize = `${35 / select1Value}vmin`;
           td.onclick = click;
           tr.appendChild(td);
           tiles.push(td)
@@ -160,9 +160,11 @@ window.addEventListener("load", () => {
         gameOver();
       } else if (clicked.value != null) {
         clicked.className = "tile-open";
+        clicked.style.fontSize = `${35 / select1Value}vmin`;
         judge();
       } else if (clicked.value == null) {
         clicked.className = "tile-open";
+        clicked.style.fontSize = `${35 / select1Value}vmin`;
         clickBlank(clicked);
       }
     }
@@ -198,8 +200,10 @@ window.addEventListener("load", () => {
           return null;
         } else if (tile.value != null) {
           tile.className = "tile-open";
+          tile.style.fontSize = `${35 / select1Value}vmin`;
         } else if (tile.value == null) {
           tile.className = "tile-open";
+          tile.style.fontSize = `${35 / select1Value}vmin`;
           clickBlank(tile);
         }
       })

@@ -2,7 +2,8 @@
   background-color: #c49e90;
 	text-indent:200%;
 	white-space:nowrap;
-	overflow:hidden;
+  overflow:hidden;
+  font-size: 0px;
 }
 
 .tile-open {
@@ -18,7 +19,8 @@
   // transform: rotateZ(-90deg);
   text-indent:200%;
 	white-space:nowrap;
-	overflow:hidden;
+  overflow:hidden;
+  font-size: 0px;
 }
 
 .acorn-mark {
@@ -29,6 +31,7 @@
   text-indent:200%;
   white-space:nowrap;
   overflow:hidden;
+  font-size: 0px;
 }
 
 .minesweeper-board {
