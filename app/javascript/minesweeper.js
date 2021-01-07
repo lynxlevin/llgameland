@@ -93,29 +93,34 @@ window.addEventListener("load", () => {
         if (tile.value == "A") {
           return null;
         }
+        const isTopTile = Math.floor(i / select1Value) == 0;
+        const isBottomTile = Math.floor(i / select1Value) == (select1Value - 1);
+        const isLeftMostTile = Math.floor(i % select1Value) == 0;
+        const isRightMostTile = Math.floor(i % select1Value) == (select1Value - 1);
+
         let acornCount = 0;
-        if (Math.floor(i / select1Value) != 0 && acorns.includes(i - select1Value)) {// 一番上でない → 上を見る
+        if (!isTopTile && acorns.includes(i - select1Value)) {// 一番上でない → 上を見る
           acornCount++;
         }
-        if (Math.floor(i / select1Value) != (select1Value - 1) && acorns.includes(i + select1Value)) {// 一番下でない → 下を見る
+        if (!isBottomTile && acorns.includes(i + select1Value)) {// 一番下でない → 下を見る
           acornCount++;
         }
-        if (Math.floor(i % select1Value) != 0 && acorns.includes(i - 1)) {// 一番左でない → 左を見る
+        if (!isLeftMostTile && acorns.includes(i - 1)) {// 一番左でない → 左を見る
           acornCount++;
         }
-        if (Math.floor(i % select1Value) != (select1Value - 1) && acorns.includes(i + 1)) {// 一番右でない → 右を見る
+        if (!isRightMostTile && acorns.includes(i + 1)) {// 一番右でない → 右を見る
           acornCount++;
         }
-        if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != 0 && acorns.includes(i - select1Value - 1)) {// 一番上でなく、左でもない → 左上を見る
+        if (!isTopTile && !isLeftMostTile && acorns.includes(i - select1Value - 1)) {// 一番上でなく、左でもない → 左上を見る
           acornCount++;
         }
-        if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != (select1Value - 1) && acorns.includes(i - select1Value + 1)) {// 一番上でなく、右でもない → 右上を見る
+        if (!isTopTile && !isRightMostTile && acorns.includes(i - select1Value + 1)) {// 一番上でなく、右でもない → 右上を見る
           acornCount++;
         }
-        if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != 0 && acorns.includes(i + select1Value - 1)) {// 一番下でなく、左でもない → 左下を見る
+        if (!isBottomTile && !isLeftMostTile && acorns.includes(i + select1Value - 1)) {// 一番下でなく、左でもない → 左下を見る
           acornCount++;
         }
-        if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != (select1Value - 1) && acorns.includes(i + select1Value + 1)) {// 一番下でなく、右でもない → 右下を見る
+        if (!isBottomTile && !isRightMostTile && acorns.includes(i + select1Value + 1)) {// 一番下でなく、右でもない → 右下を見る
           acornCount++;
         }
         if (acornCount != 0) {
@@ -171,28 +176,32 @@ window.addEventListener("load", () => {
     function clickBlank(clicked) {
       let i = clicked.index;
       let array = [];
-      if (Math.floor(i / select1Value) != 0 && tiles[i - select1Value].className != "tile-open") {// 一番上でない → 上をクリック
+      const isTopTile = Math.floor(i / select1Value) == 0;
+      const isBottomTile = Math.floor(i / select1Value) == (select1Value - 1);
+      const isLeftMostTile = Math.floor(i % select1Value) == 0;
+      const isRightMostTile = Math.floor(i % select1Value) == (select1Value - 1);
+      if (!isTopTile && tiles[i - select1Value].className != "tile-open") {// 一番上でない → 上をクリック
         array.push(tiles[i - select1Value]);
       }
-      if (Math.floor(i / select1Value) != (select1Value - 1) && tiles[i + select1Value].className != "tile-open") {// 一番下でない → 下をクリック
+      if (!isBottomTile && tiles[i + select1Value].className != "tile-open") {// 一番下でない → 下をクリック
         array.push(tiles[i + select1Value]);
       }
-      if (Math.floor(i % select1Value) != 0 && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
+      if (!isLeftMostTile && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
         array.push(tiles[i - 1]);
       }
-      if (Math.floor(i % select1Value) != (select1Value - 1) && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
+      if (!isRightMostTile && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
         array.push(tiles[i + 1]);
       }
-      if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != 0 && tiles[i - select1Value - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
+      if (!isTopTile && !isLeftMostTile && tiles[i - select1Value - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
         array.push(tiles[i - select1Value - 1]);
       }
-      if (Math.floor(i / select1Value) != 0 && Math.floor(i % select1Value) != (select1Value - 1) && tiles[i - select1Value + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
+      if (!isTopTile && !isRightMostTile && tiles[i - select1Value + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
         array.push(tiles[i - select1Value + 1]);
       }
-      if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != 0 && tiles[i + select1Value - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
+      if (!isBottomTile && !isLeftMostTile && tiles[i + select1Value - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
         array.push(tiles[i + select1Value - 1]);
       }
-      if (Math.floor(i / select1Value) != (select1Value - 1) && Math.floor(i % select1Value) != (select1Value - 1) && tiles[i + select1Value + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
+      if (!isBottomTile && !isRightMostTile && tiles[i + select1Value + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
         array.push(tiles[i + select1Value + 1]);
       }
       array.forEach (tile => {
