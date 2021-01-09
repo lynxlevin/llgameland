@@ -4,7 +4,6 @@ window.addEventListener("load", () => {
   }
   "use strict";
   revealContents();
-  let gameRestartBtn = document.getElementById("restart-game");
   let helperBtn = document.getElementById("helper-btn");
   const select1 = document.getElementById("select1");
   const select2 = document.getElementById("select2");
@@ -19,7 +18,7 @@ window.addEventListener("load", () => {
   let gameTimer = NaN;
   prepareGame();
   startGame();
-  gameRestartBtn.onclick = startGame;
+  document.getElementById("restart-game").onclick = startGame;
 
   function startGame() {
     let board = document.getElementById("board");
