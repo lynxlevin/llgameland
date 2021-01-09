@@ -6,8 +6,8 @@ window.addEventListener("load", () => {
   revealContents();
   let gameRestartBtn = document.getElementById("restart-game");
   let helperBtn = document.getElementById("helper-btn");
-  let select1 = document.getElementById("select1");
-  let select2 = document.getElementById("select2");
+  const select1 = document.getElementById("select1");
+  const select2 = document.getElementById("select2");
   let plowBtn = document.getElementById("game-btn1");
   let acornBtn = document.getElementById("game-btn2");
   let easyBtn = document.getElementById("difficulty1");
@@ -23,20 +23,18 @@ window.addEventListener("load", () => {
 
   function startGame() {
     let board = document.getElementById("board");
-    let select1Value = Number(document.getElementById("select1").value);
-    let select2Value = Number(document.getElementById("select2").value);
     let helperMessage = document.getElementById("helper-btn-message");
     let clearMessage = document.getElementById("clear-message");
     let clearImage = document.getElementById("clear-image");
     let tiles = [];
     let acorns = [];
-    let acornCount = select2.value;
+    let remainingAcorns = select2.value;
     let gameInAction = true;
     let firstClick = true;
     document.getElementById("show-settings-check").checked = false;
     prepareContents();
     prepareBoard(tiles);
-    changeAcornCount();
+    changeRemainingAcorns();
     buryAcorns(acorns);
     countNearbyAcorns(tiles, acorns);
     helperBtn.onclick = firstStep;
@@ -52,17 +50,17 @@ window.addEventListener("load", () => {
     function prepareBoard(tiles) {
       board.innerHTML = "";
       board.className = "minesweeper-board";
-      for (let i = 0 ; i < select1Value ; i++) {
+      for (let i = 0; i < Number(select1.value); i++) {
         let tr = document.createElement("tr");
-        for (let j = 0 ; j < select1Value ; j++) {
-          let index = i * select1Value + j
+        for (let j = 0; j < Number(select1.value); j++) {
+          let index = i * Number(select1.value) + j
           let td = document.createElement("td");
           td.className = "tile-closed";
           td.index = index;
           td.id = `tile${index}`
-          td.style.height = `${65 / select1Value}vmin`;
-          td.style.width = `${65 / select1Value}vmin`;
-          // td.style.fontSize = `${35 / select1Value}vmin`;
+          td.style.height = `${65 / Number(select1.value)}vmin`;
+          td.style.width = `${65 / Number(select1.value)}vmin`;
+          // td.style.fontSize = `${35 / Number(select1.value)}vmin`;
           td.onclick = click;
           tr.appendChild(td);
           tiles.push(td)
@@ -70,15 +68,15 @@ window.addEventListener("load", () => {
         board.appendChild(tr);
       }
     }
-    function changeAcornCount() {
-      document.getElementById("info1").textContent = `残りのどんぐりの数 ${acornCount}`;
+    function changeRemainingAcorns() {
+      document.getElementById("info1").textContent = `残りのどんぐりの数 ${remainingAcorns}`;
     }
     function buryAcorns(acorns) {
       let tileIndexes = [];
-      for (let i = 0 ; i < select1Value * select1Value ; i++) {
+      for (let i = 0; i < Number(select1.value) * Number(select1.value); i++) {
         tileIndexes.push(i);
       }
-      for (let i = 0 ; i < select2Value ; i++) {
+      for (let i = 0; i < select2.value; i++) {
         let random = Math.floor(Math.random() * tileIndexes.length);
         let buriedTile = tileIndexes[random];
         tileIndexes.splice(random, 1);
@@ -93,39 +91,39 @@ window.addEventListener("load", () => {
         if (tile.value == "A") {
           return null;
         }
-        const isTopTile = Math.floor(i / select1Value) == 0;
-        const isBottomTile = Math.floor(i / select1Value) == (select1Value - 1);
-        const isLeftMostTile = Math.floor(i % select1Value) == 0;
-        const isRightMostTile = Math.floor(i % select1Value) == (select1Value - 1);
+        const isTopTile = Math.floor(i / Number(select1.value)) == 0;
+        const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
+        const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
+        const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
 
-        let acornCount = 0;
-        if (!isTopTile && acorns.includes(i - select1Value)) {// 一番上でない → 上を見る
-          acornCount++;
+        let adjacentAcorns = 0;
+        if (!isTopTile && acorns.includes(i - Number(select1.value))) {// 一番上でない → 上を見る
+          adjacentAcorns++;
         }
-        if (!isBottomTile && acorns.includes(i + select1Value)) {// 一番下でない → 下を見る
-          acornCount++;
+        if (!isBottomTile && acorns.includes(i + Number(select1.value))) {// 一番下でない → 下を見る
+          adjacentAcorns++;
         }
         if (!isLeftMostTile && acorns.includes(i - 1)) {// 一番左でない → 左を見る
-          acornCount++;
+          adjacentAcorns++;
         }
         if (!isRightMostTile && acorns.includes(i + 1)) {// 一番右でない → 右を見る
-          acornCount++;
+          adjacentAcorns++;
         }
-        if (!isTopTile && !isLeftMostTile && acorns.includes(i - select1Value - 1)) {// 一番上でなく、左でもない → 左上を見る
-          acornCount++;
+        if (!isTopTile && !isLeftMostTile && acorns.includes(i - Number(select1.value) - 1)) {// 一番上でなく、左でもない → 左上を見る
+          adjacentAcorns++;
         }
-        if (!isTopTile && !isRightMostTile && acorns.includes(i - select1Value + 1)) {// 一番上でなく、右でもない → 右上を見る
-          acornCount++;
+        if (!isTopTile && !isRightMostTile && acorns.includes(i - Number(select1.value) + 1)) {// 一番上でなく、右でもない → 右上を見る
+          adjacentAcorns++;
         }
-        if (!isBottomTile && !isLeftMostTile && acorns.includes(i + select1Value - 1)) {// 一番下でなく、左でもない → 左下を見る
-          acornCount++;
+        if (!isBottomTile && !isLeftMostTile && acorns.includes(i + Number(select1.value) - 1)) {// 一番下でなく、左でもない → 左下を見る
+          adjacentAcorns++;
         }
-        if (!isBottomTile && !isRightMostTile && acorns.includes(i + select1Value + 1)) {// 一番下でなく、右でもない → 右下を見る
-          acornCount++;
+        if (!isBottomTile && !isRightMostTile && acorns.includes(i + Number(select1.value) + 1)) {// 一番下でなく、右でもない → 右下を見る
+          adjacentAcorns++;
         }
-        if (acornCount != 0) {
-          tile.textContent = acornCount;
-          tile.value = acornCount;
+        if (adjacentAcorns != 0) {
+          tile.textContent = adjacentAcorns;
+          tile.value = adjacentAcorns;
         }
       });
     }
@@ -165,26 +163,26 @@ window.addEventListener("load", () => {
         gameOver();
       } else if (clicked.value != null) {
         clicked.className = "tile-open";
-        clicked.style.fontSize = `${35 / select1Value}vmin`;
+        clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
         judge();
       } else if (clicked.value == null) {
         clicked.className = "tile-open";
-        clicked.style.fontSize = `${35 / select1Value}vmin`;
+        clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
         clickBlank(clicked);
       }
     }
     function clickBlank(clicked) {
       let i = clicked.index;
       let array = [];
-      const isTopTile = Math.floor(i / select1Value) == 0;
-      const isBottomTile = Math.floor(i / select1Value) == (select1Value - 1);
-      const isLeftMostTile = Math.floor(i % select1Value) == 0;
-      const isRightMostTile = Math.floor(i % select1Value) == (select1Value - 1);
-      if (!isTopTile && tiles[i - select1Value].className != "tile-open") {// 一番上でない → 上をクリック
-        array.push(tiles[i - select1Value]);
+      const isTopTile = Math.floor(i / Number(select1.value)) == 0;
+      const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
+      const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
+      const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
+      if (!isTopTile && tiles[i - Number(select1.value)].className != "tile-open") {// 一番上でない → 上をクリック
+        array.push(tiles[i - Number(select1.value)]);
       }
-      if (!isBottomTile && tiles[i + select1Value].className != "tile-open") {// 一番下でない → 下をクリック
-        array.push(tiles[i + select1Value]);
+      if (!isBottomTile && tiles[i + Number(select1.value)].className != "tile-open") {// 一番下でない → 下をクリック
+        array.push(tiles[i + Number(select1.value)]);
       }
       if (!isLeftMostTile && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
         array.push(tiles[i - 1]);
@@ -192,27 +190,27 @@ window.addEventListener("load", () => {
       if (!isRightMostTile && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
         array.push(tiles[i + 1]);
       }
-      if (!isTopTile && !isLeftMostTile && tiles[i - select1Value - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
-        array.push(tiles[i - select1Value - 1]);
+      if (!isTopTile && !isLeftMostTile && tiles[i - Number(select1.value) - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
+        array.push(tiles[i - Number(select1.value) - 1]);
       }
-      if (!isTopTile && !isRightMostTile && tiles[i - select1Value + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
-        array.push(tiles[i - select1Value + 1]);
+      if (!isTopTile && !isRightMostTile && tiles[i - Number(select1.value) + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
+        array.push(tiles[i - Number(select1.value) + 1]);
       }
-      if (!isBottomTile && !isLeftMostTile && tiles[i + select1Value - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
-        array.push(tiles[i + select1Value - 1]);
+      if (!isBottomTile && !isLeftMostTile && tiles[i + Number(select1.value) - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
+        array.push(tiles[i + Number(select1.value) - 1]);
       }
-      if (!isBottomTile && !isRightMostTile && tiles[i + select1Value + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
-        array.push(tiles[i + select1Value + 1]);
+      if (!isBottomTile && !isRightMostTile && tiles[i + Number(select1.value) + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
+        array.push(tiles[i + Number(select1.value) + 1]);
       }
-      array.forEach (tile => {
+      array.forEach(tile => {
         if (tile.className == "tile-open" || tile.className == "acorn-mark") {
           return null;
         } else if (tile.value != null) {
           tile.className = "tile-open";
-          tile.style.fontSize = `${35 / select1Value}vmin`;
+          tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
         } else if (tile.value == null) {
           tile.className = "tile-open";
-          tile.style.fontSize = `${35 / select1Value}vmin`;
+          tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
           clickBlank(tile);
         }
       })
@@ -231,19 +229,19 @@ window.addEventListener("load", () => {
         return null;
       } else if (clicked.className == "acorn-mark") {
         clicked.className = "tile-closed";
-        acornCount++;
-        changeAcornCount();
+        remainingAcorns++;
+        changeRemainingAcorns();
       } else {
         clicked.className = "acorn-mark";
-        acornCount--;
-        changeAcornCount();
+        remainingAcorns--;
+        changeRemainingAcorns();
         judge();
       }
     }
     function startTimer() {
       let elapsedTime = 0;
       gameTimer = setInterval(() => {
-        elapsedTime ++;
+        elapsedTime++;
         let hour = Math.floor(elapsedTime / 3600);
         let minute = Math.floor(elapsedTime / 60);
         let second = Math.floor(elapsedTime % 60);
@@ -261,7 +259,7 @@ window.addEventListener("load", () => {
     }
     function judge() {
       let closedTiles = document.getElementsByClassName("tile-closed");
-      if (closedTiles.length == 0 && acornCount == 0) {
+      if (closedTiles.length == 0 && remainingAcorns == 0) {
         clearInterval(gameTimer);
         clearMessage.textContent = "おめでとう！リスも大喜び";
         clearImage.className = "squirrel-happy";
@@ -332,8 +330,8 @@ window.addEventListener("load", () => {
     acornBtn.className = "acorn-btn game-btn-on";
   }
   function checkPath() {
-      const path = location.pathname;
-      if (path === "/games/minesweeper") {return true};
+    const path = location.pathname;
+    if (path === "/games/minesweeper") { return true };
   }
   function revealContents() {
     document.getElementById("top-btn-wrapper").style.display = "";
