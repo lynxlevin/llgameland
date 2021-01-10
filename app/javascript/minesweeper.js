@@ -4,55 +4,103 @@ window.addEventListener("load", () => {
   }
   "use strict";
   revealContents();
-  let helperBtn = document.getElementById("helper-btn");
   const select1 = document.getElementById("select1");
   const select2 = document.getElementById("select2");
   let plowBtn = document.getElementById("game-btn1");
   let acornBtn = document.getElementById("game-btn2");
-  let easyBtn = document.getElementById("difficulty1");
-  let mediumBtn = document.getElementById("difficulty2");
-  let hardBtn = document.getElementById("difficulty3");
-  let clearMessage = document.getElementById("clear-message");
-  let helperMessage = document.getElementById("helper-btn-message");
-  let clearImage = document.getElementById("clear-image");
-  let difficulty = "EASY";
-  let difficultyValue = 0.123;
-  let acornModeCode = false;
   let gameTimer = NaN;
-
   let tiles = [];
-  let acorns = [];
-  let firstClick = true;
-  let gameInAction = true;
-  let remainingAcorns = select2.value;
+  let isAcornMode = false;
+  let isFirstClick;
+  let gameInAction;
+  let remainingAcorns;
   initializeGame();
   restartGame();
   document.getElementById("restart-game").onclick = restartGame;
 
+  function checkPath() {
+    const path = location.pathname;
+    if (path === "/games/minesweeper") { return true };
+  }
+  function revealContents() {
+    document.getElementById("top-btn-wrapper").style.display = "";
+    document.getElementById("inputs-wrapper").style.display = "";
+    document.getElementById("difficulty-btns-wrapper").style.display = "";
+    document.getElementById("select-boxes-wrapper").style.display = "";
+    document.getElementById("game-btn-wrapper").style.display = "";
+    document.getElementById("game-info-wrapper").style.display = "";
+    document.getElementById("clear-image").style.display = "";
+  }
+  function initializeGame() {
+    document.getElementById("helper-btn").textContent = "はじめの第一歩"
+    document.getElementById("helper-btn").onclick = firstStep;
+    document.getElementById("select1-message").textContent = "※1辺のマスの数";
+    document.getElementById("select2-message").textContent = "※どんぐりの数";
+    select1.value = 9;
+    select2.value = 10;
+    plowBtn.className = "plow-btn game-btn-on";
+    document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
+    acornBtn.className = "acorn-btn game-btn-off";
+    document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
+    document.getElementById("difficulty1").onclick = easyMode;
+    document.getElementById("difficulty2").onclick = mediumMode;
+    document.getElementById("difficulty3").onclick = hardMode;
+    plowBtn.onclick = plowMode;
+    acornBtn.onclick = acornMode;
+    document.addEventListener("keydown", changeClickMode);
+    let difficulty = "EASY";
+    let difficultyValue = 0.123;
+    select1.addEventListener("input", () => {
+      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficulty}`
+    });
+    function easyMode() {
+      select1.value = 9;
+      select2.value = 10;
+      difficulty = "EASY";
+      difficultyValue = 0.123;
+      document.getElementById("input-info").textContent = ""
+      restartGame();
+    }
+    function mediumMode() {
+      select1.value = 16;
+      select2.value = 40;
+      difficulty = "MEDIUM";
+      difficultyValue = 0.15625;
+      document.getElementById("input-info").textContent = ""
+      restartGame();
+    }
+    function hardMode() {
+      select1.value = 22;
+      select2.value = 99;
+      difficulty = "HARD";
+      difficultyValue = 0.2045;
+      document.getElementById("input-info").textContent = ""
+      restartGame();
+    }
+  }
   function restartGame() {
-    let board = document.getElementById("board");
-    tiles = [];
-    acorns = [];
-    remainingAcorns = select2.value;
-    gameInAction = true;
-    firstClick = true;
-    document.getElementById("show-settings-check").checked = false;
-    prepareContents();
-    prepareBoard(tiles);
-    changeRemainingAcorns();
-    buryAcorns(acorns);
-    countNearbyAcorns(tiles, acorns);
-    helperBtn.onclick = firstStep;
+    resetContents();
+    resetBoard();
+    let acorns = [];
+    buryAcorns();
+    countNearbyAcorns();
 
-    function prepareContents() {
+    function resetContents() {
+      tiles = [];
+      gameInAction = true; //リファクタ removeEventListenerで代替できるか？
+      isFirstClick = true;
       clearInterval(gameTimer);
       document.getElementById("timer").textContent = `00:00:00`;
-      helperBtn.className = "";
-      helperMessage.textContent = "";
-      clearMessage.textContent = "";
-      clearImage.className = "hidden squirrel-happy";
+      document.getElementById("show-settings-check").checked = false;
+      document.getElementById("helper-btn").className = "";
+      document.getElementById("helper-btn-message").textContent = "";
+      remainingAcorns = select2.value;
+      changeRemainingAcorns();
+      document.getElementById("clear-message").textContent = "";
+      document.getElementById("clear-image").className = "hidden squirrel-happy";
     }
-    function prepareBoard(tiles) {
+    function resetBoard() {
+      let board = document.getElementById("board");
       board.innerHTML = "";
       board.className = "minesweeper-board";
       for (let i = 0; i < Number(select1.value); i++) {
@@ -72,22 +120,21 @@ window.addEventListener("load", () => {
         board.appendChild(tr);
       }
     }
-    function buryAcorns(acorns) {
-      let tileIndexes = [];
-      for (let i = 0; i < Number(select1.value) * Number(select1.value); i++) {
+    function buryAcorns() {
+      const tileIndexes = [];
+      for (let i = 0; i < Number(select1.value) * Number(select1.value); i++) { //リファクタ 二乗の書き換え
         tileIndexes.push(i);
       }
       for (let i = 0; i < select2.value; i++) {
-        let random = Math.floor(Math.random() * tileIndexes.length);
-        let buriedTile = tileIndexes[random];
+        const random = Math.floor(Math.random() * tileIndexes.length);
         tileIndexes.splice(random, 1);
-        acorns.push(buriedTile);
+        acorns.push(tileIndexes[random]);
       }
       acorns.forEach((acorn) => {
         tiles[acorn].value = "A"
       });
     }
-    function countNearbyAcorns(tiles, acorns) {
+    function countNearbyAcorns() {
       tiles.forEach((tile, i) => {
         if (tile.value == "A") {
           return null;
@@ -130,18 +177,18 @@ window.addEventListener("load", () => {
     }
   }
   function click(e) {
-    if (firstClick) {
+    if (isFirstClick) {
       startTimer();
-      firstClick = false;
+      isFirstClick = false;
     }
-    if (acornModeCode) {
+    if (isAcornMode) {
       rightClick(e);
       return null;
     }
     if (!gameInAction) {
       return null;
     }
-    let clicked = e.srcElement;
+    const clicked = e.srcElement;
     if (clicked.className == "tile-open" || clicked.className == "acorn-mark") {
       return null;
     } else if (clicked.value == "A") {
@@ -158,8 +205,8 @@ window.addEventListener("load", () => {
     }
   }
   function clickBlank(clicked) {
-    let i = clicked.index;
-    let array = [];
+    const i = clicked.index;
+    const array = [];
     const isTopTile = Math.floor(i / Number(select1.value)) == 0;
     const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
     const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
@@ -203,14 +250,14 @@ window.addEventListener("load", () => {
     judge();
   }
   function rightClick(e) {
-    if (firstClick) {
+    if (isFirstClick) {
       startTimer();
-      firstClick = false;
+      isFirstClick = false;
     }
     if (!gameInAction) {
       return null;
     }
-    let clicked = e.srcElement;
+    const clicked = e.srcElement;
     if (clicked.className == "tile-open") {
       return null;
     } else if (clicked.className == "acorn-mark") {
@@ -228,21 +275,21 @@ window.addEventListener("load", () => {
     document.getElementById("info1").textContent = `残りのどんぐりの数 ${remainingAcorns}`;
   }
   function judge() {
-    let closedTiles = document.getElementsByClassName("tile-closed");
+    const closedTiles = document.getElementsByClassName("tile-closed");
     if (closedTiles.length == 0 && remainingAcorns == 0) {
       clearInterval(gameTimer);
-      clearMessage.textContent = "おめでとう！リスも大喜び";
-      clearImage.className = "squirrel-happy";
+      document.getElementById("clear-message").textContent = "おめでとう！リスも大喜び";
+      document.getElementById("clear-image").className = "squirrel-happy";
       board.className = "minesweeper-board-clear"
     }
   }
   function gameOver() {
     clearInterval(gameTimer);
-    clearMessage.textContent = "どんぐり踏んじゃった";
+    document.getElementById("clear-message").textContent = "どんぐり踏んじゃった";
     gameInAction = false;
   }
   function firstStep(e) {
-    plowBtn.click();
+    plowMode();
     document.getElementById("show-settings-check").checked = false;
     if (tiles.find(tile => tile.value == null) != null) {
       e.srcElement.className = "hidden";
@@ -253,28 +300,8 @@ window.addEventListener("load", () => {
         firstStep(e);
       }
     } else {
-      helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+      document.getElementById("helper-btn-message").textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
     }
-  }
-  function initializeGame() {
-    helperBtn.textContent = "はじめの第一歩"
-    document.getElementById("select1-message").textContent = "※1辺のマスの数";
-    document.getElementById("select2-message").textContent = "※どんぐりの数";
-    select1.value = 9;
-    select2.value = 10;
-    plowBtn.className = "plow-btn game-btn-on";
-    document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
-    acornBtn.className = "acorn-btn game-btn-off";
-    document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
-    easyBtn.onclick = easyMode;
-    mediumBtn.onclick = mediumMode;
-    hardBtn.onclick = hardMode;
-    plowBtn.onclick = plowMode;
-    acornBtn.onclick = acornMode;
-    document.addEventListener("keydown", pressKey);
-    select1.addEventListener("input", () => {
-      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficulty}`
-    });
   }
   function startTimer() {
     let elapsedTime = 0;
@@ -289,58 +316,21 @@ window.addEventListener("load", () => {
       document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
     }, 1000);
   }
-  function easyMode() {
-    select1.value = 9;
-    select2.value = 10;
-    difficulty = "EASY";
-    difficultyValue = 0.123;
-    document.getElementById("input-info").textContent = ""
-    restartGame();
-  }
-  function mediumMode() {
-    select1.value = 16;
-    select2.value = 40;
-    difficulty = "MEDIUM";
-    difficultyValue = 0.15625;
-    document.getElementById("input-info").textContent = ""
-    restartGame();
-  }
-  function hardMode() {
-    select1.value = 22;
-    select2.value = 99;
-    difficulty = "HARD";
-    difficultyValue = 0.2045;
-    document.getElementById("input-info").textContent = ""
-    restartGame();
-  }
-  function pressKey(e) {
+  function changeClickMode(e) {
     if (e.key == "z") {
       plowMode();
     } else if (e.key == "x") {
       acornMode();
     }
   }
-  function plowMode(e) {
-    acornModeCode = false;
+  function plowMode() {
+    isAcornMode = false;
     plowBtn.className = "plow-btn game-btn-on";
     acornBtn.className = "acorn-btn game-btn-off";
   }
-  function acornMode(e) {
-    acornModeCode = true;
+  function acornMode() {
+    isAcornMode = true;
     plowBtn.className = "plow-btn game-btn-off";
     acornBtn.className = "acorn-btn game-btn-on";
-  }
-  function checkPath() {
-    const path = location.pathname;
-    if (path === "/games/minesweeper") { return true };
-  }
-  function revealContents() {
-    document.getElementById("top-btn-wrapper").style.display = "";
-    document.getElementById("inputs-wrapper").style.display = "";
-    document.getElementById("difficulty-btns-wrapper").style.display = "";
-    document.getElementById("select-boxes-wrapper").style.display = "";
-    document.getElementById("game-btn-wrapper").style.display = "";
-    document.getElementById("game-info-wrapper").style.display = "";
-    document.getElementById("clear-image").style.display = "";
   }
 });
