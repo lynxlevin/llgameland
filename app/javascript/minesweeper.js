@@ -12,24 +12,30 @@ window.addEventListener("load", () => {
   let easyBtn = document.getElementById("difficulty1");
   let mediumBtn = document.getElementById("difficulty2");
   let hardBtn = document.getElementById("difficulty3");
+  let clearMessage = document.getElementById("clear-message");
+  let helperMessage = document.getElementById("helper-btn-message");
+  let clearImage = document.getElementById("clear-image");
   let difficulty = "EASY";
   let difficultyValue = 0.123;
   let acornModeCode = false;
   let gameTimer = NaN;
-  prepareGame();
-  startGame();
-  document.getElementById("restart-game").onclick = startGame;
 
-  function startGame() {
+  let tiles = [];
+  let acorns = [];
+  let firstClick = true;
+  let gameInAction = true;
+  let remainingAcorns = select2.value;
+  initializeGame();
+  restartGame();
+  document.getElementById("restart-game").onclick = restartGame;
+
+  function restartGame() {
     let board = document.getElementById("board");
-    let helperMessage = document.getElementById("helper-btn-message");
-    let clearMessage = document.getElementById("clear-message");
-    let clearImage = document.getElementById("clear-image");
-    let tiles = [];
-    let acorns = [];
-    let remainingAcorns = select2.value;
-    let gameInAction = true;
-    let firstClick = true;
+    tiles = [];
+    acorns = [];
+    remainingAcorns = select2.value;
+    gameInAction = true;
+    firstClick = true;
     document.getElementById("show-settings-check").checked = false;
     prepareContents();
     prepareBoard(tiles);
@@ -59,16 +65,12 @@ window.addEventListener("load", () => {
           td.id = `tile${index}`
           td.style.height = `${65 / Number(select1.value)}vmin`;
           td.style.width = `${65 / Number(select1.value)}vmin`;
-          // td.style.fontSize = `${35 / Number(select1.value)}vmin`;
           td.onclick = click;
           tr.appendChild(td);
           tiles.push(td)
         }
         board.appendChild(tr);
       }
-    }
-    function changeRemainingAcorns() {
-      document.getElementById("info1").textContent = `残りのどんぐりの数 ${remainingAcorns}`;
     }
     function buryAcorns(acorns) {
       let tileIndexes = [];
@@ -126,148 +128,135 @@ window.addEventListener("load", () => {
         }
       });
     }
-
-    function firstStep(e) {
-      plowBtn.click();
-      document.getElementById("show-settings-check").checked = false;
-      if (tiles.find(tile => tile.value == null) != null) {
-        e.srcElement.className = "hidden";
-        let random = Math.floor(Math.random() * tiles.length);
-        if (tiles[random].value == null) {
-          tiles[random].click();
-        } else {
-          firstStep(e);
-        }
-      } else {
-        helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
-      }
+  }
+  function click(e) {
+    if (firstClick) {
+      startTimer();
+      firstClick = false;
     }
-    function click(e) {
-      if (firstClick) {
-        startTimer();
-        firstClick = false;
-      }
-      if (acornModeCode) {
-        rightClick(e);
-        return null;
-      }
-      if (!gameInAction) {
-        return null;
-      }
-      let clicked = e.srcElement;
-      if (clicked.className == "tile-open" || clicked.className == "acorn-mark") {
-        return null;
-      } else if (clicked.value == "A") {
-        clicked.className = "tile-broken";
-        gameOver();
-      } else if (clicked.value != null) {
-        clicked.className = "tile-open";
-        clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
-        judge();
-      } else if (clicked.value == null) {
-        clicked.className = "tile-open";
-        clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
-        clickBlank(clicked);
-      }
+    if (acornModeCode) {
+      rightClick(e);
+      return null;
     }
-    function clickBlank(clicked) {
-      let i = clicked.index;
-      let array = [];
-      const isTopTile = Math.floor(i / Number(select1.value)) == 0;
-      const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
-      const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
-      const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
-      if (!isTopTile && tiles[i - Number(select1.value)].className != "tile-open") {// 一番上でない → 上をクリック
-        array.push(tiles[i - Number(select1.value)]);
-      }
-      if (!isBottomTile && tiles[i + Number(select1.value)].className != "tile-open") {// 一番下でない → 下をクリック
-        array.push(tiles[i + Number(select1.value)]);
-      }
-      if (!isLeftMostTile && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
-        array.push(tiles[i - 1]);
-      }
-      if (!isRightMostTile && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
-        array.push(tiles[i + 1]);
-      }
-      if (!isTopTile && !isLeftMostTile && tiles[i - Number(select1.value) - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
-        array.push(tiles[i - Number(select1.value) - 1]);
-      }
-      if (!isTopTile && !isRightMostTile && tiles[i - Number(select1.value) + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
-        array.push(tiles[i - Number(select1.value) + 1]);
-      }
-      if (!isBottomTile && !isLeftMostTile && tiles[i + Number(select1.value) - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
-        array.push(tiles[i + Number(select1.value) - 1]);
-      }
-      if (!isBottomTile && !isRightMostTile && tiles[i + Number(select1.value) + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
-        array.push(tiles[i + Number(select1.value) + 1]);
-      }
-      array.forEach(tile => {
-        if (tile.className == "tile-open" || tile.className == "acorn-mark") {
-          return null;
-        } else if (tile.value != null) {
-          tile.className = "tile-open";
-          tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
-        } else if (tile.value == null) {
-          tile.className = "tile-open";
-          tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
-          clickBlank(tile);
-        }
-      })
+    if (!gameInAction) {
+      return null;
+    }
+    let clicked = e.srcElement;
+    if (clicked.className == "tile-open" || clicked.className == "acorn-mark") {
+      return null;
+    } else if (clicked.value == "A") {
+      clicked.className = "tile-broken";
+      gameOver();
+    } else if (clicked.value != null) {
+      clicked.className = "tile-open";
+      clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
       judge();
-    }
-    function rightClick(e) {
-      if (firstClick) {
-        startTimer();
-        firstClick = false;
-      }
-      if (!gameInAction) {
-        return null;
-      }
-      let clicked = e.srcElement;
-      if (clicked.className == "tile-open") {
-        return null;
-      } else if (clicked.className == "acorn-mark") {
-        clicked.className = "tile-closed";
-        remainingAcorns++;
-        changeRemainingAcorns();
-      } else {
-        clicked.className = "acorn-mark";
-        remainingAcorns--;
-        changeRemainingAcorns();
-        judge();
-      }
-    }
-    function startTimer() {
-      let elapsedTime = 0;
-      gameTimer = setInterval(() => {
-        elapsedTime++;
-        let hour = Math.floor(elapsedTime / 3600);
-        let minute = Math.floor(elapsedTime / 60);
-        let second = Math.floor(elapsedTime % 60);
-        hour = ("0" + hour).slice(-2);
-        minute = ("0" + minute).slice(-2);
-        second = ("0" + second).slice(-2);
-        document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
-      }, 1000);
-    }
-
-    function gameOver() {
-      clearInterval(gameTimer);
-      clearMessage.textContent = "どんぐり踏んじゃった";
-      gameInAction = false;
-    }
-    function judge() {
-      let closedTiles = document.getElementsByClassName("tile-closed");
-      if (closedTiles.length == 0 && remainingAcorns == 0) {
-        clearInterval(gameTimer);
-        clearMessage.textContent = "おめでとう！リスも大喜び";
-        clearImage.className = "squirrel-happy";
-        board.className = "minesweeper-board-clear"
-      }
+    } else if (clicked.value == null) {
+      clicked.className = "tile-open";
+      clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
+      clickBlank(clicked);
     }
   }
-
-  function prepareGame() {
+  function clickBlank(clicked) {
+    let i = clicked.index;
+    let array = [];
+    const isTopTile = Math.floor(i / Number(select1.value)) == 0;
+    const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
+    const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
+    const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
+    if (!isTopTile && tiles[i - Number(select1.value)].className != "tile-open") {// 一番上でない → 上をクリック
+      array.push(tiles[i - Number(select1.value)]);
+    }
+    if (!isBottomTile && tiles[i + Number(select1.value)].className != "tile-open") {// 一番下でない → 下をクリック
+      array.push(tiles[i + Number(select1.value)]);
+    }
+    if (!isLeftMostTile && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
+      array.push(tiles[i - 1]);
+    }
+    if (!isRightMostTile && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
+      array.push(tiles[i + 1]);
+    }
+    if (!isTopTile && !isLeftMostTile && tiles[i - Number(select1.value) - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
+      array.push(tiles[i - Number(select1.value) - 1]);
+    }
+    if (!isTopTile && !isRightMostTile && tiles[i - Number(select1.value) + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
+      array.push(tiles[i - Number(select1.value) + 1]);
+    }
+    if (!isBottomTile && !isLeftMostTile && tiles[i + Number(select1.value) - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
+      array.push(tiles[i + Number(select1.value) - 1]);
+    }
+    if (!isBottomTile && !isRightMostTile && tiles[i + Number(select1.value) + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
+      array.push(tiles[i + Number(select1.value) + 1]);
+    }
+    array.forEach(tile => {
+      if (tile.className == "tile-open" || tile.className == "acorn-mark") {
+        return null;
+      } else if (tile.value != null) {
+        tile.className = "tile-open";
+        tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
+      } else if (tile.value == null) {
+        tile.className = "tile-open";
+        tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
+        clickBlank(tile);
+      }
+    })
+    judge();
+  }
+  function rightClick(e) {
+    if (firstClick) {
+      startTimer();
+      firstClick = false;
+    }
+    if (!gameInAction) {
+      return null;
+    }
+    let clicked = e.srcElement;
+    if (clicked.className == "tile-open") {
+      return null;
+    } else if (clicked.className == "acorn-mark") {
+      clicked.className = "tile-closed";
+      remainingAcorns++;
+      changeRemainingAcorns();
+    } else {
+      clicked.className = "acorn-mark";
+      remainingAcorns--;
+      changeRemainingAcorns();
+      judge();
+    }
+  }
+  function changeRemainingAcorns() {
+    document.getElementById("info1").textContent = `残りのどんぐりの数 ${remainingAcorns}`;
+  }
+  function judge() {
+    let closedTiles = document.getElementsByClassName("tile-closed");
+    if (closedTiles.length == 0 && remainingAcorns == 0) {
+      clearInterval(gameTimer);
+      clearMessage.textContent = "おめでとう！リスも大喜び";
+      clearImage.className = "squirrel-happy";
+      board.className = "minesweeper-board-clear"
+    }
+  }
+  function gameOver() {
+    clearInterval(gameTimer);
+    clearMessage.textContent = "どんぐり踏んじゃった";
+    gameInAction = false;
+  }
+  function firstStep(e) {
+    plowBtn.click();
+    document.getElementById("show-settings-check").checked = false;
+    if (tiles.find(tile => tile.value == null) != null) {
+      e.srcElement.className = "hidden";
+      let random = Math.floor(Math.random() * tiles.length);
+      if (tiles[random].value == null) {
+        tiles[random].click();
+      } else {
+        firstStep(e);
+      }
+    } else {
+      helperMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+    }
+  }
+  function initializeGame() {
     helperBtn.textContent = "はじめの第一歩"
     document.getElementById("select1-message").textContent = "※1辺のマスの数";
     document.getElementById("select2-message").textContent = "※どんぐりの数";
@@ -287,13 +276,26 @@ window.addEventListener("load", () => {
       document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficulty}`
     });
   }
+  function startTimer() {
+    let elapsedTime = 0;
+    gameTimer = setInterval(() => {
+      elapsedTime++;
+      let hour = Math.floor(elapsedTime / 3600);
+      let minute = Math.floor(elapsedTime / 60);
+      let second = Math.floor(elapsedTime % 60);
+      hour = ("0" + hour).slice(-2);
+      minute = ("0" + minute).slice(-2);
+      second = ("0" + second).slice(-2);
+      document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
+    }, 1000);
+  }
   function easyMode() {
     select1.value = 9;
     select2.value = 10;
     difficulty = "EASY";
     difficultyValue = 0.123;
     document.getElementById("input-info").textContent = ""
-    startGame();
+    restartGame();
   }
   function mediumMode() {
     select1.value = 16;
@@ -301,7 +303,7 @@ window.addEventListener("load", () => {
     difficulty = "MEDIUM";
     difficultyValue = 0.15625;
     document.getElementById("input-info").textContent = ""
-    startGame();
+    restartGame();
   }
   function hardMode() {
     select1.value = 22;
@@ -309,7 +311,7 @@ window.addEventListener("load", () => {
     difficulty = "HARD";
     difficultyValue = 0.2045;
     document.getElementById("input-info").textContent = ""
-    startGame();
+    restartGame();
   }
   function pressKey(e) {
     if (e.key == "z") {
