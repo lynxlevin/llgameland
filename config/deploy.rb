@@ -1,5 +1,5 @@
 # capistranoのバージョンを記載。固定のバージョンを利用し続け、バージョン変更によるトラブルを防止する
-lock '3.14.1' # gemfile.lock参照
+lock '3.15.0' # gemfile.lock参照
 
 # Capistranoのログの表示に利用する
 set :application, 'llgameland'
@@ -15,7 +15,7 @@ set :rbenv_ruby, '2.6.5' # ruby -v で確認
 
 # どの公開鍵を利用してデプロイするか
 set :ssh_options, auth_methods: ['publickey'],
-                                  keys: ['~/.ssh/awsec2user.pem'] 
+                                  keys: ['~/.ssh/awsec2user.pem']
 
 # プロセス番号を記載したファイルの場所
 set :unicorn_pid, -> { "#{shared_path}/tmp/pids/unicorn.pid" }
