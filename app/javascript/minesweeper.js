@@ -127,8 +127,8 @@ window.addEventListener("load", () => {
       }
       for (let i = 0; i < select2.value; i++) {
         const random = Math.floor(Math.random() * tileIndexes.length);
-        tileIndexes.splice(random, 1);
         acorns.push(tileIndexes[random]);
+        tileIndexes.splice(random, 1);
       }
       acorns.forEach((acorn) => {
         tiles[acorn].value = "A"
