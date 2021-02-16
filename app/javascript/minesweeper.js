@@ -48,6 +48,7 @@ window.addEventListener("load", () => {
     plowBtn.onclick = plowMode;
     acornBtn.onclick = acornMode;
     document.addEventListener("keydown", changeClickMode);
+    document.getElementById("solver-btn").onclick = solver;
     let difficulty = "EASY";
     let difficultyValue = 0.123;
     select1.addEventListener("input", () => {
@@ -84,6 +85,8 @@ window.addEventListener("load", () => {
     let acorns = [];
     buryAcorns();
     countNearbyAcorns();
+    unsolvedCells = [];
+    solvedCells = [];
 
     function resetContents() {
       tiles = [];
@@ -139,41 +142,45 @@ window.addEventListener("load", () => {
         if (tile.value == "A") {
           return null;
         }
-        const isTopTile = Math.floor(i / Number(select1.value)) == 0;
-        const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
-        const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
-        const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
-
-        let adjacentAcorns = 0;
-        if (!isTopTile && acorns.includes(i - Number(select1.value))) {// 一番上でない → 上を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && acorns.includes(i + Number(select1.value))) {// 一番下でない → 下を見る
-          adjacentAcorns++;
-        }
-        if (!isLeftMostTile && acorns.includes(i - 1)) {// 一番左でない → 左を見る
-          adjacentAcorns++;
-        }
-        if (!isRightMostTile && acorns.includes(i + 1)) {// 一番右でない → 右を見る
-          adjacentAcorns++;
-        }
-        if (!isTopTile && !isLeftMostTile && acorns.includes(i - Number(select1.value) - 1)) {// 一番上でなく、左でもない → 左上を見る
-          adjacentAcorns++;
-        }
-        if (!isTopTile && !isRightMostTile && acorns.includes(i - Number(select1.value) + 1)) {// 一番上でなく、右でもない → 右上を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && !isLeftMostTile && acorns.includes(i + Number(select1.value) - 1)) {// 一番下でなく、左でもない → 左下を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && !isRightMostTile && acorns.includes(i + Number(select1.value) + 1)) {// 一番下でなく、右でもない → 右下を見る
-          adjacentAcorns++;
-        }
+        adjacentAcorns = countNearbyCells(i, "A");
         if (adjacentAcorns != 0) {
           tile.textContent = adjacentAcorns;
           tile.value = adjacentAcorns;
         }
       });
+    }
+    function countNearbyCells(cellIndex, target) {
+      const isTopTile = Math.floor(cellIndex / Number(select1.value)) == 0;
+      const isBottomTile = Math.floor(cellIndex / Number(select1.value)) == (Number(select1.value) - 1);
+      const isLeftMostTile = Math.floor(cellIndex % Number(select1.value)) == 0;
+      const isRightMostTile = Math.floor(cellIndex % Number(select1.value)) == (Number(select1.value) - 1);
+
+      let adjacentTargets = 0;
+      if (!isTopTile && tiles[cellIndex - Number(select1.value)].value == target) {// 一番上でない → 上を見る
+        adjacentTargets++;
+      }
+      if (!isBottomTile && tiles[cellIndex + Number(select1.value)].value == target) {// 一番下でない → 下を見る
+        adjacentTargets++;
+      }
+      if (!isLeftMostTile && tiles[cellIndex - 1].value == target) {// 一番左でない → 左を見る
+        adjacentTargets++;
+      }
+      if (!isRightMostTile && tiles[cellIndex + 1].value == target) {// 一番右でない → 右を見る
+        adjacentTargets++;
+      }
+      if (!isTopTile && !isLeftMostTile && tiles[cellIndex - Number(select1.value) - 1].value == target) {// 一番上でなく、左でもない → 左上を見る
+        adjacentTargets++;
+      }
+      if (!isTopTile && !isRightMostTile && tiles[cellIndex - Number(select1.value) + 1].value == target) {// 一番上でなく、右でもない → 右上を見る
+        adjacentTargets++;
+      }
+      if (!isBottomTile && !isLeftMostTile && tiles[cellIndex + Number(select1.value) - 1].value == target) {// 一番下でなく、左でもない → 左下を見る
+        adjacentTargets++;
+      }
+      if (!isBottomTile && !isRightMostTile && tiles[cellIndex + Number(select1.value) + 1].value == target) {// 一番下でなく、右でもない → 右下を見る
+        adjacentTargets++;
+      }
+      return adjacentTargets;
     }
   }
   function click(e) {
@@ -197,6 +204,7 @@ window.addEventListener("load", () => {
     } else if (clicked.value != null) {
       clicked.className = "tile-open";
       clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
+      unsolvedCells.push(clicked);
       judge();
     } else if (clicked.value == null) {
       clicked.className = "tile-open";
@@ -332,5 +340,10 @@ window.addEventListener("load", () => {
     isAcornMode = true;
     plowBtn.className = "plow-btn game-btn-off";
     acornBtn.className = "acorn-btn game-btn-on";
+  }
+  function solver() {
+    // unsolvedCells.forEach((cell) => {
+    //   countNearbyCells(cell.index, )
+    // });
   }
 });
