@@ -153,23 +153,23 @@ window.addEventListener("load", () => {
         }
       });
     }
-    function getAllNearbyCells(cellIndex) {
-      const isTopTile = Math.floor(cellIndex / Number(select1.value)) == 0;
-      const isBottomTile = Math.floor(cellIndex / Number(select1.value)) == (Number(select1.value) - 1);
-      const isLeftMostTile = Math.floor(cellIndex % Number(select1.value)) == 0;
-      const isRightMostTile = Math.floor(cellIndex % Number(select1.value)) == (Number(select1.value) - 1);
+  }
+  function getAllNearbyCells(cellIndex) {
+    const isTopTile = Math.floor(cellIndex / Number(select1.value)) == 0;
+    const isBottomTile = Math.floor(cellIndex / Number(select1.value)) == (Number(select1.value) - 1);
+    const isLeftMostTile = Math.floor(cellIndex % Number(select1.value)) == 0;
+    const isRightMostTile = Math.floor(cellIndex % Number(select1.value)) == (Number(select1.value) - 1);
 
-      let adjacentCells = [];
-      if (!isTopTile) { adjacentCells.push(tiles[cellIndex - Number(select1.value)]); } // 一番上でない → 上を見る
-      if (!isBottomTile) { adjacentCells.push(tiles[cellIndex + Number(select1.value)]); } // 一番下でない → 下を見る
-      if (!isLeftMostTile) { adjacentCells.push(tiles[cellIndex - 1]); } // 一番左でない → 左を見る
-      if (!isRightMostTile) { adjacentCells.push(tiles[cellIndex + 1]); } // 一番右でない → 右を見る
-      if (!isTopTile && !isLeftMostTile) { adjacentCells.push(tiles[cellIndex - Number(select1.value) - 1]); } // 一番上でなく、左でもない → 左上を見る
-      if (!isTopTile && !isRightMostTile) { adjacentCells.push(tiles[cellIndex - Number(select1.value) + 1]); } // 一番上でなく、右でもない → 右上を見る
-      if (!isBottomTile && !isLeftMostTile) { adjacentCells.push(tiles[cellIndex + Number(select1.value) - 1]); } // 一番下でなく、左でもない → 左下を見る
-      if (!isBottomTile && !isRightMostTile) { adjacentCells.push(tiles[cellIndex + Number(select1.value) + 1]); } // 一番下でなく、右でもない → 右下を見る
-      return adjacentCells;
-    }
+    let adjacentCells = [];
+    if (!isTopTile) { adjacentCells.push(tiles[cellIndex - Number(select1.value)]); } // 一番上でない → 上を見る
+    if (!isBottomTile) { adjacentCells.push(tiles[cellIndex + Number(select1.value)]); } // 一番下でない → 下を見る
+    if (!isLeftMostTile) { adjacentCells.push(tiles[cellIndex - 1]); } // 一番左でない → 左を見る
+    if (!isRightMostTile) { adjacentCells.push(tiles[cellIndex + 1]); } // 一番右でない → 右を見る
+    if (!isTopTile && !isLeftMostTile) { adjacentCells.push(tiles[cellIndex - Number(select1.value) - 1]); } // 一番上でなく、左でもない → 左上を見る
+    if (!isTopTile && !isRightMostTile) { adjacentCells.push(tiles[cellIndex - Number(select1.value) + 1]); } // 一番上でなく、右でもない → 右上を見る
+    if (!isBottomTile && !isLeftMostTile) { adjacentCells.push(tiles[cellIndex + Number(select1.value) - 1]); } // 一番下でなく、左でもない → 左下を見る
+    if (!isBottomTile && !isRightMostTile) { adjacentCells.push(tiles[cellIndex + Number(select1.value) + 1]); } // 一番下でなく、右でもない → 右下を見る
+    return adjacentCells;
   }
   function click(e) {
     if (isFirstClick) {
@@ -237,6 +237,7 @@ window.addEventListener("load", () => {
       } else if (tile.value != null) {
         tile.className = "tile-open";
         tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
+        unsolvedCells.push(tile);
       } else if (tile.value == null) {
         tile.className = "tile-open";
         tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
@@ -330,8 +331,23 @@ window.addEventListener("load", () => {
     acornBtn.className = "acorn-btn game-btn-on";
   }
   function solver() {
-    // unsolvedCells.forEach((cell) => {
-    //   countNearbyCells(cell.index, )
-    // });
+    unsolvedCells.forEach((cell, i) => {
+      let nearbyCells = getAllNearbyCells(cell.index);
+      let closedAndAcorn = 0;
+      nearbyCells.forEach((c) => {
+        if (c.className === "tile-closed" || c.value === "A") { closedAndAcorn++; }
+      })
+      if (cell.value === closedAndAcorn) {
+        nearbyCells.forEach((c) => {
+          if (c.className === "tile-closed") {
+            c.className = "acorn-mark";
+            remainingAcorns--;
+          }
+        });
+        changeRemainingAcorns();
+        solvedCells.push(cell);
+        unsolvedCells.splice(i, 1);
+      }
+    });
   }
 });
