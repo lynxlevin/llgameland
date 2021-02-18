@@ -49,6 +49,7 @@ window.addEventListener("load", () => {
     acornBtn.onclick = acornMode;
     document.addEventListener("keydown", changeClickMode);
     document.getElementById("solver-btn").onclick = solver;
+    document.getElementById("fillAcorns").onclick = sFillAcorns;
     let difficulty = "EASY";
     let difficultyValue = 0.123;
     select1.addEventListener("input", () => {
@@ -331,7 +332,12 @@ window.addEventListener("load", () => {
     acornBtn.className = "acorn-btn game-btn-on";
   }
   function solver() {
-    unsolvedCells.forEach((cell, i) => {
+    sFillAcorns();
+  }
+  function sFillAcorns() {
+    let length = unsolvedCells.length;
+    for (let i = length - 1; i >= 0; i--) {
+      let cell = unsolvedCells[i];
       let nearbyCells = getAllNearbyCells(cell.index);
       let closedAndAcorn = 0;
       nearbyCells.forEach((c) => {
@@ -344,10 +350,10 @@ window.addEventListener("load", () => {
             remainingAcorns--;
           }
         });
-        changeRemainingAcorns();
         solvedCells.push(cell);
         unsolvedCells.splice(i, 1);
       }
-    });
+    };
+    changeRemainingAcorns();
   }
 });
