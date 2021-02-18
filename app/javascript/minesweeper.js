@@ -50,6 +50,7 @@ window.addEventListener("load", () => {
     document.addEventListener("keydown", changeClickMode);
     document.getElementById("solver-btn").onclick = solver;
     document.getElementById("fillAcorns").onclick = sFillAcorns;
+    document.getElementById("fillNumbersAlreadyDone").onclick = sFillNumbersAlreadyDone;
     let difficulty = "EASY";
     let difficultyValue = 0.123;
     select1.addEventListener("input", () => {
@@ -333,6 +334,7 @@ window.addEventListener("load", () => {
   }
   function solver() {
     sFillAcorns();
+    sFillNumbersAlreadyDone();
   }
   function sFillAcorns() {
     let length = unsolvedCells.length;
@@ -341,13 +343,34 @@ window.addEventListener("load", () => {
       let nearbyCells = getAllNearbyCells(cell.index);
       let closedAndAcorn = 0;
       nearbyCells.forEach((c) => {
-        if (c.className === "tile-closed" || c.value === "A") { closedAndAcorn++; }
+        if (c.className === "tile-closed" || c.className === "acorn-mark") { closedAndAcorn++; }
       })
       if (cell.value === closedAndAcorn) {
         nearbyCells.forEach((c) => {
           if (c.className === "tile-closed") {
             c.className = "acorn-mark";
             remainingAcorns--;
+          }
+        });
+        solvedCells.push(cell);
+        unsolvedCells.splice(i, 1);
+      }
+    };
+    changeRemainingAcorns();
+  }
+  function sFillNumbersAlreadyDone() {
+    let length = unsolvedCells.length;
+    for (let i = length - 1; i >= 0; i--) {
+      let cell = unsolvedCells[i];
+      let nearbyCells = getAllNearbyCells(cell.index);
+      let filledAcorns = 0;
+      nearbyCells.forEach((c) => {
+        if (c.className === "acorn-mark") { filledAcorns++; }
+      })
+      if (cell.value === filledAcorns) {
+        nearbyCells.forEach((c) => {
+          if (c.className === "tile-closed") {
+            c.click();
           }
         });
         solvedCells.push(cell);
