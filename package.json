@@ -7,6 +7,7 @@
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "4.3.0",
     "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
     "jsdom": "^16.7.0",
     "turbolinks": "^5.2.0"
   },
