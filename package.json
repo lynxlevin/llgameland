@@ -10,6 +10,9 @@
     "request-promise": "^4.2.6",
     "turbolinks": "^5.2.0"
   },
+  "scripts": {
+    "nextConan": "node miscs/nextConan/index.js"
+  },
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
