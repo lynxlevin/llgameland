@@ -1,5 +1,7 @@
+require('dotenv').config();
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
+const FormData = require("form-data");
 
 (async () => {
   // アニメ公式サイトから次回のタイトルを取得
@@ -25,5 +27,11 @@ const { JSDOM } = require("jsdom");
   const re2 = new RegExp('【(.*)】');
   const importance = titleMatch.length === 0 ? "重要回ではありません" : '重要度' + titleMatch[0].textContent.match(re2)[0];
   const message = '次回の放送は' + importance;
-  console.log(message);
+  const slackUrl = 'https://slack.com/api/chat.postMessage';
+  const slackMessage = {
+    "channel": process.env.CONANSLACKCHANNEL,
+    "text": message
+  }
+  const slackHeader = { headers: { authorization: `Bearer ${process.env.CONANSLACKTOKEN}` } };
+  axios.post(slackUrl, slackMessage, slackHeader);
 })();
