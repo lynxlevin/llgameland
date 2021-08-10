@@ -26,7 +26,7 @@ const FormData = require("form-data");
   // 次回の放送の重要度を表示
   const re2 = new RegExp('【(.*)】');
   const importance = titleMatch.length === 0 ? "重要回ではありません" : '重要度' + titleMatch[0].textContent.match(re2)[0];
-  const message = '次回の放送は' + importance;
+  const message = `次回のコナンは「${nextTitle}」${importance}`;
   const slackUrl = 'https://slack.com/api/chat.postMessage';
   const slackMessage = {
     "channel": process.env.CONANSLACKCHANNEL,
