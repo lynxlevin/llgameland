@@ -12,7 +12,8 @@
     "turbolinks": "^5.2.0"
   },
   "scripts": {
-    "nextConan": "node miscs/nextConan/index.js"
+    "nextConan": "node miscs/nextConan/index.js",
+    "fridayRoadshow": "node miscs/fridayRoadshow/index.js"
   },
   "version": "0.1.0",
   "devDependencies": {

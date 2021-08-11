@@ -10,7 +10,6 @@ const FormData = require("form-data");
   const dom1 = new JSDOM(response1.data);
   const re1 = new RegExp('「(.*)」');
   const nextTitle = dom1.window.document.getElementsByClassName('oa_title')[0].textContent.match(re1)[1];
-  // const nextTitle = "ゲーム会社殺人事件";
 
   // まとめサイトから、タイトルと重要度が記載された部分を取得
   const url2 = 'https://www.miyachiman.com/entry/conan-black';
