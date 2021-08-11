@@ -17,4 +17,4 @@ const slackMessage = {
   "text": url
 }
 const slackHeader = { headers: { authorization: `Bearer ${process.env.FRIDAYSLACKTOKEN}` } };
-axios.post(slackUrl, slackMessage, slackHeader).then((response) => { console.log(response) });
+axios.post(slackUrl, slackMessage, slackHeader);
