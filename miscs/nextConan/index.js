@@ -1,7 +1,6 @@
 require('dotenv').config();
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
-const FormData = require("form-data");
 
 (async () => {
   // アニメ公式サイトから次回のタイトルを取得
