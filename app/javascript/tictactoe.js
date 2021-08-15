@@ -1,3 +1,4 @@
+import { showContents } from "./utils/displayStyles.js";
 let count = 0;
 let gameInAction = true;
 
@@ -7,7 +8,7 @@ window.addEventListener("load", () => {
   };
   let board = document.getElementById("board");
   let gameRestartBtn = document.getElementById("restart-game");
-  revealContents();
+  showContents(getShowContentsIds());
   hideContents();
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();
@@ -57,7 +58,7 @@ function checkWinner(e) {
 
   let cell02 = document.getElementById("c" + "0" + "2").textContent;
   let cell20 = document.getElementById("c" + "2" + "0").textContent;
-  
+
   switch (true) {
     case cellr0 == cellr1 && cellr0 == cellr2:
       endGame(cellrc); break;
@@ -77,13 +78,15 @@ function checkPath() {
   const path = location.pathname;
   if (path === "/games/tictactoe") {return true};
 }
-function revealContents() {
-  document.getElementById("top-btn-wrapper").style.display = "";
-  document.getElementById("game-info-wrapper").style.display = "";
-}
 function hideContents() {
   document.getElementById("show-settings").className = "hidden";
   document.getElementById("show-settings-check").className = "hidden";
   document.getElementById("timer").className = "hidden";
 }
-  
+
+function getShowContentsIds() {
+  return [
+    "top-btn-wrapper",
+    "game-info-wrapper"
+  ];
+  }

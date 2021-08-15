@@ -1,9 +1,11 @@
+import { showContents } from "./utils/displayStyles.js";
+
 window.addEventListener("load", () => {
   if (!checkPath()) {
     return null;
   }
   "use strict";
-  revealContents();
+  showContents(getShowContentsIds());
   const select1 = document.getElementById("select1");
   const select2 = document.getElementById("select2");
   let plowBtn = document.getElementById("game-btn1");
@@ -21,15 +23,6 @@ window.addEventListener("load", () => {
   function checkPath() {
     const path = location.pathname;
     if (path === "/games/minesweeper") { return true };
-  }
-  function revealContents() {
-    document.getElementById("top-btn-wrapper").style.display = "";
-    document.getElementById("inputs-wrapper").style.display = "";
-    document.getElementById("difficulty-btns-wrapper").style.display = "";
-    document.getElementById("select-boxes-wrapper").style.display = "";
-    document.getElementById("game-btn-wrapper").style.display = "";
-    document.getElementById("game-info-wrapper").style.display = "";
-    document.getElementById("clear-image").style.display = "";
   }
   function initializeGame() {
     document.getElementById("helper-btn").textContent = "はじめの第一歩"
@@ -334,3 +327,15 @@ window.addEventListener("load", () => {
     acornBtn.className = "acorn-btn game-btn-on";
   }
 });
+
+function getShowContentsIds() {
+  return [
+    "top-btn-wrapper",
+    "inputs-wrapper",
+    "difficulty-btns-wrapper",
+    "select-boxes-wrapper",
+    "game-btn-wrapper",
+    "game-info-wrapper",
+    "clear-image"
+  ];
+}
