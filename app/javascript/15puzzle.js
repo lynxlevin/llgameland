@@ -1,8 +1,9 @@
 import { showContents, hideContents } from "./utils/displayStyles.js";
 import { startTimer } from "./utils/timer.js";
+import { checkPath } from "./utils/checkPath.js";
 
 window.addEventListener("load", () => {
-  if (!checkPath()) {
+  if (!checkPath("/games/15puzzle")) {
     return null;
   }
   "use strict";
@@ -106,10 +107,6 @@ window.addEventListener("load", () => {
     document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
     document.getElementById("select1").value = 4
     document.getElementById("inputs-wrapper").style.height = "65px";
-  }
-  function checkPath() {
-    const path = location.pathname;
-    if (path === "/games/15puzzle") {return true};
   }
 });
 

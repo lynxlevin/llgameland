@@ -1,8 +1,9 @@
 import { showContents } from "./utils/displayStyles.js";
 import { startTimer } from "./utils/timer.js";
+import { checkPath } from "./utils/checkPath.js";
 
 window.addEventListener("load", () => {
-  if (!checkPath()) {
+  if (!checkPath("/games/minesweeper")) {
     return null;
   }
   "use strict";
@@ -21,10 +22,6 @@ window.addEventListener("load", () => {
   restartGame();
   document.getElementById("restart-game").onclick = restartGame;
 
-  function checkPath() {
-    const path = location.pathname;
-    if (path === "/games/minesweeper") { return true };
-  }
   function initializeGame() {
     document.getElementById("helper-btn").textContent = "はじめの第一歩"
     document.getElementById("helper-btn").onclick = firstStep;

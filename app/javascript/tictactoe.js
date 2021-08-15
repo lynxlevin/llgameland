@@ -1,9 +1,10 @@
 import { showContents, hideContents } from "./utils/displayStyles.js";
+import { checkPath } from "./utils/checkPath.js";
 let count = 0;
 let gameInAction = true;
 
 window.addEventListener("load", () => {
-  if (!checkPath()) {
+  if (!checkPath("/games/tictactoe")) {
     return null;
   };
   let board = document.getElementById("board");
@@ -73,10 +74,6 @@ function checkWinner(e) {
 function endGame(e) {
   document.getElementById("info1").textContent = e + " Wins!!";
   gameInAction = false;
-}
-function checkPath() {
-  const path = location.pathname;
-  if (path === "/games/tictactoe") {return true};
 }
 
 function getShowContentsIds() {
