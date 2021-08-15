@@ -1,4 +1,5 @@
 import { showContents } from "./utils/displayStyles.js";
+import { startTimer } from "./utils/timer.js";
 
 window.addEventListener("load", () => {
   if (!checkPath()) {
@@ -171,7 +172,7 @@ window.addEventListener("load", () => {
   }
   function click(e) {
     if (isFirstClick) {
-      startTimer();
+      gameTimer = startTimer(gameTimer);
       isFirstClick = false;
     }
     if (isAcornMode) {
@@ -244,7 +245,7 @@ window.addEventListener("load", () => {
   }
   function rightClick(e) {
     if (isFirstClick) {
-      startTimer();
+      gameTimer = startTimer(gameTimer);
       isFirstClick = false;
     }
     if (!gameInAction) {
@@ -295,19 +296,6 @@ window.addEventListener("load", () => {
     } else {
       document.getElementById("helper-btn-message").textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
     }
-  }
-  function startTimer() {
-    let elapsedTime = 0;
-    gameTimer = setInterval(() => {
-      elapsedTime++;
-      let hour = Math.floor(elapsedTime / 3600);
-      let minute = Math.floor(elapsedTime / 60);
-      let second = Math.floor(elapsedTime % 60);
-      hour = ("0" + hour).slice(-2);
-      minute = ("0" + minute).slice(-2);
-      second = ("0" + second).slice(-2);
-      document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
-    }, 1000);
   }
   function changeClickMode(e) {
     if (e.key == "z") {

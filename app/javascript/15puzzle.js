@@ -1,4 +1,5 @@
 import { showContents, hideContents } from "./utils/displayStyles.js";
+import { startTimer } from "./utils/timer.js";
 
 window.addEventListener("load", () => {
   if (!checkPath()) {
@@ -54,7 +55,7 @@ window.addEventListener("load", () => {
     }
     function click(e) {
       if (firstClick) {
-        startTimer();
+        gameTimer = startTimer(gameTimer);
         firstClick = false;
       }
       let clicked = e.srcElement.index;
@@ -99,19 +100,6 @@ window.addEventListener("load", () => {
         document.getElementById("info1").textContent = " You've DONE IT!!";
       }
     }
-  }
-  function startTimer() {
-    let elapsedTime = 0;
-    gameTimer = setInterval(() => {
-      elapsedTime ++;
-      let hour = Math.floor(elapsedTime / 3600);
-      let minute = Math.floor(elapsedTime / 60);
-      let second = Math.floor(elapsedTime % 60);
-      hour = ("0" + hour).slice(-2);
-      minute = ("0" + minute).slice(-2);
-      second = ("0" + second).slice(-2);
-      document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
-    }, 1000);
   }
   function prepareGame() {
     gameRestartBtn.textContent = "START";
