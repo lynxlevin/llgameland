@@ -1,4 +1,4 @@
-import { showContents } from "./utils/displayStyles.js";
+import { showContents, hideContents } from "./utils/displayStyles.js";
 let count = 0;
 let gameInAction = true;
 
@@ -9,7 +9,7 @@ window.addEventListener("load", () => {
   let board = document.getElementById("board");
   let gameRestartBtn = document.getElementById("restart-game");
   showContents(getShowContentsIds());
-  hideContents();
+  hideContents(getHideContentsIds());
   board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
   startGame();
   gameRestartBtn.onclick = startGame;
@@ -78,15 +78,17 @@ function checkPath() {
   const path = location.pathname;
   if (path === "/games/tictactoe") {return true};
 }
-function hideContents() {
-  document.getElementById("show-settings").className = "hidden";
-  document.getElementById("show-settings-check").className = "hidden";
-  document.getElementById("timer").className = "hidden";
-}
 
 function getShowContentsIds() {
   return [
     "top-btn-wrapper",
     "game-info-wrapper"
   ];
-  }
+}
+function getHideContentsIds() {
+  return [
+    "show-settings",
+    "show-settings-check",
+    "timer"
+  ];
+}

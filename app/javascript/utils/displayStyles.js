@@ -3,3 +3,9 @@ export function showContents(ids) {
     document.getElementById(id).style.display = "";
   })
 }
+
+export function hideContents(ids) {
+  ids.forEach((id) => {
+    document.getElementById(id).style.display = "none";
+  })
+}

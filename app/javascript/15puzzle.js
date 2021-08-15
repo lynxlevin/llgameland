@@ -1,4 +1,4 @@
-import { showContents } from "./utils/displayStyles.js";
+import { showContents, hideContents } from "./utils/displayStyles.js";
 
 window.addEventListener("load", () => {
   if (!checkPath()) {
@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
   }
   "use strict";
   showContents(getShowContentsIds());
-  hideContents();
+  hideContents(getHideContentsIds());
   let gameRestartBtn = document.getElementById("restart-game");
   let board = document.getElementById("board");
   let gameTimer = NaN;
@@ -123,10 +123,6 @@ window.addEventListener("load", () => {
     const path = location.pathname;
     if (path === "/games/15puzzle") {return true};
   }
-  function hideContents() {
-    document.getElementById("select2-div").style.display = "none";
-    document.getElementById("input-info").style.display = "none";
-  }
 });
 
 function getShowContentsIds() {
@@ -136,4 +132,11 @@ function getShowContentsIds() {
     "select-boxes-wrapper",
     "game-info-wrapper"
   ]
+}
+
+function getHideContentsIds() {
+  return [
+    "select2-div",
+    "input-info"
+  ];
 }
