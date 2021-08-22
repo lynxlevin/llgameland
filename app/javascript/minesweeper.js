@@ -14,56 +14,52 @@ window.addEventListener("load", () => {
   const acornBtn = document.getElementById("game-btn2");
   let tiles = [];
   let isAcornMode = false;
-  let gameTimer, isFirstClick, gameInAction, remainingAcorns;
+  let gameTimer, isFirstClick, gameInAction, remainingAcorns, difficultyName, difficultyValue;
   initializeGame();
   restartGame();
   document.getElementById("restart-game").onclick = restartGame;
 
   function initializeGame() {
-    document.getElementById("helper-btn").textContent = "はじめの第一歩"
-    document.getElementById("helper-btn").onclick = firstStep;
-    document.getElementById("select1-message").textContent = "※1辺のマスの数";
-    document.getElementById("select2-message").textContent = "※どんぐりの数";
-    select1.value = 9;
-    select2.value = 10;
-    plowBtn.className = "plow-btn game-btn-on";
-    document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
-    acornBtn.className = "acorn-btn game-btn-off";
-    document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
-    document.getElementById("difficulty1").onclick = easyMode;
-    document.getElementById("difficulty2").onclick = mediumMode;
-    document.getElementById("difficulty3").onclick = hardMode;
-    plowBtn.onclick = plowMode;
-    acornBtn.onclick = acornMode;
-    document.addEventListener("keydown", changeClickMode);
-    let difficulty = "EASY";
-    let difficultyValue = 0.123;
-    select1.addEventListener("input", () => {
-      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficulty}`
-    });
-    function easyMode() {
-      select1.value = 9;
-      select2.value = 10;
-      difficulty = "EASY";
-      difficultyValue = 0.123;
-      document.getElementById("input-info").textContent = ""
-      restartGame();
+    initializeViews();
+    activateEventListeners();
+    changeDifficulty(config.difficulty.easy);
+
+    function initializeViews() {
+      document.getElementById("helper-btn").textContent = "はじめの第一歩"
+      document.getElementById("select1-message").textContent = "※1辺のマスの数";
+      document.getElementById("select2-message").textContent = "※どんぐりの数";
+      document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
+      document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
+      plowBtn.className = "plow-btn game-btn-on";
+      acornBtn.className = "acorn-btn game-btn-off";
     }
-    function mediumMode() {
-      select1.value = 16;
-      select2.value = 40;
-      difficulty = "MEDIUM";
-      difficultyValue = 0.15625;
-      document.getElementById("input-info").textContent = ""
-      restartGame();
+    function activateEventListeners() {
+      document.getElementById("helper-btn").onclick = firstStep;
+      document.getElementById("difficulty1").addEventListener("click", () => {
+        changeDifficulty(config.difficulty.easy);
+        restartGame();
+      });
+      document.getElementById("difficulty2").addEventListener("click", () => {
+        changeDifficulty(config.difficulty.medium);
+        restartGame();
+      });
+      document.getElementById("difficulty3").addEventListener("click", () => {
+        changeDifficulty(config.difficulty.hard);
+        restartGame();
+      });
+      plowBtn.onclick = plowMode;
+      acornBtn.onclick = acornMode;
+      document.addEventListener("keydown", changeClickMode);
+      select1.addEventListener("input", () => {
+        document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficultyName}`
+      });
     }
-    function hardMode() {
-      select1.value = 22;
-      select2.value = 99;
-      difficulty = "HARD";
-      difficultyValue = 0.2045;
+    function changeDifficulty(diff) {
+      difficultyName = diff.name;
+      select1.value = diff.select1;
+      select2.value = diff.select2;
+      difficultyValue = diff.difficultyValue;
       document.getElementById("input-info").textContent = ""
-      restartGame();
     }
   }
   function restartGame() {
@@ -320,4 +316,27 @@ function getShowContentsIds() {
     "game-info-wrapper",
     "clear-image"
   ];
+}
+
+const config = {
+  difficulty: {
+    easy: {
+      name: "EASY",
+      select1: 9,
+      select2: 10,
+      difficultyValue: 0.123
+    },
+    medium: {
+      name: "MEDIUM",
+      select1: 16,
+      select2: 40,
+      difficultyValue: 0.15625
+    },
+    hard: {
+      name: "HARD",
+      select1: 22,
+      select2: 99,
+      difficultyValue: 0.2045
+    },
+  },
 }
