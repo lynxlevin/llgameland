@@ -3,12 +3,16 @@ const axios = require("axios");
 const { JSDOM } = require("jsdom");
 
 (async () => {
-  // アニメ公式サイトから次回のタイトルを取得
-  const url1 = 'https://www.ytv.co.jp/conan/trailer/index.html';
+  // アニメ公式サイトから前回のタイトルを取得
+  const url1 = `https://www.ytv.co.jp/conan/archive/k${getPrevSaturday()}.html`;
   const response1 = await axios.get(url1);
   const dom1 = new JSDOM(response1.data);
-  const re1 = new RegExp('「(.*)」');
-  const nextTitle = dom1.window.document.getElementsByClassName('oa_title')[0].textContent.match(re1)[1];
+  const re1 = new RegExp(/「(.*)」/);
+  const prevTitleForShowing = dom1.window.document.getElementsByClassName('oa_title')[0].textContent;
+  const prevTitle = prevTitleForShowing.match(re1)[1];
+  const re11 = new RegExp(/(.*)（/); // （前編）などを取り除く
+  const re12 = new RegExp(/(.*)\(/); // (パーフェクトゲーム)などを取り除く
+  const prevTitleForMatching = zenkaku2Hankaku(prevTitle.match(re11)[1].match(re12)[1]);
 
   // まとめサイトから、タイトルと重要度が記載された部分を取得
   const url2 = 'https://www.miyachiman.com/entry/conan-black';
@@ -16,15 +20,15 @@ const { JSDOM } = require("jsdom");
   const dom2 = new JSDOM(response2.data);
   const importantTitles = dom2.window.document.getElementsByTagName("h4");
 
-  // 次回のタイトルがまとめサイトに記載されているかを確認
+  // 前回のタイトルがまとめサイトに記載されているかを確認
   const titleMatch = Array.prototype.filter.call(importantTitles, function (el) {
-    return el.textContent.match(nextTitle);
+    return el.textContent.match(prevTitleForMatching);
   });
 
-  // 次回の放送の重要度を表示
-  const re2 = new RegExp('【(.*)】');
+  // 前回の放送の重要度を表示
+  const re2 = new RegExp(/【(.*)】/);
   const importance = titleMatch.length === 0 ? "重要回ではありません" : '重要度' + titleMatch[0].textContent.match(re2)[0];
-  const message = `次回のコナンは「${nextTitle}」${importance}`;
+  const message = `前回のコナンは「${prevTitleForShowing}」${importance}`;
   const slackUrl = 'https://slack.com/api/chat.postMessage';
   const slackMessage = {
     "channel": process.env.CONANSLACKCHANNEL,
@@ -33,3 +37,18 @@ const { JSDOM } = require("jsdom");
   const slackHeader = { headers: { authorization: `Bearer ${process.env.CONANSLACKTOKEN}` } };
   axios.post(slackUrl, slackMessage, slackHeader);
 })();
+
+function getPrevSaturday() {
+  const prevSaturday = new Date(); // この時点ではまだtoday
+  prevSaturday.setDate(prevSaturday.getDate() - prevSaturday.getDay() - 1)
+  const year = ("0000" + prevSaturday.getFullYear().toString()).slice(-4);
+  const month = ("00" + (prevSaturday.getMonth() + 1).toString()).slice(-2);
+  const date = ("00" + prevSaturday.getDate().toString()).slice(-2);
+  return `${year}${month}${date}`;
+}
+
+function zenkaku2Hankaku(str) {
+  return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
+    return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+  });
+}
