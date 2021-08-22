@@ -10,14 +10,11 @@ window.addEventListener("load", () => {
   showContents(getShowContentsIds());
   const select1 = document.getElementById("select1");
   const select2 = document.getElementById("select2");
-  let plowBtn = document.getElementById("game-btn1");
-  let acornBtn = document.getElementById("game-btn2");
-  let gameTimer = NaN;
+  const plowBtn = document.getElementById("game-btn1");
+  const acornBtn = document.getElementById("game-btn2");
   let tiles = [];
   let isAcornMode = false;
-  let isFirstClick;
-  let gameInAction;
-  let remainingAcorns;
+  let gameTimer, isFirstClick, gameInAction, remainingAcorns;
   initializeGame();
   restartGame();
   document.getElementById("restart-game").onclick = restartGame;
@@ -72,7 +69,7 @@ window.addEventListener("load", () => {
   function restartGame() {
     resetContents();
     resetBoard();
-    let acorns = [];
+    const acorns = [];
     buryAcorns();
     countNearbyAcorns();
 

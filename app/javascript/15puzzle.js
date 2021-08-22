@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
   hideContents(getHideContentsIds());
   let gameRestartBtn = document.getElementById("restart-game");
   let board = document.getElementById("board");
-  let gameTimer = NaN;
+  let gameTimer;
   prepareGame();
   startGame();
   gameRestartBtn.onclick = startGame;
@@ -25,9 +25,9 @@ window.addEventListener("load", () => {
 
     function prepareBoard(tiles) {
       board.innerHTML = "";
-      for (let i = 0 ; i < select1 ; i++) {
+      for (let i = 0; i < select1; i++) {
         let tr = document.createElement("tr");
-        for (let j = 0 ; j < select1 ; j++) {
+        for (let j = 0; j < select1; j++) {
           let index = i * select1 + j
           let td = document.createElement("td");
           td.className = "tile";
@@ -43,8 +43,8 @@ window.addEventListener("load", () => {
         }
         board.appendChild(tr);
       }
-      for (let i = 0 ; i < 1000 + (select1 * select1 * select1) ; i++) {
-        click({ srcElement: {index: Math.floor(Math.random() * (select1 * select1))}})
+      for (let i = 0; i < 1000 + (select1 * select1 * select1); i++) {
+        click({ srcElement: { index: Math.floor(Math.random() * (select1 * select1)) } })
       }
       firstClick = true;
     }
@@ -63,13 +63,13 @@ window.addEventListener("load", () => {
       let blank = document.getElementById(`tile${select1 * select1}`).index;
       let distance = blank - clicked;
       if (Math.floor(clicked / select1) == Math.floor(blank / select1)) {// clickedとblankが同じ行なら
-        for (let k = 0 ; k < Math.abs(distance) ; k++) {
+        for (let k = 0; k < Math.abs(distance); k++) {
           swap(blank, blank - Math.sign(distance));
           blank = document.getElementById(`tile${select1 * select1}`).index;
         }
         judge();
       } else if (clicked % select1 == blank % select1) {
-        for (let k = 0 ; k < Math.abs(distance) / select1 ; k++) {// clickedとblankが同じ列なら
+        for (let k = 0; k < Math.abs(distance) / select1; k++) {// clickedとblankが同じ列なら
           swap(blank, blank - Math.sign(distance) * select1);
           blank = document.getElementById(`tile${select1 * select1}`).index;
         }
@@ -88,9 +88,9 @@ window.addEventListener("load", () => {
     }
     function judge() {
       let goal = 0
-      tiles.forEach( function(tile) {
+      tiles.forEach(function (tile) {
         if (tile.textContent == (tile.index + 1) ||
-            (tile.textContent == "" && tile.index == (select1 * select1 - 1))) {
+          (tile.textContent == "" && tile.index == (select1 * select1 - 1))) {
           goal = goal;
         } else {
           goal = goal + 1;
