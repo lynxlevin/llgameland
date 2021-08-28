@@ -1,23 +1,97 @@
 import { showContents } from "./utils/displayStyles.js";
 import { startTimer } from "./utils/timer.js";
 import { checkPath } from "./utils/checkPath.js";
+import { getElementsByIds } from "./utils/getElementsByIds.js";
 
 window.addEventListener("load", () => {
   if (!checkPath("/games/minesweeper")) {
     return null;
   }
   "use strict";
+  const config = {
+    difficulty: {
+      easy: {
+        name: "EASY",
+        select1: 9,
+        select2: 10,
+        difficultyValue: 0.123
+      },
+      medium: {
+        name: "MEDIUM",
+        select1: 16,
+        select2: 40,
+        difficultyValue: 0.15625
+      },
+      hard: {
+        name: "HARD",
+        select1: 22,
+        select2: 99,
+        difficultyValue: 0.2045
+      },
+    },
+  }
+  // ボタン系統
+  const [
+    select1,
+    select2,
+    plowBtn,
+    acornBtn,
+    restartBtn,
+    helperBtn,
+    difficulty1,
+    difficulty2,
+    difficulty3,
+  ] = getElementsByIds([
+    "select1",
+    "select2",
+    "game-btn1",
+    "game-btn2",
+    "restart-game",
+    "helper-btn",
+    "difficulty1",
+    "difficulty2",
+    "difficulty3",
+  ]);
+  // 表示テキストを変える系統
+  const [
+    select1Message,
+    select2Message,
+    gameBtnText1,
+    gameBtnText2,
+    inputInfo,
+    timer,
+    helperBtnMessage,
+    clearMessage,
+    clearImage,
+    info1,
+  ] = getElementsByIds([
+    "select1-message",
+    "select2-message",
+    "game-btn-text1",
+    "game-btn-text2",
+    "input-info",
+    "timer",
+    "helper-btn-message",
+    "clear-message",
+    "clear-image",
+    "info1",
+  ]);
+  // その他
+  const [
+    board,
+    showSettingsCheck,
+  ] = getElementsByIds([
+    "board",
+    "show-settings-check",
+  ]);
+
   showContents(getShowContentsIds());
-  const select1 = document.getElementById("select1");
-  const select2 = document.getElementById("select2");
-  const plowBtn = document.getElementById("game-btn1");
-  const acornBtn = document.getElementById("game-btn2");
   let tiles = [];
   let isAcornMode = false;
   let gameTimer, isFirstClick, gameInAction, remainingAcorns, difficultyName, difficultyValue;
   initializeGame();
   restartGame();
-  document.getElementById("restart-game").onclick = restartGame;
+  restartBtn.onclick = restartGame;
 
   function initializeGame() {
     initializeViews();
@@ -25,25 +99,25 @@ window.addEventListener("load", () => {
     changeDifficulty(config.difficulty.easy);
 
     function initializeViews() {
-      document.getElementById("helper-btn").textContent = "はじめの第一歩"
-      document.getElementById("select1-message").textContent = "※1辺のマスの数";
-      document.getElementById("select2-message").textContent = "※どんぐりの数";
-      document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
-      document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
+      helperBtn.textContent = "はじめの第一歩"
+      select1Message.textContent = "※1辺のマスの数";
+      select2Message.textContent = "※どんぐりの数";
+      gameBtnText1.innerHTML = "<span>Z：</span>畑を耕す";
+      gameBtnText2.innerHTML = "<span>X：</span>印をつける";
       plowBtn.className = "plow-btn game-btn-on";
       acornBtn.className = "acorn-btn game-btn-off";
     }
     function activateEventListeners() {
-      document.getElementById("helper-btn").onclick = firstStep;
-      document.getElementById("difficulty1").addEventListener("click", () => {
+      helperBtn.onclick = firstStep;
+      difficulty1.addEventListener("click", () => {
         changeDifficulty(config.difficulty.easy);
         restartGame();
       });
-      document.getElementById("difficulty2").addEventListener("click", () => {
+      difficulty2.addEventListener("click", () => {
         changeDifficulty(config.difficulty.medium);
         restartGame();
       });
-      document.getElementById("difficulty3").addEventListener("click", () => {
+      difficulty3.addEventListener("click", () => {
         changeDifficulty(config.difficulty.hard);
         restartGame();
       });
@@ -51,7 +125,7 @@ window.addEventListener("load", () => {
       acornBtn.onclick = acornMode;
       document.addEventListener("keydown", changeClickMode);
       select1.addEventListener("input", () => {
-        document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficultyName}`
+        inputInfo.textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficultyName}`
       });
     }
     function changeDifficulty(diff) {
@@ -59,7 +133,7 @@ window.addEventListener("load", () => {
       select1.value = diff.select1;
       select2.value = diff.select2;
       difficultyValue = diff.difficultyValue;
-      document.getElementById("input-info").textContent = ""
+      inputInfo.textContent = ""
     }
   }
   function restartGame() {
@@ -74,17 +148,16 @@ window.addEventListener("load", () => {
       gameInAction = true; //リファクタ removeEventListenerで代替できるか？
       isFirstClick = true;
       clearInterval(gameTimer);
-      document.getElementById("timer").textContent = `00:00:00`;
-      document.getElementById("show-settings-check").checked = false;
-      document.getElementById("helper-btn").className = "";
-      document.getElementById("helper-btn-message").textContent = "";
+      timer.textContent = `00:00:00`;
+      showSettingsCheck.checked = false;
+      helperBtn.className = "";
+      helperBtnMessage.textContent = "";
       remainingAcorns = select2.value;
       changeRemainingAcorns();
-      document.getElementById("clear-message").textContent = "";
-      document.getElementById("clear-image").className = "hidden squirrel-happy";
+      clearMessage.textContent = "";
+      clearImage.className = "hidden squirrel-happy";
     }
     function resetBoard() {
-      let board = document.getElementById("board");
       board.innerHTML = "";
       board.className = "minesweeper-board";
       for (let i = 0; i < Number(select1.value); i++) {
@@ -256,25 +329,25 @@ window.addEventListener("load", () => {
     }
   }
   function changeRemainingAcorns() {
-    document.getElementById("info1").textContent = `残りのどんぐりの数 ${remainingAcorns}`;
+    info1.textContent = `残りのどんぐりの数 ${remainingAcorns}`;
   }
   function judge() {
     const closedTiles = document.getElementsByClassName("tile-closed");
     if (closedTiles.length == 0 && remainingAcorns == 0) {
       clearInterval(gameTimer);
-      document.getElementById("clear-message").textContent = "おめでとう！リスも大喜び";
-      document.getElementById("clear-image").className = "squirrel-happy";
+      clearMessage.textContent = "おめでとう！リスも大喜び";
+      clearImage.className = "squirrel-happy";
       board.className = "minesweeper-board-clear"
     }
   }
   function gameOver() {
     clearInterval(gameTimer);
-    document.getElementById("clear-message").textContent = "どんぐり踏んじゃった";
+    clearMessage.textContent = "どんぐり踏んじゃった";
     gameInAction = false;
   }
   function firstStep(e) {
     plowMode();
-    document.getElementById("show-settings-check").checked = false;
+    showSettingsCheck.checked = false;
     if (tiles.find(tile => tile.value == null) != null) {
       e.srcElement.className = "hidden";
       let random = Math.floor(Math.random() * tiles.length);
@@ -284,7 +357,7 @@ window.addEventListener("load", () => {
         firstStep(e);
       }
     } else {
-      document.getElementById("helper-btn-message").textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+      helperBtnMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
     }
   }
   function changeClickMode(e) {
@@ -304,39 +377,16 @@ window.addEventListener("load", () => {
     plowBtn.className = "plow-btn game-btn-off";
     acornBtn.className = "acorn-btn game-btn-on";
   }
+
+  function getShowContentsIds() {
+    return [
+      "top-btn-wrapper",
+      "inputs-wrapper",
+      "difficulty-btns-wrapper",
+      "select-boxes-wrapper",
+      "game-btn-wrapper",
+      "game-info-wrapper",
+      "clear-image"
+    ];
+  }
 });
-
-function getShowContentsIds() {
-  return [
-    "top-btn-wrapper",
-    "inputs-wrapper",
-    "difficulty-btns-wrapper",
-    "select-boxes-wrapper",
-    "game-btn-wrapper",
-    "game-info-wrapper",
-    "clear-image"
-  ];
-}
-
-const config = {
-  difficulty: {
-    easy: {
-      name: "EASY",
-      select1: 9,
-      select2: 10,
-      difficultyValue: 0.123
-    },
-    medium: {
-      name: "MEDIUM",
-      select1: 16,
-      select2: 40,
-      difficultyValue: 0.15625
-    },
-    hard: {
-      name: "HARD",
-      select1: 22,
-      select2: 99,
-      difficultyValue: 0.2045
-    },
-  },
-}
