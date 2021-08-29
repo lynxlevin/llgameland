@@ -33,7 +33,7 @@ window.addEventListener("load", () => {
       doms.acornBtn.className = "acorn-btn game-btn-off";
     }
     function activateEventListeners() {
-      doms.helperBtn.onclick = firstStep;
+      doms.helperBtn.addEventListener("click", firstStep);
       doms.difficulty1.addEventListener("click", () => {
         changeDifficulty(config.difficulty.easy);
         restartGame();
@@ -46,8 +46,8 @@ window.addEventListener("load", () => {
         changeDifficulty(config.difficulty.hard);
         restartGame();
       });
-      doms.plowBtn.onclick = plowMode;
-      doms.acornBtn.onclick = acornMode;
+      doms.plowBtn.addEventListener("click", plowMode);
+      doms.acornBtn.addEventListener("click", acornMode);
       document.addEventListener("keydown", changeClickMode);
       doms.select1.addEventListener("input", () => {
         doms.inputInfo.textContent = `どんぐり${Math.floor(doms.select1.value * doms.select1.value * difficultyValue)}個で難易度${difficultyName}`
@@ -166,31 +166,21 @@ window.addEventListener("load", () => {
     const condition = (x) => { return tiles[x].className != "tile-open" };
     const array = getConditionedAdjacentTiles(i, condition);
     array.forEach(tile => {
-      if (tile.className == "tile-open" || tile.className == "acorn-mark") {
-        return null;
-      } else if (tile.value != null) {
-        tile.className = "tile-open";
-        tile.style.fontSize = `${35 / sides}vmin`;
-      } else if (tile.value == null) {
-        tile.className = "tile-open";
-        tile.style.fontSize = `${35 / sides}vmin`;
-        clickBlank(tile);
-      }
+      if (tile.className == "tile-open" || tile.className == "acorn-mark") return;
+      tile.className = "tile-open";
+      tile.style.fontSize = `${35 / sides}vmin`;
+      if (tile.value == null) clickBlank(tile);
     })
     judge();
   }
   function rightClick(e) {
+    const clicked = e.srcElement;
+    if (!gameInAction || clicked.className === "tile-open") return;
     if (isFirstClick) {
       gameTimer = startTimer(gameTimer);
       isFirstClick = false;
     }
-    if (!gameInAction) {
-      return null;
-    }
-    const clicked = e.srcElement;
-    if (clicked.className == "tile-open") {
-      return null;
-    } else if (clicked.className == "acorn-mark") {
+    if (clicked.className == "acorn-mark") {
       clicked.className = "tile-closed";
       remainingAcorns++;
       changeRemainingAcorns();
@@ -204,7 +194,7 @@ window.addEventListener("load", () => {
   function changeRemainingAcorns() {
     doms.info1.textContent = `残りのどんぐりの数 ${remainingAcorns}`;
   }
-  function judge() {
+  function judge() { // 判定結果だけ返すように変える
     const closedTiles = document.getElementsByClassName("tile-closed");
     if (closedTiles.length == 0 && remainingAcorns == 0) {
       clearInterval(gameTimer);
@@ -221,16 +211,16 @@ window.addEventListener("load", () => {
   function firstStep(e) {
     plowMode();
     doms.showSettingsCheck.checked = false;
-    if (tiles.find(tile => tile.value == null) != null) {
-      e.srcElement.className = "hidden";
-      let random = Math.floor(Math.random() * tiles.length);
-      if (tiles[random].value == null) {
-        tiles[random].click();
-      } else {
-        firstStep(e);
-      }
-    } else {
+    if (tiles.find(tile => tile.value == null) === undefined) {
       doms.helperBtnMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+      return;
+    }
+    e.srcElement.className = "hidden";
+    let random = Math.floor(Math.random() * tiles.length);
+    if (tiles[random].value == null) {
+      tiles[random].click();
+    } else {
+      firstStep(e);
     }
   }
   function changeClickMode(e) {
