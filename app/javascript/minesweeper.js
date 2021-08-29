@@ -122,37 +122,9 @@ window.addEventListener("load", () => {
         if (tile.value == "A") {
           return null;
         }
-        const sides = Number(doms.select1.value);
-        const isTopTile = Math.floor(i / sides) == 0;
-        const isBottomTile = Math.floor(i / sides) == (sides - 1);
-        const isLeftMostTile = Math.floor(i % sides) == 0;
-        const isRightMostTile = Math.floor(i % sides) == (sides - 1);
-
-        let adjacentAcorns = 0;
-        if (!isTopTile && acorns.includes(i - sides)) {// 一番上でない → 上を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && acorns.includes(i + sides)) {// 一番下でない → 下を見る
-          adjacentAcorns++;
-        }
-        if (!isLeftMostTile && acorns.includes(i - 1)) {// 一番左でない → 左を見る
-          adjacentAcorns++;
-        }
-        if (!isRightMostTile && acorns.includes(i + 1)) {// 一番右でない → 右を見る
-          adjacentAcorns++;
-        }
-        if (!isTopTile && !isLeftMostTile && acorns.includes(i - sides - 1)) {// 一番上でなく、左でもない → 左上を見る
-          adjacentAcorns++;
-        }
-        if (!isTopTile && !isRightMostTile && acorns.includes(i - sides + 1)) {// 一番上でなく、右でもない → 右上を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && !isLeftMostTile && acorns.includes(i + sides - 1)) {// 一番下でなく、左でもない → 左下を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && !isRightMostTile && acorns.includes(i + sides + 1)) {// 一番下でなく、右でもない → 右下を見る
-          adjacentAcorns++;
-        }
+        const condition = (x) => { return acorns.includes(x) };
+        const adjacentTilesWithAcorns = getConditionedAdjacentTiles(i, condition);
+        const adjacentAcorns = adjacentTilesWithAcorns.length
         if (adjacentAcorns != 0) {
           tile.textContent = adjacentAcorns;
           tile.value = adjacentAcorns;
@@ -189,37 +161,10 @@ window.addEventListener("load", () => {
     }
   }
   function clickBlank(clicked) {
-    const i = clicked.index;
-    const array = [];
     const sides = Number(doms.select1.value);
-    const isTopTile = Math.floor(i / sides) == 0;
-    const isBottomTile = Math.floor(i / sides) == (sides - 1);
-    const isLeftMostTile = Math.floor(i % sides) == 0;
-    const isRightMostTile = Math.floor(i % sides) == (sides - 1);
-    if (!isTopTile && tiles[i - sides].className != "tile-open") {// 一番上でない → 上をクリック
-      array.push(tiles[i - sides]);
-    }
-    if (!isBottomTile && tiles[i + sides].className != "tile-open") {// 一番下でない → 下をクリック
-      array.push(tiles[i + sides]);
-    }
-    if (!isLeftMostTile && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
-      array.push(tiles[i - 1]);
-    }
-    if (!isRightMostTile && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
-      array.push(tiles[i + 1]);
-    }
-    if (!isTopTile && !isLeftMostTile && tiles[i - sides - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
-      array.push(tiles[i - sides - 1]);
-    }
-    if (!isTopTile && !isRightMostTile && tiles[i - sides + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
-      array.push(tiles[i - sides + 1]);
-    }
-    if (!isBottomTile && !isLeftMostTile && tiles[i + sides - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
-      array.push(tiles[i + sides - 1]);
-    }
-    if (!isBottomTile && !isRightMostTile && tiles[i + sides + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
-      array.push(tiles[i + sides + 1]);
-    }
+    const i = clicked.index;
+    const condition = (x) => { return tiles[x].className != "tile-open" };
+    const array = getConditionedAdjacentTiles(i, condition);
     array.forEach(tile => {
       if (tile.className == "tile-open" || tile.className == "acorn-mark") {
         return null;
@@ -306,6 +251,37 @@ window.addEventListener("load", () => {
     doms.acornBtn.className = "acorn-btn game-btn-on";
   }
 
+  /**
+   * 条件に合致した隣接マスの配列を返却
+   * @param {number} centerIndex - このマスの隣接マスを検証する
+   * @param {Function} condition - 検証の条件
+   * @return {array} array - 条件に合致した隣接マスの配列
+   */
+  function getConditionedAdjacentTiles(centerIndex, condition) {
+    const array = [];
+    const sides = Number(doms.select1.value);
+    const isTopMost = Math.floor(centerIndex / sides) == 0;
+    const isBottomMost = Math.floor(centerIndex / sides) == (sides - 1);
+    const isLeftMost = Math.floor(centerIndex % sides) == 0;
+    const isRightMost = Math.floor(centerIndex % sides) == (sides - 1);
+    // 一番上でない → 上を見る
+    if (!isTopMost && condition(centerIndex - sides)) array.push(tiles[centerIndex - sides]);
+    // 一番下でない → 下を見る
+    if (!isBottomMost && condition(centerIndex + sides)) array.push(tiles[centerIndex + sides]);
+    // 一番左でない → 左を見る
+    if (!isLeftMost && condition(centerIndex - 1)) array.push(tiles[centerIndex - 1]);
+    // 一番右でない → 右を見る
+    if (!isRightMost && condition(centerIndex + 1)) array.push(tiles[centerIndex + 1]);
+    // 一番上でなく、左でもない → 左上を見る
+    if (!isTopMost && !isLeftMost && condition(centerIndex - sides - 1)) array.push(tiles[centerIndex - sides - 1]);
+    // 一番上でなく、右でもない → 右上を見る
+    if (!isTopMost && !isRightMost && condition(centerIndex - sides + 1)) array.push(tiles[centerIndex - sides + 1]);
+    // 一番下でなく、左でもない → 左下を見る
+    if (!isBottomMost && !isLeftMost && condition(centerIndex + sides - 1)) array.push(tiles[centerIndex + sides - 1]);
+    // 一番下でなく、右でもない → 右下を見る
+    if (!isBottomMost && !isRightMost && condition(centerIndex + sides + 1)) array.push(tiles[centerIndex + sides + 1]);
+    return array;
+  }
   function getShowContentsIds() {
     return [
       "top-btn-wrapper",
