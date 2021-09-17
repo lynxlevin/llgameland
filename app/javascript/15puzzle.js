@@ -3,10 +3,10 @@ import { startTimer } from "./utils/timer.js";
 import { checkPath } from "./utils/checkPath.js";
 
 window.addEventListener("load", () => {
+  "use strict";
   if (!checkPath("/games/15puzzle")) {
     return null;
   }
-  "use strict";
   showContents(getShowContentsIds());
   hideContents(getHideContentsIds());
   const gameRestartBtn = document.getElementById("restart-game");

@@ -3,10 +3,10 @@ import { startTimer } from "./utils/timer.js";
 import { checkPath } from "./utils/checkPath.js";
 
 window.addEventListener("load", () => {
+  "use strict";
   if (!checkPath("/games/minesweeper")) {
     return null;
   }
-  "use strict";
   const config = getConfig();
   const doms = getDoms();
 

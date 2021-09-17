@@ -31,9 +31,9 @@ function startGame() {
     }
     board.appendChild(tr);
   }
-  board.onclick = tick_cell;
+  board.onclick = tickCell;
 }
-function tick_cell(e) {
+function tickCell(e) {
   if (e.target.textContent == "" && gameInAction) {
     count = ++count;
     e.target.textContent = (count % 2 == 0) ? "X" : "O";
