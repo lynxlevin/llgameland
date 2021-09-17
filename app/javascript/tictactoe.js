@@ -7,11 +7,11 @@ window.addEventListener("load", () => {
   if (!checkPath("/games/tictactoe")) {
     return null;
   };
-  let board = document.getElementById("board");
-  let gameRestartBtn = document.getElementById("restart-game");
+  const board = document.getElementById("board");
+  const gameRestartBtn = document.getElementById("restart-game");
   showContents(getShowContentsIds());
   hideContents(getHideContentsIds());
-  board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;")
+  board.setAttribute("style", "background-color: black; width: 70vmin; height: 70vmin;");
   startGame();
   gameRestartBtn.onclick = startGame;
 });
@@ -26,7 +26,7 @@ function startGame() {
     const tr = document.createElement("tr");
     for (let j = 0 ; j < 3 ; j++) {
       const td = `
-      <td class="cell" id="c${i}${j}"></td>`
+      <td class="cell" id="c${i}${j}"></td>`;
       tr.insertAdjacentHTML("beforeend", td);
     }
     board.appendChild(tr);
@@ -41,24 +41,24 @@ function tick_cell(e) {
   }
 }
 function checkWinner(e) {
-  let row = e.target.id.slice(1,2);
-  let column = e.target.id.slice(2,3);
-  let cellrc = document.getElementById("c" + row + column).textContent;
+  const row = e.target.id.slice(1,2);
+  const column = e.target.id.slice(2,3);
+  const cellrc = document.getElementById("c" + row + column).textContent;
 
-  let cellr0 = document.getElementById("c" + row + "0").textContent;
-  let cellr1 = document.getElementById("c" + row + "1").textContent;
-  let cellr2 = document.getElementById("c" + row + "2").textContent;
+  const cellr0 = document.getElementById("c" + row + "0").textContent;
+  const cellr1 = document.getElementById("c" + row + "1").textContent;
+  const cellr2 = document.getElementById("c" + row + "2").textContent;
 
-  let cell0c = document.getElementById("c" + "0" + column).textContent;
-  let cell1c = document.getElementById("c" + "1" + column).textContent;
-  let cell2c = document.getElementById("c" + "2" + column).textContent;
+  const cell0c = document.getElementById("c" + "0" + column).textContent;
+  const cell1c = document.getElementById("c" + "1" + column).textContent;
+  const cell2c = document.getElementById("c" + "2" + column).textContent;
 
-  let cell00 = document.getElementById("c" + "0" + "0").textContent;
-  let cell11 = document.getElementById("c" + "1" + "1").textContent;
-  let cell22 = document.getElementById("c" + "2" + "2").textContent;
+  const cell00 = document.getElementById("c" + "0" + "0").textContent;
+  const cell11 = document.getElementById("c" + "1" + "1").textContent;
+  const cell22 = document.getElementById("c" + "2" + "2").textContent;
 
-  let cell02 = document.getElementById("c" + "0" + "2").textContent;
-  let cell20 = document.getElementById("c" + "2" + "0").textContent;
+  const cell02 = document.getElementById("c" + "0" + "2").textContent;
+  const cell20 = document.getElementById("c" + "2" + "0").textContent;
 
   switch (true) {
     case cellr0 == cellr1 && cellr0 == cellr2:

@@ -24,7 +24,7 @@ window.addEventListener("load", () => {
     changeDifficulty(config.difficulty.easy);
 
     function initializeViews() {
-      doms.helperBtn.textContent = "はじめの第一歩"
+      doms.helperBtn.textContent = "はじめの第一歩";
       doms.select1Message.textContent = "※1辺のマスの数";
       doms.select2Message.textContent = "※どんぐりの数";
       doms.gameBtnText1.innerHTML = "<span>Z：</span>畑を耕す";
@@ -50,7 +50,7 @@ window.addEventListener("load", () => {
       doms.acornBtn.addEventListener("click", acornMode);
       document.addEventListener("keydown", changeClickMode);
       doms.select1.addEventListener("input", () => {
-        doms.inputInfo.textContent = `どんぐり${Math.floor(doms.select1.value * doms.select1.value * difficultyValue)}個で難易度${difficultyName}`
+        doms.inputInfo.textContent = `どんぐり${Math.floor(doms.select1.value * doms.select1.value * difficultyValue)}個で難易度${difficultyName}`;
       });
     }
     function changeDifficulty(diff) {
@@ -58,7 +58,7 @@ window.addEventListener("load", () => {
       doms.select1.value = diff.select1;
       doms.select2.value = diff.select2;
       difficultyValue = diff.difficultyValue;
-      doms.inputInfo.textContent = ""
+      doms.inputInfo.textContent = "";
     }
   }
   function restartGame() {
@@ -70,7 +70,7 @@ window.addEventListener("load", () => {
 
     function resetContents() {
       tiles = [];
-      gameInAction = true; //リファクタ removeEventListenerで代替できるか？
+      gameInAction = true; // リファクタ removeEventListenerで代替できるか？
       isFirstClick = true;
       clearInterval(gameTimer);
       doms.timer.textContent = `00:00:00`;
@@ -87,18 +87,18 @@ window.addEventListener("load", () => {
       doms.board.className = "minesweeper-board";
       const sides = Number(doms.select1.value);
       for (let i = 0; i < sides; i++) {
-        let tr = document.createElement("tr");
+        const tr = document.createElement("tr");
         for (let j = 0; j < sides; j++) {
-          let index = i * sides + j
-          let td = document.createElement("td");
+          const index = i * sides + j;
+          const td = document.createElement("td");
           td.className = "tile-closed";
           td.index = index;
-          td.id = `tile${index}`
+          td.id = `tile${index}`;
           td.style.height = `${65 / sides}vmin`;
           td.style.width = `${65 / sides}vmin`;
           td.onclick = click;
           tr.appendChild(td);
-          tiles.push(td)
+          tiles.push(td);
         }
         doms.board.appendChild(tr);
       }
@@ -114,7 +114,7 @@ window.addEventListener("load", () => {
         tileIndexes.splice(random, 1);
       }
       acorns.forEach((acorn) => {
-        tiles[acorn].value = "A"
+        tiles[acorn].value = "A";
       });
     }
     function countNearbyAcorns() {
@@ -122,9 +122,9 @@ window.addEventListener("load", () => {
         if (tile.value == "A") {
           return null;
         }
-        const condition = (x) => { return acorns.includes(x) };
+        const condition = (x) => { return acorns.includes(x); };
         const adjacentTilesWithAcorns = getConditionedAdjacentTiles(i, condition);
-        const adjacentAcorns = adjacentTilesWithAcorns.length
+        const adjacentAcorns = adjacentTilesWithAcorns.length;
         if (adjacentAcorns != 0) {
           tile.textContent = adjacentAcorns;
           tile.value = adjacentAcorns;
@@ -163,14 +163,14 @@ window.addEventListener("load", () => {
   function clickBlank(clicked) {
     const sides = Number(doms.select1.value);
     const i = clicked.index;
-    const condition = (x) => { return tiles[x].className != "tile-open" };
+    const condition = (x) => { return tiles[x].className != "tile-open"; };
     const array = getConditionedAdjacentTiles(i, condition);
     array.forEach(tile => {
       if (tile.className == "tile-open" || tile.className == "acorn-mark") return;
       tile.className = "tile-open";
       tile.style.fontSize = `${35 / sides}vmin`;
       if (tile.value == null) clickBlank(tile);
-    })
+    });
     judge();
   }
   function rightClick(e) {
@@ -200,7 +200,7 @@ window.addEventListener("load", () => {
       clearInterval(gameTimer);
       doms.clearMessage.textContent = "おめでとう！リスも大喜び";
       doms.clearImage.className = "squirrel-happy";
-      doms.board.className = "minesweeper-board-clear"
+      doms.board.className = "minesweeper-board-clear";
     }
   }
   function gameOver() {
@@ -216,7 +216,7 @@ window.addEventListener("load", () => {
       return;
     }
     e.srcElement.className = "hidden";
-    let random = Math.floor(Math.random() * tiles.length);
+    const random = Math.floor(Math.random() * tiles.length);
     if (tiles[random].value == null) {
       tiles[random].click();
     } else {
@@ -305,7 +305,7 @@ window.addEventListener("load", () => {
           difficultyValue: 0.2045
         },
       },
-    }
+    };
   };
   function getDoms() {
     return {
