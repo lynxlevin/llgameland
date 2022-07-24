@@ -1,31 +1,35 @@
+import { showContents, hideContents } from "./utils/displayStyles.js";
+import { startTimer } from "./utils/timer.js";
+import { checkPath } from "./utils/checkPath.js";
+
 window.addEventListener("load", () => {
-  if (!checkPath()) {
+  "use strict";
+  if (!checkPath("/games/15puzzle")) {
     return null;
   }
-  "use strict";
-  revealContents();
-  hideContents();
-  let gameRestartBtn = document.getElementById("restart-game");
-  let board = document.getElementById("board");
-  let gameTimer = NaN;
+  showContents(getShowContentsIds());
+  hideContents(getHideContentsIds());
+  const gameRestartBtn = document.getElementById("restart-game");
+  const board = document.getElementById("board");
+  let gameTimer;
   prepareGame();
   startGame();
   gameRestartBtn.onclick = startGame;
 
   function startGame() {
-    let select1 = Number(document.getElementById("select1").value);
+    const select1 = Number(document.getElementById("select1").value);
     let firstClick = false;
-    let tiles = [];
+    const tiles = [];
     prepareBoard(tiles);
     prepareContents();
 
     function prepareBoard(tiles) {
       board.innerHTML = "";
-      for (let i = 0 ; i < select1 ; i++) {
-        let tr = document.createElement("tr");
-        for (let j = 0 ; j < select1 ; j++) {
-          let index = i * select1 + j
-          let td = document.createElement("td");
+      for (let i = 0; i < select1; i++) {
+        const tr = document.createElement("tr");
+        for (let j = 0; j < select1; j++) {
+          const index = i * select1 + j;
+          const td = document.createElement("td");
           td.className = "tile";
           td.index = index;
           td.style.height = `${75 / select1}vmin`;
@@ -35,12 +39,12 @@ window.addEventListener("load", () => {
           td.textContent = index == (select1 * select1 - 1) ? "" : (index + 1);
           td.onclick = click;
           tr.appendChild(td);
-          tiles.push(td)
+          tiles.push(td);
         }
         board.appendChild(tr);
       }
-      for (let i = 0 ; i < 1000 + (select1 * select1 * select1) ; i++) {
-        click({ srcElement: {index: Math.floor(Math.random() * (select1 * select1))}})
+      for (let i = 0; i < 1000 + (select1 * select1 * select1); i++) {
+        click({ srcElement: { index: Math.floor(Math.random() * (select1 * select1)) } });
       }
       firstClick = true;
     }
@@ -52,20 +56,20 @@ window.addEventListener("load", () => {
     }
     function click(e) {
       if (firstClick) {
-        startTimer();
+        gameTimer = startTimer(gameTimer);
         firstClick = false;
       }
-      let clicked = e.srcElement.index;
+      const clicked = e.srcElement.index;
       let blank = document.getElementById(`tile${select1 * select1}`).index;
-      let distance = blank - clicked;
+      const distance = blank - clicked;
       if (Math.floor(clicked / select1) == Math.floor(blank / select1)) {// clickedとblankが同じ行なら
-        for (let k = 0 ; k < Math.abs(distance) ; k++) {
+        for (let k = 0; k < Math.abs(distance); k++) {
           swap(blank, blank - Math.sign(distance));
           blank = document.getElementById(`tile${select1 * select1}`).index;
         }
         judge();
       } else if (clicked % select1 == blank % select1) {
-        for (let k = 0 ; k < Math.abs(distance) / select1 ; k++) {// clickedとblankが同じ列なら
+        for (let k = 0; k < Math.abs(distance) / select1; k++) {// clickedとblankが同じ列なら
           swap(blank, blank - Math.sign(distance) * select1);
           blank = document.getElementById(`tile${select1 * select1}`).index;
         }
@@ -73,63 +77,51 @@ window.addEventListener("load", () => {
       }
     }
     function swap(i, j) {
-      let tileI = tiles[i];
-      let tileJ = tiles[j];
-      let tmpTextContent = tileI.textContent;
-      let tmpId = tileI.id;
+      const tileI = tiles[i];
+      const tileJ = tiles[j];
+      const tmpTextContent = tileI.textContent;
+      const tmpId = tileI.id;
       tileI.textContent = tileJ.textContent;
       tileI.id = tileJ.id;
       tileJ.textContent = tmpTextContent;
       tileJ.id = tmpId;
     }
     function judge() {
-      let goal = 0
-      tiles.forEach( function(tile) {
+      let goal = 0;
+      tiles.forEach(function (tile) {
         if (tile.textContent == (tile.index + 1) ||
-            (tile.textContent == "" && tile.index == (select1 * select1 - 1))) {
+          (tile.textContent == "" && tile.index == (select1 * select1 - 1))) {
           goal = goal;
         } else {
           goal = goal + 1;
         }
-      })
+      });
       if (goal == 0) {
         clearInterval(gameTimer);
         document.getElementById("info1").textContent = " You've DONE IT!!";
       }
     }
   }
-  function startTimer() {
-    let elapsedTime = 0;
-    gameTimer = setInterval(() => {
-      elapsedTime ++;
-      let hour = Math.floor(elapsedTime / 3600);
-      let minute = Math.floor(elapsedTime / 60);
-      let second = Math.floor(elapsedTime % 60);
-      hour = ("0" + hour).slice(-2);
-      minute = ("0" + minute).slice(-2);
-      second = ("0" + second).slice(-2);
-      document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
-    }, 1000);
-  }
   function prepareGame() {
     gameRestartBtn.textContent = "START";
-    document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）"
-    document.getElementById("select1").value = 4
+    document.getElementById("select1-message").textContent = "※マス目の数を指定（○×○マス）";
+    document.getElementById("select1").value = 4;
     document.getElementById("inputs-wrapper").style.height = "65px";
   }
-  function checkPath() {
-    const path = location.pathname;
-    if (path === "/games/15puzzle") {return true};
-  }
-  function revealContents() {
-    document.getElementById("top-btn-wrapper").style.display = "";
-    document.getElementById("inputs-wrapper").style.display = "";
-    document.getElementById("select-boxes-wrapper").style.display = "";
-    document.getElementById("game-info-wrapper").style.display = "";
-  }
-  function hideContents() {
-    document.getElementById("select2-div").style.display = "none";
-    document.getElementById("input-info").style.display = "none";
-  }
 });
-    
+
+function getShowContentsIds() {
+  return [
+    "top-btn-wrapper",
+    "inputs-wrapper",
+    "select-boxes-wrapper",
+    "game-info-wrapper"
+  ];
+}
+
+function getHideContentsIds() {
+  return [
+    "select2-div",
+    "input-info"
+  ];
+}

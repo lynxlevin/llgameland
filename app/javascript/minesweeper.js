@@ -1,137 +1,120 @@
+import { showContents } from "./utils/displayStyles.js";
+import { startTimer } from "./utils/timer.js";
+import { checkPath } from "./utils/checkPath.js";
+
 window.addEventListener("load", () => {
-  if (!checkPath()) {
+  "use strict";
+  if (!checkPath("/games/minesweeper")) {
     return null;
   }
-  "use strict";
-  revealContents();
-  const select1 = document.getElementById("select1");
-  const select2 = document.getElementById("select2");
-  let plowBtn = document.getElementById("game-btn1");
-  let acornBtn = document.getElementById("game-btn2");
-  let gameTimer = NaN;
+  const config = getConfig();
+  const doms = getDoms();
+
+  showContents(getShowContentsIds());
   let tiles = [];
   let isAcornMode = false;
-  let isFirstClick;
-  let gameInAction;
-  let remainingAcorns;
+  let gameTimer, isFirstClick, gameInAction, remainingAcorns, difficultyName, difficultyValue;
   initializeGame();
   restartGame();
-  document.getElementById("restart-game").onclick = restartGame;
+  doms.restartBtn.onclick = restartGame;
 
-  function checkPath() {
-    const path = location.pathname;
-    if (path === "/games/minesweeper") { return true };
-  }
-  function revealContents() {
-    document.getElementById("top-btn-wrapper").style.display = "";
-    document.getElementById("inputs-wrapper").style.display = "";
-    document.getElementById("difficulty-btns-wrapper").style.display = "";
-    document.getElementById("select-boxes-wrapper").style.display = "";
-    document.getElementById("game-btn-wrapper").style.display = "";
-    document.getElementById("game-info-wrapper").style.display = "";
-    document.getElementById("clear-image").style.display = "";
-  }
   function initializeGame() {
-    document.getElementById("helper-btn").textContent = "はじめの第一歩"
-    document.getElementById("helper-btn").onclick = firstStep;
-    document.getElementById("select1-message").textContent = "※1辺のマスの数";
-    document.getElementById("select2-message").textContent = "※どんぐりの数";
-    select1.value = 9;
-    select2.value = 10;
-    plowBtn.className = "plow-btn game-btn-on";
-    document.getElementById("game-btn-text1").innerHTML = "<span>Z：</span>畑を耕す";
-    acornBtn.className = "acorn-btn game-btn-off";
-    document.getElementById("game-btn-text2").innerHTML = "<span>X：</span>印をつける";
-    document.getElementById("difficulty1").onclick = easyMode;
-    document.getElementById("difficulty2").onclick = mediumMode;
-    document.getElementById("difficulty3").onclick = hardMode;
-    plowBtn.onclick = plowMode;
-    acornBtn.onclick = acornMode;
-    document.addEventListener("keydown", changeClickMode);
-    let difficulty = "EASY";
-    let difficultyValue = 0.123;
-    select1.addEventListener("input", () => {
-      document.getElementById("input-info").textContent = `どんぐり${Math.floor(select1.value * select1.value * difficultyValue)}個で難易度${difficulty}`
-    });
-    function easyMode() {
-      select1.value = 9;
-      select2.value = 10;
-      difficulty = "EASY";
-      difficultyValue = 0.123;
-      document.getElementById("input-info").textContent = ""
-      restartGame();
+    initializeViews();
+    activateEventListeners();
+    changeDifficulty(config.difficulty.easy);
+
+    function initializeViews() {
+      doms.helperBtn.textContent = "はじめの第一歩";
+      doms.select1Message.textContent = "※1辺のマスの数";
+      doms.select2Message.textContent = "※どんぐりの数";
+      doms.gameBtnText1.innerHTML = "<span>Z：</span>畑を耕す";
+      doms.gameBtnText2.innerHTML = "<span>X：</span>印をつける";
+      doms.plowBtn.className = "plow-btn game-btn-on";
+      doms.acornBtn.className = "acorn-btn game-btn-off";
     }
-    function mediumMode() {
-      select1.value = 16;
-      select2.value = 40;
-      difficulty = "MEDIUM";
-      difficultyValue = 0.15625;
-      document.getElementById("input-info").textContent = ""
-      restartGame();
+    function activateEventListeners() {
+      doms.helperBtn.addEventListener("click", firstStep);
+      doms.difficulty1.addEventListener("click", () => {
+        changeDifficulty(config.difficulty.easy);
+        restartGame();
+      });
+      doms.difficulty2.addEventListener("click", () => {
+        changeDifficulty(config.difficulty.medium);
+        restartGame();
+      });
+      doms.difficulty3.addEventListener("click", () => {
+        changeDifficulty(config.difficulty.hard);
+        restartGame();
+      });
+      doms.plowBtn.addEventListener("click", plowMode);
+      doms.acornBtn.addEventListener("click", acornMode);
+      document.addEventListener("keydown", changeClickMode);
+      doms.select1.addEventListener("input", () => {
+        doms.inputInfo.textContent = `どんぐり${Math.floor(doms.select1.value * doms.select1.value * difficultyValue)}個で難易度${difficultyName}`;
+      });
     }
-    function hardMode() {
-      select1.value = 22;
-      select2.value = 99;
-      difficulty = "HARD";
-      difficultyValue = 0.2045;
-      document.getElementById("input-info").textContent = ""
-      restartGame();
+    function changeDifficulty(diff) {
+      difficultyName = diff.name;
+      doms.select1.value = diff.select1;
+      doms.select2.value = diff.select2;
+      difficultyValue = diff.difficultyValue;
+      doms.inputInfo.textContent = "";
     }
   }
   function restartGame() {
     resetContents();
     resetBoard();
-    let acorns = [];
+    const acorns = [];
     buryAcorns();
     countNearbyAcorns();
 
     function resetContents() {
       tiles = [];
-      gameInAction = true; //リファクタ removeEventListenerで代替できるか？
+      gameInAction = true; // リファクタ removeEventListenerで代替できるか？
       isFirstClick = true;
       clearInterval(gameTimer);
-      document.getElementById("timer").textContent = `00:00:00`;
-      document.getElementById("show-settings-check").checked = false;
-      document.getElementById("helper-btn").className = "";
-      document.getElementById("helper-btn-message").textContent = "";
-      remainingAcorns = select2.value;
+      doms.timer.textContent = `00:00:00`;
+      doms.showSettingsCheck.checked = false;
+      doms.helperBtn.className = "";
+      doms.helperBtnMessage.textContent = "";
+      remainingAcorns = doms.select2.value;
       changeRemainingAcorns();
-      document.getElementById("clear-message").textContent = "";
-      document.getElementById("clear-image").className = "hidden squirrel-happy";
+      doms.clearMessage.textContent = "";
+      doms.clearImage.className = "hidden squirrel-happy";
     }
     function resetBoard() {
-      let board = document.getElementById("board");
-      board.innerHTML = "";
-      board.className = "minesweeper-board";
-      for (let i = 0; i < Number(select1.value); i++) {
-        let tr = document.createElement("tr");
-        for (let j = 0; j < Number(select1.value); j++) {
-          let index = i * Number(select1.value) + j
-          let td = document.createElement("td");
+      doms.board.innerHTML = "";
+      doms.board.className = "minesweeper-board";
+      const sides = Number(doms.select1.value);
+      for (let i = 0; i < sides; i++) {
+        const tr = document.createElement("tr");
+        for (let j = 0; j < sides; j++) {
+          const index = i * sides + j;
+          const td = document.createElement("td");
           td.className = "tile-closed";
           td.index = index;
-          td.id = `tile${index}`
-          td.style.height = `${65 / Number(select1.value)}vmin`;
-          td.style.width = `${65 / Number(select1.value)}vmin`;
+          td.id = `tile${index}`;
+          td.style.height = `${65 / sides}vmin`;
+          td.style.width = `${65 / sides}vmin`;
           td.onclick = click;
           tr.appendChild(td);
-          tiles.push(td)
+          tiles.push(td);
         }
-        board.appendChild(tr);
+        doms.board.appendChild(tr);
       }
     }
     function buryAcorns() {
       const tileIndexes = [];
-      for (let i = 0; i < Number(select1.value) * Number(select1.value); i++) { //リファクタ 二乗の書き換え
+      for (let i = 0; i < Number(doms.select1.value) ** 2; i++) {
         tileIndexes.push(i);
       }
-      for (let i = 0; i < select2.value; i++) {
+      for (let i = 0; i < doms.select2.value; i++) {
         const random = Math.floor(Math.random() * tileIndexes.length);
         acorns.push(tileIndexes[random]);
         tileIndexes.splice(random, 1);
       }
       acorns.forEach((acorn) => {
-        tiles[acorn].value = "A"
+        tiles[acorn].value = "A";
       });
     }
     function countNearbyAcorns() {
@@ -139,36 +122,9 @@ window.addEventListener("load", () => {
         if (tile.value == "A") {
           return null;
         }
-        const isTopTile = Math.floor(i / Number(select1.value)) == 0;
-        const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
-        const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
-        const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
-
-        let adjacentAcorns = 0;
-        if (!isTopTile && acorns.includes(i - Number(select1.value))) {// 一番上でない → 上を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && acorns.includes(i + Number(select1.value))) {// 一番下でない → 下を見る
-          adjacentAcorns++;
-        }
-        if (!isLeftMostTile && acorns.includes(i - 1)) {// 一番左でない → 左を見る
-          adjacentAcorns++;
-        }
-        if (!isRightMostTile && acorns.includes(i + 1)) {// 一番右でない → 右を見る
-          adjacentAcorns++;
-        }
-        if (!isTopTile && !isLeftMostTile && acorns.includes(i - Number(select1.value) - 1)) {// 一番上でなく、左でもない → 左上を見る
-          adjacentAcorns++;
-        }
-        if (!isTopTile && !isRightMostTile && acorns.includes(i - Number(select1.value) + 1)) {// 一番上でなく、右でもない → 右上を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && !isLeftMostTile && acorns.includes(i + Number(select1.value) - 1)) {// 一番下でなく、左でもない → 左下を見る
-          adjacentAcorns++;
-        }
-        if (!isBottomTile && !isRightMostTile && acorns.includes(i + Number(select1.value) + 1)) {// 一番下でなく、右でもない → 右下を見る
-          adjacentAcorns++;
-        }
+        const condition = (x) => { return acorns.includes(x); };
+        const adjacentTilesWithAcorns = getConditionedAdjacentTiles(i, condition);
+        const adjacentAcorns = adjacentTilesWithAcorns.length;
         if (adjacentAcorns != 0) {
           tile.textContent = adjacentAcorns;
           tile.value = adjacentAcorns;
@@ -178,7 +134,7 @@ window.addEventListener("load", () => {
   }
   function click(e) {
     if (isFirstClick) {
-      startTimer();
+      gameTimer = startTimer(gameTimer);
       isFirstClick = false;
     }
     if (isAcornMode) {
@@ -196,71 +152,35 @@ window.addEventListener("load", () => {
       gameOver();
     } else if (clicked.value != null) {
       clicked.className = "tile-open";
-      clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
+      clicked.style.fontSize = `${35 / Number(doms.select1.value)}vmin`;
       judge();
     } else if (clicked.value == null) {
       clicked.className = "tile-open";
-      clicked.style.fontSize = `${35 / Number(select1.value)}vmin`;
+      clicked.style.fontSize = `${35 / Number(doms.select1.value)}vmin`;
       clickBlank(clicked);
     }
   }
   function clickBlank(clicked) {
+    const sides = Number(doms.select1.value);
     const i = clicked.index;
-    const array = [];
-    const isTopTile = Math.floor(i / Number(select1.value)) == 0;
-    const isBottomTile = Math.floor(i / Number(select1.value)) == (Number(select1.value) - 1);
-    const isLeftMostTile = Math.floor(i % Number(select1.value)) == 0;
-    const isRightMostTile = Math.floor(i % Number(select1.value)) == (Number(select1.value) - 1);
-    if (!isTopTile && tiles[i - Number(select1.value)].className != "tile-open") {// 一番上でない → 上をクリック
-      array.push(tiles[i - Number(select1.value)]);
-    }
-    if (!isBottomTile && tiles[i + Number(select1.value)].className != "tile-open") {// 一番下でない → 下をクリック
-      array.push(tiles[i + Number(select1.value)]);
-    }
-    if (!isLeftMostTile && tiles[i - 1].className != "tile-open") {// 一番左でない → 左をクリック
-      array.push(tiles[i - 1]);
-    }
-    if (!isRightMostTile && tiles[i + 1].className != "tile-open") {// 一番右でない → 右をクリック
-      array.push(tiles[i + 1]);
-    }
-    if (!isTopTile && !isLeftMostTile && tiles[i - Number(select1.value) - 1].className != "tile-open") {// 一番上でなく、左でもない → 左上をクリック
-      array.push(tiles[i - Number(select1.value) - 1]);
-    }
-    if (!isTopTile && !isRightMostTile && tiles[i - Number(select1.value) + 1].className != "tile-open") {// 一番上でなく、右でもない → 右上をクリック
-      array.push(tiles[i - Number(select1.value) + 1]);
-    }
-    if (!isBottomTile && !isLeftMostTile && tiles[i + Number(select1.value) - 1].className != "tile-open") {// 一番下でなく、左でもない → 左下をクリック
-      array.push(tiles[i + Number(select1.value) - 1]);
-    }
-    if (!isBottomTile && !isRightMostTile && tiles[i + Number(select1.value) + 1].className != "tile-open") {// 一番下でなく、右でもない → 右下をクリック
-      array.push(tiles[i + Number(select1.value) + 1]);
-    }
+    const condition = (x) => { return tiles[x].className != "tile-open"; };
+    const array = getConditionedAdjacentTiles(i, condition);
     array.forEach(tile => {
-      if (tile.className == "tile-open" || tile.className == "acorn-mark") {
-        return null;
-      } else if (tile.value != null) {
-        tile.className = "tile-open";
-        tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
-      } else if (tile.value == null) {
-        tile.className = "tile-open";
-        tile.style.fontSize = `${35 / Number(select1.value)}vmin`;
-        clickBlank(tile);
-      }
-    })
+      if (tile.className == "tile-open" || tile.className == "acorn-mark") return;
+      tile.className = "tile-open";
+      tile.style.fontSize = `${35 / sides}vmin`;
+      if (tile.value == null) clickBlank(tile);
+    });
     judge();
   }
   function rightClick(e) {
+    const clicked = e.srcElement;
+    if (!gameInAction || clicked.className === "tile-open") return;
     if (isFirstClick) {
-      startTimer();
+      gameTimer = startTimer(gameTimer);
       isFirstClick = false;
     }
-    if (!gameInAction) {
-      return null;
-    }
-    const clicked = e.srcElement;
-    if (clicked.className == "tile-open") {
-      return null;
-    } else if (clicked.className == "acorn-mark") {
+    if (clicked.className == "acorn-mark") {
       clicked.className = "tile-closed";
       remainingAcorns++;
       changeRemainingAcorns();
@@ -272,49 +192,36 @@ window.addEventListener("load", () => {
     }
   }
   function changeRemainingAcorns() {
-    document.getElementById("info1").textContent = `残りのどんぐりの数 ${remainingAcorns}`;
+    doms.info1.textContent = `残りのどんぐりの数 ${remainingAcorns}`;
   }
-  function judge() {
+  function judge() { // 判定結果だけ返すように変える
     const closedTiles = document.getElementsByClassName("tile-closed");
     if (closedTiles.length == 0 && remainingAcorns == 0) {
       clearInterval(gameTimer);
-      document.getElementById("clear-message").textContent = "おめでとう！リスも大喜び";
-      document.getElementById("clear-image").className = "squirrel-happy";
-      board.className = "minesweeper-board-clear"
+      doms.clearMessage.textContent = "おめでとう！リスも大喜び";
+      doms.clearImage.className = "squirrel-happy";
+      doms.board.className = "minesweeper-board-clear";
     }
   }
   function gameOver() {
     clearInterval(gameTimer);
-    document.getElementById("clear-message").textContent = "どんぐり踏んじゃった";
+    doms.clearMessage.textContent = "どんぐり踏んじゃった";
     gameInAction = false;
   }
   function firstStep(e) {
     plowMode();
-    document.getElementById("show-settings-check").checked = false;
-    if (tiles.find(tile => tile.value == null) != null) {
-      e.srcElement.className = "hidden";
-      let random = Math.floor(Math.random() * tiles.length);
-      if (tiles[random].value == null) {
-        tiles[random].click();
-      } else {
-        firstStep(e);
-      }
-    } else {
-      document.getElementById("helper-btn-message").textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+    doms.showSettingsCheck.checked = false;
+    if (tiles.find(tile => tile.value == null) === undefined) {
+      doms.helperBtnMessage.textContent = "ごめんなさい。どんぐりが多すぎて、お力になれません。";
+      return;
     }
-  }
-  function startTimer() {
-    let elapsedTime = 0;
-    gameTimer = setInterval(() => {
-      elapsedTime++;
-      let hour = Math.floor(elapsedTime / 3600);
-      let minute = Math.floor(elapsedTime / 60);
-      let second = Math.floor(elapsedTime % 60);
-      hour = ("0" + hour).slice(-2);
-      minute = ("0" + minute).slice(-2);
-      second = ("0" + second).slice(-2);
-      document.getElementById("timer").textContent = `${hour}:${minute}:${second}`;
-    }, 1000);
+    e.srcElement.className = "hidden";
+    const random = Math.floor(Math.random() * tiles.length);
+    if (tiles[random].value == null) {
+      tiles[random].click();
+    } else {
+      firstStep(e);
+    }
   }
   function changeClickMode(e) {
     if (e.key == "z") {
@@ -325,12 +232,104 @@ window.addEventListener("load", () => {
   }
   function plowMode() {
     isAcornMode = false;
-    plowBtn.className = "plow-btn game-btn-on";
-    acornBtn.className = "acorn-btn game-btn-off";
+    doms.plowBtn.className = "plow-btn game-btn-on";
+    doms.acornBtn.className = "acorn-btn game-btn-off";
   }
   function acornMode() {
     isAcornMode = true;
-    plowBtn.className = "plow-btn game-btn-off";
-    acornBtn.className = "acorn-btn game-btn-on";
+    doms.plowBtn.className = "plow-btn game-btn-off";
+    doms.acornBtn.className = "acorn-btn game-btn-on";
   }
+
+  /**
+   * 条件に合致した隣接マスの配列を返却
+   * @param {number} centerIndex - このマスの隣接マスを検証する
+   * @param {Function} condition - 検証の条件
+   * @return {array} array - 条件に合致した隣接マスの配列
+   */
+  function getConditionedAdjacentTiles(centerIndex, condition) {
+    const array = [];
+    const sides = Number(doms.select1.value);
+    const isTopMost = Math.floor(centerIndex / sides) == 0;
+    const isBottomMost = Math.floor(centerIndex / sides) == (sides - 1);
+    const isLeftMost = Math.floor(centerIndex % sides) == 0;
+    const isRightMost = Math.floor(centerIndex % sides) == (sides - 1);
+    // 一番上でない → 上を見る
+    if (!isTopMost && condition(centerIndex - sides)) array.push(tiles[centerIndex - sides]);
+    // 一番下でない → 下を見る
+    if (!isBottomMost && condition(centerIndex + sides)) array.push(tiles[centerIndex + sides]);
+    // 一番左でない → 左を見る
+    if (!isLeftMost && condition(centerIndex - 1)) array.push(tiles[centerIndex - 1]);
+    // 一番右でない → 右を見る
+    if (!isRightMost && condition(centerIndex + 1)) array.push(tiles[centerIndex + 1]);
+    // 一番上でなく、左でもない → 左上を見る
+    if (!isTopMost && !isLeftMost && condition(centerIndex - sides - 1)) array.push(tiles[centerIndex - sides - 1]);
+    // 一番上でなく、右でもない → 右上を見る
+    if (!isTopMost && !isRightMost && condition(centerIndex - sides + 1)) array.push(tiles[centerIndex - sides + 1]);
+    // 一番下でなく、左でもない → 左下を見る
+    if (!isBottomMost && !isLeftMost && condition(centerIndex + sides - 1)) array.push(tiles[centerIndex + sides - 1]);
+    // 一番下でなく、右でもない → 右下を見る
+    if (!isBottomMost && !isRightMost && condition(centerIndex + sides + 1)) array.push(tiles[centerIndex + sides + 1]);
+    return array;
+  }
+  function getShowContentsIds() {
+    return [
+      "top-btn-wrapper",
+      "inputs-wrapper",
+      "difficulty-btns-wrapper",
+      "select-boxes-wrapper",
+      "game-btn-wrapper",
+      "game-info-wrapper",
+      "clear-image"
+    ];
+  }
+  function getConfig() {
+    return {
+      difficulty: {
+        easy: {
+          name: "EASY",
+          select1: 9,
+          select2: 10,
+          difficultyValue: 0.123
+        },
+        medium: {
+          name: "MEDIUM",
+          select1: 16,
+          select2: 40,
+          difficultyValue: 0.15625
+        },
+        hard: {
+          name: "HARD",
+          select1: 22,
+          select2: 99,
+          difficultyValue: 0.2045
+        },
+      },
+    };
+  };
+  function getDoms() {
+    return {
+      select1: document.getElementById("select1"),
+      select2: document.getElementById("select2"),
+      helperBtn: document.getElementById("helper-btn"),
+      difficulty1: document.getElementById("difficulty1"),
+      difficulty2: document.getElementById("difficulty2"),
+      difficulty3: document.getElementById("difficulty3"),
+      select1Message: document.getElementById("select1-message"),
+      select2Message: document.getElementById("select2-message"),
+      gameBtnText1: document.getElementById("game-btn-text1"),
+      gameBtnText2: document.getElementById("game-btn-text2"),
+      inputInfo: document.getElementById("input-info"),
+      timer: document.getElementById("timer"),
+      helperBtnMessage: document.getElementById("helper-btn-message"),
+      clearMessage: document.getElementById("clear-message"),
+      clearImage: document.getElementById("clear-image"),
+      info1: document.getElementById("info1"),
+      board: document.getElementById("board"),
+      showSettingsCheck: document.getElementById("show-settings-check"),
+      plowBtn: document.getElementById("game-btn1"),
+      acornBtn: document.getElementById("game-btn2"),
+      restartBtn: document.getElementById("restart-game"),
+    };
+  };
 });
