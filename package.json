@@ -7,13 +7,7 @@
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^5.4.3",
     "axios": "^0.21.1",
-    "dotenv": "^10.0.0",
-    "jsdom": "^16.7.0",
     "turbolinks": "^5.2.0"
-  },
-  "scripts": {
-    "prevConan": "node miscs/prevConan/index.js",
-    "fridayRoadshow": "node miscs/fridayRoadshow/index.js"
   },
   "version": "0.1.0",
   "devDependencies": {
